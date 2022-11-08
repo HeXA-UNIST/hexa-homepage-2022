@@ -1,17 +1,7 @@
-import firebase from 'firebase/compat/app'
-import 'firebase/auth';
-import 'firebase/firestore';
+import { initializeApp } from 'firebase/app';
 
 const firebaseConfig = {
     // Put FirebaseConfig.
-}
-
-const rrfConfig = {
-    userProfile: "users",
-    useFirestoreForProfile: true,
 };
 
-
-firebase.initializeApp(firebaseConfig);
-
-export {rrfConfig};
+export default initializeApp(firebaseConfig);

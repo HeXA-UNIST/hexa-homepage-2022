@@ -1,26 +1,22 @@
-import firebase from 'firebase/compat/app';
-import {combineReducers} from 'redux';
-import {firebaseReducer, firestoreReducer} from 'react-redux-firebase';
-import { createStore } from "redux";
-import { createFirestoreInstance } from "redux-firestore";
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
-
-import {rrfConfig} from './firebase.js';
+import personalReducer from '../features/personal/personal_reduce';
+import projectReducer from '../features/project/project_reduce';
+import seminarReducer from '../features/seminar/seminar_reduce';
 
 export const rootReducer = combineReducers({
-    firebase: firebaseReducer,
-    firestore: firestoreReducer
+  personalReducer,
+  projectReducer,
+  seminarReducer
 });
 
-const initialState = {};
-const store = createStore(rootReducer, initialState);
+const store = configureStore({
+  reducer: {
+    personalReducer,
+    projectReducer,
+    seminarReducer,
+  },
+});
 
-const rrfProps = {
-    firebase,
-    config: rrfConfig,
-    dispatch: store.dispatch,
-    createFirestoreInstance,
-  };
-
-export {rrfProps, store};
+export default store;
 
