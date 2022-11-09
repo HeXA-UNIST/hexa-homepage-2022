@@ -1,0 +1,20 @@
+/* Main Text 2 */
+
+
+@import url('https://fonts.googleapis.com/css?family=Orbitron');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+/* HeXA에서 UNIST 학우를 위한 웹/앱 서비스를 만들어갑니다 */
+.HomeImageContainer {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 72px;
+    line-height: 120%;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+
+
+/* or 86px */
+
+
