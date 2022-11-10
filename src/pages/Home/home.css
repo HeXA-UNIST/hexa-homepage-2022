@@ -2,19 +2,178 @@
 
 
 @import url('https://fonts.googleapis.com/css?family=Orbitron');
+@import url('https://fonts.googleapis.com/css?family=Asap');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
 /* HeXA에서 UNIST 학우를 위한 웹/앱 서비스를 만들어갑니다 */
-.HomeImageContainer {
+
+.ServiceTitle{
+    background-color: rgba(0, 0, 0, 0.9)
+}
+
+.newletter{
+    margin-top: 14px;
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 120%;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+}
+.newletter1{
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 120%;
+    text-align: center;
+    color: #F4B91E;
+}
+.newsTitle{
+    margin-top: 20px;
+}
+.Introtitle{
+    margin-left: 60px;
+    margin-top: 80px;
+    white-space: pre-wrap;
     font-family: 'Noto Sans KR';
     font-style: normal;
     font-weight: 700;
-    font-size: 72px;
+    font-size: 56px;
     line-height: 120%;
     color: rgba(255, 255, 255, 0.9);
 }
+.Introdescription{
+    height:400px;
+    margin-left: 60px;
+    white-space: pre-wrap;
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 120%;
+    color: rgba(255, 255, 255, 0.9);
+}
+.hexaIntro {
+    background: #0A0A50;
+}
+.hexaTitle{
+    margin-left: 250px;
+    margin-right: 250px;
+    font-family: 'Asap';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 120%;
+/* identical to box height, or 58px */
+    text-align: center;
+    white-space: pre-wrap;
+    color: #FFFFFF;
+}
+.hexadescription{
+    margin-left: 250px;
+    margin-right: 250px;
+    margin-bottom: 0px;
+    font-family: 'Asap';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 144%;
+    white-space: pre-wrap;
+/* or 46px */
 
+    color: #FFFFFF;
+}
+.ContactTitle{
+    margin-left: 100px;
+    margin-right: 50px;
+    font-family: 'Nanum Gothic Coding';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 144%;
+/* or 35px */
+    text-align: center;
+    white-space: pre-wrap;
+    min-width: 400px;
+    color: black;
+    background-color: white;
+}
+.ContactInfo{
+    margin-left: 100px;
+    margin-right: 50px;
+    font-family: 'Nanum Gothic Coding';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 144%;
+    white-space: pre-wrap;
+    min-width: 400px;
+    min-height: 50px;
+    color: #FFFFFF;
+    background-color: black;
+}
+.ExternalLink{
+    margin-left: 150px;
+    margin-right: 250px;
+}
+/* .Loginbutton{
+    font-family: 'NanumGothic';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 5px;
+    line-height: 18px;
+    text-align: center;
+} */
+.newContainer{
+    background-color: rgba(0, 0, 0, 0.9)
+}
+.BusHexaTitle{
+    font-family: 'Asap';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 120%;
+    /* or 43px */
 
+    color: #FFFFFF;
+}
+.BusHexaDescription{
+    font-family: 'Asap';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 120%;
+    /* identical to box height, or 29px */
 
-/* or 86px */
+    color: #FFFFFF;
+}
+.ArrowLeft{
+    transform: scale(1.8);
+}
+.ArrowRight{
+    transform: scale(1.8);
+}
+.MuiMobileStepper-dots{
+    background-color: "rgba(255, 255, 255, 0.5)";
+    min-width: 30px;
+    min-height: 30px;
+}
+.MuiMobileStepper-dot{
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    min-width: 30px;
+    min-height: 30px;
+}
 
+.MuiMobileStepper-dotActive{
+    background-color: #00E0BE !important;
+    min-width: 30px;
+    min-height: 30px;
+
+}
+.MuiMobileStepper-positionStatic{
+    width: 150px;
+    height: 50px;
+}
 
