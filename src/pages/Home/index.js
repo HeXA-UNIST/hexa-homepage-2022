@@ -28,13 +28,17 @@ import background1 from '../../img/background1.jpg';
 import background2 from '../../img/background2.jpg';
 import background3 from '../../img/background3.jpg';
 import background4 from '../../img/background4.png';
+import background5 from '../../img/background5.png';
+import background6 from '../../img/background6.png';
+import background8 from '../../img/background8.png';
 import Icon1 from '../../img/logo1.png';
 import Icon2 from '../../img/logo2.png';
 import Icon3 from '../../img/f.png';
 import Icon4 from '../../img/insta.png';
 import Icon5 from '../../img/github.png';
 import Icon6 from '../../img/blog.png';
-import Icon7 from '../../img/darkmod.png';
+import Icon7 from '../../img/github1.png';
+import Icon8 from '../../img/unist.png';
 import './home.css';
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
@@ -87,6 +91,8 @@ const ResponsiveAppBar=()=> {
         <Button>
         <Avatar alt="Hexa_logo" variant="square" sx={{ fontStyle:"normal",
               left: "100px",
+              width: '40px',
+              height: '45px',
               mr: 15,
               ml: 1,
               display: { xs: 'none', md: 'flex' }
@@ -322,22 +328,29 @@ const HexaIntro = () =>{
   }
   return(
       <div className='hexaIntro' style={{backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundImage: `url(${background4})`} }>
-          <Box className='hexaTitle'>{title}</Box>
+          {/* <Box className='hexaTitle'>
+            {title}
+            </Box> */}
+          <Typography className='hexaTitle' component='div'>
+          <Box sx={{ fontWeight: '900', fontSize: '32px' }} display='inline'>H</Box>ACKERS
+          <Box sx={{ fontWeight: '900', fontSize: '32px' }} display='inline'> eX</Box>CXCITING
+          <Box sx={{ fontWeight: '900', fontSize: '32px' }} display='inline'> A</Box>CADEMY
+          </Typography>
           <Box className='hexadescription'>{subTitle}</Box>
           <div>
           <Stack className = 'ExternalLink' direction="row" spacing={2}>
             <Contact/>
             <Link href="https://ko-kr.facebook.com/unist.hexa/" underline="none">
-            <Avatar alt ="faceBook" src = {Icon3}  variant="rounded"/>
+            <Avatar alt ="faceBook" src = {Icon3} sx={{width:"70px", height: "70px"}} variant="rounded"/>
             </Link>
             <Link href="https://www.instagram.com/" underline="none">
-            <Avatar alt ="instrgram" src = {Icon4} variant="rounded"/>
+            <Avatar alt ="instrgram" src = {Icon4} sx={{width:"70px", height: "70px"}} variant="rounded"/>
             </Link>
             <Link href="https://github.com/HeXA-UNIST" underline="none">
-            <Avatar alt ="instrgram" src = {Icon5} variant="rounded"/>
+            <Avatar alt ="github" src = {Icon5} sx={{width:"70px", height: "70px"}} variant="rounded"/>
             </Link>
             <Link href="https://hexa-unist.github.io/" underline="none">
-            <Avatar alt ="instrgram" src = {Icon6} variant="rounded"/>
+            <Avatar alt ="blog" src = {Icon6} sx={{width:"70px", height: "70px"}} variant="rounded"/>
             </Link>
       </Stack>
           </div>
@@ -349,7 +362,16 @@ const BusHexa = ()=>{
     return(
       <div>
         <Box className='BusHexaTitle'>BUS HeXA</Box>
-        <Box className='BusHexaDescription'>BUS HeXA는 UNIST에 도착하는 버스 시간과 배차 간격을 확인하는 서비스입니다.</Box>
+        <Box className='BusHexaDescription' sx={{mb:1}}>BUS HeXA는 UNIST에 도착하는 버스 시간과 배차 간격을 확인하는 서비스입니다.</Box>
+        <Stack direction="row" spacing={2}>
+        <Link href="https://bus.hexa.pro/" underline="none">
+        <Avatar className = "HexaBusButton" sx={{ fontFamily:"'NanumGothic'",fontStyle:"normal",fontWeight:"800",fontSize:"16px",lineHeight:"1px",textAlign:"center", bgcolor: '#666666',color:'white',  width: 160, height: 40}}variant="rounded">
+            바로가기→
+        </Avatar>
+        </Link>
+        <Link href="https://github.com/Raon1123/bus-hexa" underline="none">
+        <Avatar className =  "HexBusGithubButton" sx={{ width: 40, height: 40}} src = {Icon7} variant="rounded"/></Link>
+        </Stack>
       </div>
     )
   }
@@ -375,10 +397,11 @@ const BusHexa = ()=>{
       <Stack direction="row" spacing={2}>
       <Avatar alt="Hexa_logo2" variant="square" 
             sx={{ fontStyle:"normal",
-              width:'60px',
-              height: '60px',
-              mr: 1,
-              ml: 1,
+              width:'90px',
+              height: '105px',
+              mr: 3,
+              ml: 5,
+              mb: 2,
               display: { xs: 'none', md: 'flex' }
             }} src={Icon1}/>
         <BusHexaInfo></BusHexaInfo>
@@ -387,7 +410,69 @@ const BusHexa = ()=>{
 
   )
 }
-
+const Sponsor = ()=>{
+   return(
+      <div className = "SponsorBanner" style={{backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundImage: `url(${background5})`} }>
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="50px">
+        <Typography variant="h6" noWrap component="a" href="/" sx={{ fontStyle:"normal",
+              mt:3,
+              mb:3,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'Asap',
+              fontWeight: 700,
+              fontSize: "28px",
+              color: 'inherit',
+              textDecoration: 'none',
+              color: 'white',
+              textAlign:"center"
+            }}>
+            HeXA 후원사
+        </Typography>
+        </Box>
+        <Box className='SponsorDescription'>
+          다양한 후원사와 멘토링 기회, 그리고 소통을 기다리고 있습니다 :) 
+        </Box>
+        <Box display="flex" justifyContent="center" alignItems="center">
+        <div className = 'SponsorContact' style={{backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundImage: `url(${background6})`} }>
+          <Box display="flex" justifyContent="center" alignItems="center">
+          <Box className='SponsorContact' sx={{mt:1, mb:1,ml:2,mr:2}}>(Contact) hexa.unist@gmail.com</Box>
+          </Box>
+        </div>
+        </Box>
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <Avatar className =  "UNISTIcon" sx={{ width: 120, height: 120, mt:4, mb:4}} src = {Icon8} variant="rounded"/>
+        </Box>
+      </div>
+   )
+}
+const HeXAInfo = () =>{
+  const HeXAContactInfo = () =>{
+    return(
+      <div>
+        <Box className='HexaLocation'>(44919) 울산광역시 울주군 언양읍 유니스트길 50 (언양읍, 울산과학기술원) 203동(학생회관) 415호</Box>
+        <Box className='HexaLicense' >Developed in HeXA, Licensed under MIT License</Box>
+      </div>
+    )
+  }
+  return(
+    <div style={{minHeight:"250px", backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundImage: `url(${background8})`} }>
+      <Stack direction="row" spacing={2}>
+      <Avatar alt="Hexa_logo1" variant="square" 
+            sx={{ fontStyle:"normal",
+              width:'90px',
+              height: '105px',
+              mt:5,
+              mr: 3,
+              ml: 5,
+              mb: 2,
+              display: { xs: 'none', md: 'flex' }
+            }} src={Icon2}/>
+        <Box className='HexaLogo'>HeXA</Box>
+      </Stack>
+      <HeXAContactInfo />
+    </div>
+  )
+}
 const Home = (props) => {
   const [mode, setMode] = React.useState('light');
   const colorMode = React.useMemo(
@@ -416,6 +501,8 @@ const Home = (props) => {
         <News/>
         <HexaIntro/>
         <BusHexa/>
+        <Sponsor/>
+        <HeXAInfo/>
     </div>
       </ThemeProvider>
       </ColorModeContext.Provider>

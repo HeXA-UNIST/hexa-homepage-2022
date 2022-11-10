@@ -10,6 +10,74 @@
 .ServiceTitle{
     background-color: rgba(0, 0, 0, 0.9)
 }
+.SponsorTitle{
+    min-height: 100px;
+    font-family: 'Asap';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 120%;
+    /* identical to box height, or 58px */
+    text-align: center;
+    margin-bottom: 20px;
+    color: #FFFFFF;
+    vertical-align: baseline;
+}
+.SponsorDescription{
+    font-family: 'Asap';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 120%;
+    /* identical to box height, or 38px */
+    text-align: center;
+    margin-bottom: 30px;
+    color: rgba(255, 255, 255, 0.7);
+}
+.SponsorContact{
+    font-family: 'Nanum Gothic Coding';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 120%;
+    /* identical to box height, or 29px */
+    text-align: center;
+    white-space: pre-wrap;
+    max-width: 500px;
+    min-height: 30px;
+    color: #FFFFFF;
+}
+.HexaLogo{
+    margin-top: 50px !important;
+    font-family: 'Orbitron';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 72px;
+    line-height: 90px;
+    color: #FFFFFF;
+}
+.HexaLocation{
+    margin-left: 40px;
+    font-family: 'Asap';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 100%;
+    /* or 24px */
+
+    color: #FFFFFF;
+}
+.HexaLicense{
+    margin-left: 40px;
+    font-family: 'Asap';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 100%;
+    /* or 24px */
+
+    color: #FFFFFF;
+}
 
 .newletter{
     margin-top: 14px;
@@ -61,10 +129,10 @@
 .hexaTitle{
     margin-left: 250px;
     margin-right: 250px;
-    font-family: 'Asap';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 16px;
+    font-family: 'Asap' !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    font-size: 20px !important;
     line-height: 120%;
 /* identical to box height, or 58px */
     text-align: center;
@@ -72,13 +140,14 @@
     color: #FFFFFF;
 }
 .hexadescription{
+    margin-top: 20px;
     margin-left: 250px;
     margin-right: 250px;
     margin-bottom: 0px;
     font-family: 'Asap';
     font-style: normal;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 18px;
     line-height: 144%;
     white-space: pre-wrap;
 /* or 46px */
