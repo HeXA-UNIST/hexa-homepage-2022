@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {lazy, Suspense} from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import Home from '../pages/Home';
+
 import Signup from '../pages/Signup';
 import Login from '../pages/Login';
 import About from '../pages/About';
@@ -12,12 +12,14 @@ import NotFound from '../pages/NotFound';
 
 import store from './store';
 
+const Home = lazy(()=> import('../pages/Home'));
 
 function App() {
   return (
     <Provider store={store}>
       <div className="App">
         <header />
+        <Suspense>
         <BrowserRouter>
           <Routes>
             <Route path='/' element={<Home />}></Route>
@@ -30,6 +32,7 @@ function App() {
             <Route path='*' element={<NotFound />}></Route>
           </Routes>
         </BrowserRouter>
+        </Suspense>
       </div>
     </Provider>
   );
