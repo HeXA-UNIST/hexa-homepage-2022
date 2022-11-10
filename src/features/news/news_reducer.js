@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { loadNewsFirebase, postNewNewsFirebase } from './news';
 
 export const newsSlice = createSlice({
     name: 'news',
@@ -9,26 +10,27 @@ export const newsSlice = createSlice({
         setNewsList: (state, action) => {
             state.news = action.payload;
         },
+        addNewNews: (state, action) => {
+            state.news.push(action.payload);
+        },
     },
 });
 
-// Load News List From FireStore
-export const loadNewsList = (dispatch) => {
-    // TODO : Load News List From FireStore
-    dispatch(
-        setNewsList([])
-    );
+// Firebase에서 최신 순으로 number개의 News를 불러오고 state 갱신.
+export const loadNewsList = (number) => (dispatch) => {
+    loadNewsFirebase(number).then((data) => {
+        dispatch(setNewsList(data));
+    });
 };
 
-// Post(Upload) News List To FireStore (Maybe For WebSite Manager?)
-export const postNewsList = (news) => (dispatch) => {
-    // TODO : post News List To FireStore
-    dispatch(
-        setNewsList(news)
-    );
+// Firebase에 새 News를 게시하고 state 갱신. 
+export const postNewNews = (news) => (dispatch) => {
+    postNewNewsFirebase(news).then(() => {
+        dispatch(addNewNews(news));
+    });
 }
 
-export const { setNewsList } = newsSlice.actions;
+export const { setNewsList, addNewNews } = newsSlice.actions;
 
 export const selectNewsList = (state) => state.news.news;
 
