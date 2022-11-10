@@ -10,13 +10,13 @@ import darkModeReducer from '../features/dark_mode/dark_mode_reducer';
 
 
 export const rootReducer = combineReducers({
-  loginReducer,
-  personalReducer,
-  projectReducer,
-  seminarReducer,
-  newsReducer,
-  techStackReducer,
-  darkModeReducer,
+  login : loginReducer,
+  personal : personalReducer,
+  project: projectReducer,
+  seminar: seminarReducer,
+  news: newsReducer,
+  techStack: techStackReducer,
+  darkMode: darkModeReducer,
 });
 
 const store = configureStore({

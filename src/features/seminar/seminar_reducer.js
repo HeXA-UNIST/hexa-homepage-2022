@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export const seminarSlice = createSlice({
-    name: 'project',
+    name: 'seminar',
     initialState: {
     },
     reducers: {
