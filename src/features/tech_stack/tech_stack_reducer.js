@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export const personalSlice = createSlice({
-    name: 'personal',
+export const techStackSlice = createSlice({
+    name: 'techStack',
     initialState: {
     },
     reducers: {
@@ -21,7 +21,7 @@ export const personalSlice = createSlice({
     },
 });
 
-export const { increment, decrement, incrementByAmount } = personalSlice.actions;
+export const { increment, decrement, incrementByAmount } = techStackSlice.actions;
 
-export default personalSlice.reducer;
+export default techStackSlice.reducer;
 
