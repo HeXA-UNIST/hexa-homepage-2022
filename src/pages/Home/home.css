@@ -79,7 +79,7 @@
     color: #FFFFFF;
 }
 
-.newletter{
+.newsletter{
     margin-top: 14px;
     font-family: 'Noto Sans KR';
     font-style: normal;
@@ -89,7 +89,7 @@
     text-align: center;
     color: rgba(255, 255, 255, 0.9);
 }
-.newletter1{
+.newsletter1{
     font-family: 'Noto Sans KR';
     font-style: normal;
     font-weight: 500;
@@ -125,6 +125,7 @@
 }
 .hexaIntro {
     background: #0A0A50;
+    padding-bottom: 20px;
 }
 .hexaTitle{
     margin-left: 250px;
@@ -195,8 +196,9 @@
     line-height: 18px;
     text-align: center;
 } */
-.newContainer{
-    background-color: rgba(0, 0, 0, 0.9)
+.newsContainer{
+    background-color: rgba(0, 0, 0, 0.9);
+    padding-bottom: 10px;
 }
 .BusHexaTitle{
     font-family: 'Asap';
