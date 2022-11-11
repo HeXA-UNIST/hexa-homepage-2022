@@ -220,6 +220,10 @@
 
     color: #FFFFFF;
 }
+.BBextension{
+    padding-bottom: 20px;
+}
+
 .ArrowLeft{
     transform: scale(1.8);
 }

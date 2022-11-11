@@ -11,7 +11,7 @@ import './home.css';
 
 import HeXAInfo from './HexaInfo';
 import Sponsor from './Sponsor';
-import BusHexa from './BusHexa';
+import ProjectIntro from './ProjectIntro';
 import TextMobileStepper from './TextMobileStepper';
 import HexaIntro from './HexaIntro';
 import News from './news';
@@ -48,7 +48,7 @@ const Home = (props) => {
           <TextMobileStepper />
           <News />
           <HexaIntro />
-          <BusHexa />
+          <ProjectIntro />
           <Sponsor />
           <HeXAInfo />
         </div>

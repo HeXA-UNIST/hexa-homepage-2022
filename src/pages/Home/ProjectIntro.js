@@ -32,7 +32,26 @@ class BusHexaInfo extends Component{
         )
     }
 }
-class BusHexa extends Component{
+class BBextensionInfo extends Component{
+    render(){
+        return(
+            <div class= 'BBextension'>
+        <Box className='BusHexaTitle'>BlackBoard Extension</Box>
+        <Box className='BusHexaDescription' sx={{ mb: 1 }}>BlackBoard Extension은 BlackBoard에서 다양한 추가 기능을 제공하는 서비스입니다.</Box>
+        <Stack direction="row" spacing={2}>
+          <Link href="https://chrome.google.com/webstore/detail/blackboard-extension/pbpldnhboapmjkbgakkkgefgkkdajfnc/related?hl=ko" underline="none">
+            <Avatar className="HexaBusButton" sx={{ fontFamily: "'NanumGothic'", fontStyle: "normal", fontWeight: "800", fontSize: "16px", lineHeight: "1px", textAlign: "center", bgcolor: '#666666', color: 'white', width: 160, height: 40 }} variant="rounded">
+              바로가기→
+            </Avatar>
+          </Link>
+          <Link href="https://github.com/See-Y/blackboard-extension" underline="none">
+            <Avatar className="HexBusGithubButton" sx={{ width: 40, height: 40 }} src={Icon7} variant="rounded" /></Link>
+        </Stack>
+      </div>
+        )
+    }
+}
+class ProjectIntro extends Component{
     render() {
         return (
         <div className='ServiceTitle'>
@@ -65,10 +84,11 @@ class BusHexa extends Component{
             mb: 2,
             display: { xs: 'none', md: 'flex' }
           }} src={Icon1} />
-        <BusHexaInfo></BusHexaInfo>
+          <Stack spacing={2}><BusHexaInfo></BusHexaInfo>
+        <BBextensionInfo></BBextensionInfo></Stack>
       </Stack>
     </div>
         )
     }
 }
-export default BusHexa;
+export default ProjectIntro;
