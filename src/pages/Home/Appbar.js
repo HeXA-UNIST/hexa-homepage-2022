@@ -16,6 +16,7 @@ import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 
+import Link from '@mui/material/Link';
 
 import Icon2 from '../../img/logo2.png';
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
@@ -88,9 +89,9 @@ const ResponsiveAppBar =()=> {
         >
         HeXA
         </Typography>
-        <Avatar className="Loginbutton" sx={{ fontFamily: "'NanumGothic'", fontStyle: "normal", fontWeight: "800", fontSize: "12px", lineHeight: "18px", textAlign: "center", bgcolor: 'white', mr: 10, width: 48, height: 24, color: '#0A0A50' }} variant="rounded">
+        <Link href="/login" underline="none"><Avatar className="Loginbutton" sx={{ fontFamily: "'NanumGothic'", fontStyle: "normal", fontWeight: "800", fontSize: "12px", lineHeight: "18px", textAlign: "center", bgcolor: 'white', mr: 10, width: 48, height: 24, color: '#0A0A50' }} variant="rounded">
         로그인
-        </Avatar>
+        </Avatar></Link>
         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
         <IconButton
             size="large"

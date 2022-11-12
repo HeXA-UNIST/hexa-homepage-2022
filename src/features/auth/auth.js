@@ -28,15 +28,17 @@ export const loginWithEmail = async (email, password) => {
         if ((await loadPersonalDataFirebase(userCredential.user.uid)) == null) {
             await postPersonalDataFirebase(userCredential.user.uid, { email: userCredential.user.email });
         }
+        return userCredential;
     } catch (e) {
         return e.message.replace("Firebase: Error ", "");
     }
 };
 
-export const resgisterWithEmail = async (email, password) => {
+export const registerWithEmail = async (email, password) => {
     try {
         let userCredential = await createUserWithEmailAndPassword(firebaseAuth, email, password);
         await postPersonalDataFirebase(userCredential.user.uid, { email: userCredential.user.email });
+        return userCredential;
     } catch (e) {
         return e.message.replace("Firebase: Error ", "");
     }

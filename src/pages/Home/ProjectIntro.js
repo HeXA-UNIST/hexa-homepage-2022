@@ -35,7 +35,7 @@ class BusHexaInfo extends Component{
 class BBextensionInfo extends Component{
     render(){
         return(
-            <div class= 'BBextension'>
+            <div className= 'BBextension'>
         <Box className='BusHexaTitle'>BlackBoard Extension</Box>
         <Box className='BusHexaDescription' sx={{ mb: 1 }}>BlackBoard Extension은 BlackBoard에서 다양한 추가 기능을 제공하는 서비스입니다.</Box>
         <Stack direction="row" spacing={2}>

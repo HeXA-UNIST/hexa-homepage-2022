@@ -1,10 +1,5 @@
 import * as React from 'react';
-import { useEffect, useRef, useState } from "react";
 
-import MobileStepper from '@mui/material/MobileStepper';
-import Button from '@mui/material/Button';
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -13,12 +8,7 @@ import Avatar from '@mui/material/Avatar';
 
 import Link from '@mui/material/Link';
 
-import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
 
-
-import background1 from '../../img/background1.jpg';
-import background2 from '../../img/background2.jpg';
-import background3 from '../../img/background3.jpg';
 import background4 from '../../img/background4.png';
 
 

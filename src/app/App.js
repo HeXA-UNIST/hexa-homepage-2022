@@ -1,6 +1,6 @@
-import React, {lazy, Suspense} from 'react';
+import React, {lazy, Suspense, useEffect} from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 
 
 import Signup from '../pages/Signup';
@@ -11,6 +11,7 @@ import Apply from '../pages/Apply';
 import NotFound from '../pages/NotFound';
 
 import store from './store';
+import { registerAuthStateChangedObserver } from '../features/auth/auth';
 
 const Home = lazy(()=> import('../pages/Home'));
 

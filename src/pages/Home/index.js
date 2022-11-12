@@ -15,6 +15,10 @@ import ProjectIntro from './ProjectIntro';
 import TextMobileStepper from './TextMobileStepper';
 import HexaIntro from './HexaIntro';
 import News from './news';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { registerAuthStateChangedObserver } from '../../features/auth/auth';
+import {loadUserPersonalData } from '../../features/personal/personal_reducer.js'
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
 
 
@@ -23,6 +27,13 @@ const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
 
 const Home = (props) => {
   const [mode, setMode] = React.useState('light');
+
+  // Todo : 일단은 임시로 여기에 적어뒀는데, 나중에는 App.js쪽에서 최상위 단계에 적어놔야함.
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(registerAuthStateChangedObserver);
+  }, []);
+
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
