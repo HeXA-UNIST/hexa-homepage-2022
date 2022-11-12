@@ -9,7 +9,6 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
 
 import Box from '@mui/material/Box';
-import ResponsiveAppBar from './Appbar';
 
 import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
 
@@ -59,7 +58,6 @@ const TextMobileStepper = () => {
     return (
       <div style={{ backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundImage: `url(${steps[activeStep].background})` }} >
         <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-          <ResponsiveAppBar />
           <Box sx={{ p: 6 }}>
             <Box className='Introtitle'>{steps[activeStep].label}</Box>
             <Box className='Introdescription'>{steps[activeStep].description}</Box>

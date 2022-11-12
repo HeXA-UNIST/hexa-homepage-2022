@@ -3,14 +3,14 @@ import React, { Component } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Icon2 from '../../img/logo2.png';
 import Stack from '@mui/material/Stack';
-import background8 from '../../img/background8.png';
+
 
 
 class HeXAInfo extends Component
 {
     render(){
         return(
-            <div style={{ minHeight: "250px", backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundImage: `url(${background8})` }}>
+            <div style={{ background: 'linear-gradient(270deg, #222222 0%, #3B2D74 100%)', paddingBottom:'4em' }}>
         <Stack direction="row" spacing={2}>
           <Avatar alt="Hexa_logo1" variant="square"
             sx={{

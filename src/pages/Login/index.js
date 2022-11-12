@@ -13,31 +13,24 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { loginWithEmail, registerWithEmail } from "../../features/auth/auth";
+import HeXAInfo from '../Home/HexaInfo';
 // import { useHistory } from "react-router-dom";
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        HeXA 
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import '../Home/home.css';
+import { loadUserPersonalData } from '../../features/personal/personal_reducer';
+import { useDispatch } from 'react-redux';
+import ResponsiveAppBar from '../Home/ResponsiveAppbar';
 
 const theme = createTheme();
 
 export default function SignIn() {
-
+  const dispatch = useDispatch()
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     loginWithEmail(data.get('email'),data.get('password')).then((err)=>{
         console.log(err);
-        window.location.href = window.location.origin+"/home";
+        console.log(loadUserPersonalData());
+        // window.location.href = window.location.origin+"/home";
     });
     console.log({
       email: data.get('email'),
@@ -47,6 +40,7 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={theme}>
+      <ResponsiveAppBar bgcolor="rgba(0, 0, 0, 0.8)"/>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -102,7 +96,7 @@ export default function SignIn() {
                   비밀번호 찾기
                 </Link>
               </Grid>
-              <Grid item>
+              <Grid item sx={{mb:4}}>
                 <Link href="/Signup" variant="body2">
                   {"회원가입"}
                 </Link>
@@ -110,8 +104,9 @@ export default function SignIn() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
+      <HeXAInfo/>
     </ThemeProvider>
   );
 }

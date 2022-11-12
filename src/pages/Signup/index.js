@@ -11,24 +11,24 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider} from '@mui/material/styles';
 import { registerWithEmail } from "../../features/auth/auth";
 import { loadPersonalDataFirebase, postPersonalDataFirebase } from '../../features/personal/personal';
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        HeXA
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import HeXAInfo from '../Home/HexaInfo';
+// import { useHistory } from "react-router-dom";
+import '../Home/home.css';
+import ResponsiveAppBar from '../Home/ResponsiveAppbar';
 
-const theme = createTheme();
-
+// const theme = createTheme();
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#330066',
+      mainGradient: "linear-gradient(to right, cyan, #330066)",
+    },
+    // ...
+  },
+});
 export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -43,15 +43,14 @@ export default function SignUp() {
             });
         })
     });
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
   };
 
   return (
+    <div style={{background: 'linear-gradient(to right bottom, #430089, #82ffa1)'}}>
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <ResponsiveAppBar bgcolor="rgba(0, 0, 0, 0.8)"/>
+      <Container  component="main" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
@@ -117,7 +116,7 @@ export default function SignUp() {
               회원가입
             </Button>
             <Grid container justifyContent="flex-end">
-              <Grid item>
+              <Grid item sx={{mb:4}}>
                 <Link href="/Login" variant="body2">
                   이미 계정이 있나요? 로그인
                 </Link>
@@ -125,8 +124,9 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
+      <HeXAInfo/>
     </ThemeProvider>
+    </div>
   );
 }

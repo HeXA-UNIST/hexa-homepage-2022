@@ -5,15 +5,14 @@ import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 
-import background5 from '../../img/background5.png';
-import background6 from '../../img/background6.png';
+
 import Icon8 from '../../img/unist.png';
 import './home.css';
 
 class Sponsor extends Component{
     render(){
         return (
-            <div className="SponsorBanner" style={{ backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundImage: `url(${background5})` }}>
+            <div className="SponsorBanner" style={{ background: 'linear-gradient(270deg, #110B29 0%, rgba(68, 34, 204, 0.7) 100%)' }}>
               <Box display="flex" justifyContent="center" alignItems="center" minHeight="50px">
                 <Typography variant="h6" noWrap component="a" href="/" sx={{
                   fontStyle: "normal",
@@ -35,7 +34,7 @@ class Sponsor extends Component{
                 다양한 후원사와 멘토링 기회, 그리고 소통을 기다리고 있습니다 :)
               </Box>
               <Box display="flex" justifyContent="center" alignItems="center">
-                <div className='SponsorContact' style={{ backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundImage: `url(${background6})` }}>
+                <div className='SponsorContact' style={{ background: 'linear-gradient(180deg, #0B0B60 0%, rgba(0, 0, 0, 0.7) 100%)' }}>
                   <Box display="flex" justifyContent="center" alignItems="center">
                     <Box className='SponsorContact' sx={{ mt: 1, mb: 1, ml: 2, mr: 2 }}>(Contact) hexa.unist@gmail.com</Box>
                   </Box>
