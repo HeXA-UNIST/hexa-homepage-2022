@@ -19,6 +19,7 @@ import '../Home/home.css';
 import { loadUserPersonalData } from '../../features/personal/personal_reducer';
 import { useDispatch } from 'react-redux';
 import ResponsiveAppBar from '../Home/ResponsiveAppbar';
+import { setIsLoggedIn } from '../../features/auth/login_reducer';
 
 const theme = createTheme();
 
@@ -28,14 +29,14 @@ export default function SignIn() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     loginWithEmail(data.get('email'),data.get('password')).then((err)=>{
-        console.log(err);
-        console.log(loadUserPersonalData());
-        // window.location.href = window.location.origin+"/home";
+        // console.log(err);
+        // console.log(loadUserPersonalData());
+        window.location.href = window.location.origin+"/home";
     });
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    // console.log({
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // });
   };
 
   return (
