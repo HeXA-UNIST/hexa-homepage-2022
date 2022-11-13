@@ -14,7 +14,7 @@ export const personalSlice = createSlice({
             state.uid = action.payload;
         },
         updatePersonData: (state, action) => {
-            state.personalData = { ...state, ...action.payload };
+            state.personalData = { ...state.personalData, ...action.payload };
         },
     },
 });
@@ -24,7 +24,6 @@ export const { setUid, updatePersonData } = personalSlice.actions;
 // 현재 로그인되어 있는 User의 PersonData를 불러오는 Action
 export const loadUserPersonalData = (dispatch) => {
     if (firebaseAuth.currentUser == null) {
-        console.log("error : not logged in");
         return 'error: Not logged in';
     }
     loadPersonalData(firebaseAuth.currentUser.uid)(dispatch);
@@ -52,6 +51,7 @@ export const postPersonalData = (uid, data) => (dispatch) => {
 
 export const postUserPersonalData = (data) => (dispatch) => {
     if (firebaseAuth.currentUser == null) {
+
         return 'error: Not logged in';
     }
     postPersonalData(firebaseAuth.currentUser.uid, data)(dispatch);
@@ -71,5 +71,6 @@ export const selectPersonalSns = (state) => state.personal.personalData.sns;
 export const selectPersonalPower = (state) => state.personal.personalData.power;
 export const selectPersonalStudentId = (state) => state.personal.personalData.studentId;
 export const selectPersonalStatus = (state) => state.personal.personalData.status;
+export const selectPersonalIntroduction = (state) => state.personal.personalData.introduction;
 
 export default personalSlice.reducer;

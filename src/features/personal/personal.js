@@ -20,7 +20,7 @@ export { personalStatusDomain, personalPowerDomain };
 export const initialPersonalData = {
     public: true,
     name: "홍길동",
-    introdution: "",
+    introduction: "",
     photo: null,
     techStack: [], // list of  techStack ids
     email: "example@unist.ac.kr",
