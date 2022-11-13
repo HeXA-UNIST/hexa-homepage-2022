@@ -24,6 +24,7 @@ export const { setUid, updatePersonData } = personalSlice.actions;
 // 현재 로그인되어 있는 User의 PersonData를 불러오는 Action
 export const loadUserPersonalData = (dispatch) => {
     if (!firebaseAuth.currentUser) {
+        console.log("error : not logged in");
         return 'error: Not logged in';
     }
     loadPersonalData(firebaseAuth.currentUser.uid)(dispatch);
@@ -40,14 +41,23 @@ export const loadPersonalData = (uid) => (dispatch) => {
 };
 
 // personalReducer의 State를 firebase에 업로드 하고, dispatch해 갱신. 
-export const postPersonData = (state) => (dispatch) => {
-    postPersonalDataFirebase(state.uid, state.personalData).then(
+export const postPersonalData = (uid, data) => (dispatch) => {
+    postPersonalDataFirebase(uid, data).then(
         () => {
-            dispatch(setUid(state.uid));
-            dispatch(updatePersonData(state.personalData));
+            dispatch(setUid(uid));
+            dispatch(updatePersonData(data));
         }
     );
 }
+
+export const postUserPersonalData = (data) => (dispatch) => {
+    if (!firebaseAuth.currentUser) {
+        return 'error: Not logged in';
+    }
+    postPersonalData(firebaseAuth.currentUser.uid, data)(dispatch);
+}
+
+
 
 export const selectPersonalUid = (state) => state.personal.uid;
 export const selectPersonalData = (state) => state.personal.personalData;
