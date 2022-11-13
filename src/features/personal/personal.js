@@ -20,6 +20,8 @@ export { personalStatusDomain, personalPowerDomain };
 export const initialPersonalData = {
     public: true,
     name: "홍길동",
+    introdution: "",
+    photo: null,
     techStack: [], // list of  techStack ids
     email: "example@unist.ac.kr",
     links: [],
@@ -41,9 +43,9 @@ export const loadPersonalDataFirebase = async (uid) => {
     } else {
         return null;
     }
-};
+}; 
 
-// Firebase에 uid에 해당하는 document에 PersonalData를 update하는 함수이다.
+// Firebase에 uid에 해당하는 document에 PersonalData를 update하는 비동기 함수이다.
 // personal_reducer의 postPersonData에서 이 함수를 사용하며,
 // UI단에서 직접 이 함수를 호출할 경우는 거의 없을 듯 하다.
 export const postPersonalDataFirebase = async (uid, data, existGuaranteed = false) => {
@@ -53,7 +55,7 @@ export const postPersonalDataFirebase = async (uid, data, existGuaranteed = fals
     if (!existGuaranteed && !(await getDoc(docRef)).exists()) {
         data = { ...initialPersonalData, ...data };
         await setDoc(docRef, data);
-    }else{
+    } else {
         await updateDoc(docRef, data);
     }
 };

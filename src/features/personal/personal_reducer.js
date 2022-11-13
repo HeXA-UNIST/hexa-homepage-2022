@@ -23,7 +23,7 @@ export const { setUid, updatePersonData } = personalSlice.actions;
 
 // 현재 로그인되어 있는 User의 PersonData를 불러오는 Action
 export const loadUserPersonalData = (dispatch) => {
-    if (!firebaseAuth.currentUser) {
+    if (firebaseAuth.currentUser == null) {
         console.log("error : not logged in");
         return 'error: Not logged in';
     }
@@ -51,7 +51,7 @@ export const postPersonalData = (uid, data) => (dispatch) => {
 }
 
 export const postUserPersonalData = (data) => (dispatch) => {
-    if (!firebaseAuth.currentUser) {
+    if (firebaseAuth.currentUser == null) {
         return 'error: Not logged in';
     }
     postPersonalData(firebaseAuth.currentUser.uid, data)(dispatch);
