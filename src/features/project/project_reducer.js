@@ -1,26 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { loadProjectListFirebase, postProjectDataFirebase, searchProjectListFirebase } from './project';
 
 export const projectSlice = createSlice({
     name: 'project',
     initialState: {
+        projectList: [],
     },
     reducers: {
-        increment: (state) => {
-            // Redux Toolkit allows us to write "mutating" logic in reducers. It
-            // doesn't actually mutate the state because it uses the Immer library,
-            // which detects changes to a "draft state" and produces a brand new
-            // immutable state based off those changes
-            state.value += 1
-        },
-        decrement: (state) => {
-            state.value -= 1
-        },
-        incrementByAmount: (state, action) => {
-            state.value += action.payload
+        setProjectList: (state, action) => {
+            state.projectList = action.payload;
         },
     },
 });
 
-export const { increment, decrement, incrementByAmount } = projectSlice.actions;
+export const { setProjectList } = projectSlice.actions;
+
+export const loadProjectList = (searchText = null, searchTechStackList = null) => (dispatch) => {
+    searchProjectListFirebase(searchText, searchTechStackList).then((projectList) => {
+        dispatch(setProjectList(projectList));
+    });
+}
+
+export const selectProjectList = (state) => state.project.projectList;
 
 export default projectSlice.reducer;
