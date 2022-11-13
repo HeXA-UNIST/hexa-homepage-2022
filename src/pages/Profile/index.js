@@ -19,22 +19,18 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import '../Home/home.css';
-
+import { techStackList } from '../../features/tech_stack/tech_stack_list';
 const TechStacksSearch = (props) => {
     const dispatch = useDispatch();
-    const [TechStacks,setTechStacks] = useState([]);
+    const [TechStacks,setTechStacks] = useState(techStackList);
     const [userInput, setUserInput] = useState("");
+
     useEffect(() => {
         dispatch(loadUserPersonalData);
-        fetch('https://api.stackexchange.com/2.3/tags?order=desc&pagesize=100&page=1&sort=popular&site=stackoverflow').then(res=>res.json()).then(
-            (result)=> {
-                setTechStacks(result.items);
-            }
-        )
       }, []);
       let PersonalTechStack = useSelector(selectPersonalTechStack);
       console.log(PersonalTechStack)
-    const handleChange = (e) => {
+        const handleChange = (e) => {
         setUserInput(e.target.value);
       };
       const Transition = React.forwardRef(function Transition(props, ref) {
@@ -88,10 +84,10 @@ const TechStacksSearch = (props) => {
         return (
           <div>
             {data.map((card) => (
-                <div key = {card.name}>
+                <div key = {card}>
                     <Stack direction="row" spacing={2}>
-                    <Box sx={{ ml: 3, mb: 1 }}>{card.name}</Box>
-                    <AlertDialogSlide item = {card.name}/>
+                    <Box sx={{ ml: 3, mb: 1 }}>{card}</Box>
+                    <AlertDialogSlide item = {card}/>
                     </Stack>
                     
                 </div>
@@ -140,7 +136,7 @@ const TechStacksSearch = (props) => {
     },
     }));
     const filterdTechStacks = TechStacks.filter((TechStack) => {
-        if(userInput !== "") return TechStack.name.toLowerCase().includes(userInput.toLowerCase());
+        if(userInput !== "") return TechStack.toLowerCase().includes(userInput.toLowerCase());
     });
     return (
     <div>
