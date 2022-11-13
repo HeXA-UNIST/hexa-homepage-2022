@@ -34,12 +34,11 @@ export default function SignUp() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     registerWithEmail(data.get('email'), data.get('password')).then((result)=>{
-        console.log(result);
-        if(typeof result == "string") return;
+        if(typeof result == "string") return alert(result);
         postPersonalDataFirebase(result.user.uid, {name:data.get('Name')}).then((r)=>{
-            console.log(r);
             loadPersonalDataFirebase(result.user.uid).then((data)=>{
                 console.log(data);
+                window.location.href = window.location.origin+"/home";
             });
         })
     });
