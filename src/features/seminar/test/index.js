@@ -42,8 +42,8 @@ const SeminarReducerTestScreen = () => {
 const NewSeminarForm = (props) => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [filename, setFilename] = useState("");
-    const [fileurl, setFileurl] = useState("");
+    const [fileName, setFileName] = useState("");
+    const [fileUrl, setFileUrl] = useState("");
     const [date, setDate] = useState("");
 
     const handleTitleChange = (event) => {
@@ -52,12 +52,12 @@ const NewSeminarForm = (props) => {
     const handleDescriptionChange = (event) => {
         setDescription(event.target.value);
     };
-    const handleFilenameChange = (event) => {
-        setFilename(event.target.value);
+    const handleFileNameChange = (event) => {
+        setFileName(event.target.value);
     };
 
-    const handleFileurlChange = (event) => {
-        setFileurl(event.target.value);
+    const handleFileUrlChange = (event) => {
+        setFileUrl(event.target.value);
     };
     const handleDateChange = (event) => {
         setDate(event.target.value);
@@ -65,7 +65,7 @@ const NewSeminarForm = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        let seminarData = createSeminarData(title, description, filename, fileurl, new Date(Date.parse(date)).getTime());
+        let seminarData = createSeminarData(title, description, fileName, fileUrl, new Date(Date.parse(date)).getTime());
         props.onSubmit(seminarData);
     };
 
@@ -82,11 +82,11 @@ const NewSeminarForm = (props) => {
                 </label>
                 <label>
                     Filename:
-                    <input type="text" value={filename} onChange={handleFilenameChange} />
+                    <input type="text" value={fileName} onChange={handleFileNameChange} />
                 </label>
                 <label>
                     Fileurl:
-                    <input type="text" value={fileurl} onChange={handleFileurlChange} />
+                    <input type="text" value={fileUrl} onChange={handleFileUrlChange} />
                 </label>
                 <label>
                     Date:
@@ -100,7 +100,7 @@ const NewSeminarForm = (props) => {
 
 const SeminarItem = (props) => {
     const dispatch = useDispatch();
-    const { id, title, description, filename, fileurl, date } = props.seminar;
+    const { id, title, description, fileName, fileUrl, date } = props.seminar;
     return (
         <div id="small-card">
             <div id="title-bar">
@@ -126,8 +126,8 @@ const SeminarItem = (props) => {
             </div>
             <p>id: {id}</p>
             <p>description: {description}</p>
-            <p>filename: {filename}</p>
-            <p>fileurl: {fileurl}</p>
+            <p>fileName: {fileName}</p>
+            <p>fileUrl: {fileUrl}</p>
             <p>date: {new Date(parseInt(date)).toLocaleDateString()}</p>
         </div>
     );
@@ -137,8 +137,8 @@ const UpdateSeminarForm = (props) => {
     const [id, setId] = useState("");
     const [newTitle, setNewTitle] = useState("");
     const [newDescription, setNewDescription] = useState("");
-    const [newFilename, setNewFilename] = useState("");
-    const [newFileurl, setNewFileurl] = useState("");
+    const [newFileName, setNewFileName] = useState("");
+    const [newFileUrl, setNewFileUrl] = useState("");
     const [newDate, setNewDate] = useState("");
 
     const handleIdChange = (event) => {
@@ -151,10 +151,10 @@ const UpdateSeminarForm = (props) => {
         setNewDescription(event.target.value);
     };
     const handleFilenameChange = (event) => {
-        setNewFilename(event.target.value);
+        setNewFileName(event.target.value);
     };
     const handleFileurlChange = (event) => {
-        setNewFileurl(event.target.value);
+        setNewFileUrl(event.target.value);
     };
     const handleDateChange = (event) => {
         setNewDate(event.target.value);
@@ -172,11 +172,11 @@ const UpdateSeminarForm = (props) => {
         if (newDescription !== "") {
             seminarData.description = newDescription;
         }
-        if (newFilename !== "") {
-            seminarData.filename = newFilename;
+        if (newFileName !== "") {
+            seminarData.fileName = newFileName;
         }
-        if (newFileurl !== "") {
-            seminarData.fileurl = newFileurl;
+        if (newFileUrl !== "") {
+            seminarData.fileUrl = newFileUrl;
         }
         if (newDate !== "") {
             seminarData.date = new Date(Date.parse(newDate)).getTime();
@@ -199,12 +199,12 @@ const UpdateSeminarForm = (props) => {
                     <input type="text" value={newDescription} onChange={handleDescriptionChange} />
                 </label>
                 <label>
-                    Filename:
-                    <input type="text" value={newFilename} onChange={handleFilenameChange} />
+                    FileName:
+                    <input type="text" value={newFileName} onChange={handleFilenameChange} />
                 </label>
                 <label>
-                    Fileurl:
-                    <input type="text" value={newFileurl} onChange={handleFileurlChange} />
+                    FileUrl:
+                    <input type="text" value={newFileUrl} onChange={handleFileurlChange} />
                 </label>
                 <label>
                     Date:

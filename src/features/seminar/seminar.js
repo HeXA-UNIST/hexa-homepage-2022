@@ -5,17 +5,17 @@ export const initialSeminarData = {
     id: "",
     title: "",
     description: "", // Nullable
-    filename: "", // Nullable
-    fileurl: "", // Nullable only if filename is null
+    fileName: "", // Nullable
+    fileUrl: "", // Nullable only if filename is null
     date: 0,
 }
 
-export const createSeminarData = (title, description, filename, fileurl, date) => {
+export const createSeminarData = (title, description, fileName, fileUrl, date) => {
     return {
         title: title,
         description: description,
-        filename: filename,
-        fileurl: fileurl,
+        fileName: fileName,
+        fileUrl: fileUrl,
         date: date,
     }
 }
