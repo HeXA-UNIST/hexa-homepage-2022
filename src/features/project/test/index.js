@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { loadProjectList } from "../project_reducer";
+import { loadProjectList, loadProjectListByMember } from "../project_reducer";
 import { addMemberToProjectFirebase, changeMemberProToProjectFirebase, deleteProjectDataFirebase, postProjectDataFirebase, removeMemberFromProjectFirebase } from "../project";
 import { selectProjectList } from "../project_reducer";
 
@@ -12,7 +12,7 @@ const ProjectReducerTestScreen = (props) => {
 
     useEffect(() => {
         dispatch(loadProjectList());
-    }, []);
+    }, [dispatch]);
 
     return (
         <div id="project-test">
@@ -24,8 +24,12 @@ const ProjectReducerTestScreen = (props) => {
                 });
             }} />
             <h2>Search Project</h2>
-            <SearchProjectBar onSearch={(searchText, searchTechStackList) => {
+            <SearchProjectForm onSearch={(searchText, searchTechStackList) => {
                 dispatch(loadProjectList(searchText, searchTechStackList));
+            }} />
+            <h2>Search Project By User</h2>
+            <SearchProjectByMemberForm onSearch={(uid) => {
+                dispatch(loadProjectListByMember(uid));
             }} />
             <h2>Project List</h2>
             <ProjectList projectList={projectList} />
@@ -33,7 +37,7 @@ const ProjectReducerTestScreen = (props) => {
     );
 }
 
-const SearchProjectBar = (props) => {
+const SearchProjectForm = (props) => {
     const [searchText, setSearchText] = useState("");
     const [searchTechStackList, setSearchTechStackList] = useState("");
     const handleSearchTextChange = (text) => {
@@ -41,8 +45,8 @@ const SearchProjectBar = (props) => {
     }
 
     const handleSearchTechStackListChange = (text) => {
-        let techStackList = searchTechStackList.trim() == "" ? null : searchTechStackList.split(",").map((tech) => tech.trim());
-        props.onSearch(searchText.trim() != "" ? searchText.trim() : null,
+        let techStackList = searchTechStackList.trim() === "" ? null : searchTechStackList.split(",").map((tech) => tech.trim());
+        props.onSearch(searchText.trim() !== "" ? searchText.trim() : null,
             techStackList);
     }
 
@@ -60,6 +64,26 @@ const SearchProjectBar = (props) => {
         </div>
     );
 }
+
+const SearchProjectByMemberForm = (props) => {
+    const [memberUid, setMemberUid] = useState("");
+    const handleUidChange = (e) => {
+        setMemberUid(e.target.value);
+    }
+    const handleSearch = () => {
+        props.onSearch(memberUid);
+    }
+    return (
+        <div id="card">
+            <label>
+                User Uid:
+                <input type="text" value={memberUid} onChange={handleUidChange} />
+            </label>
+            <button onClick={handleSearch}>Search</button>
+        </div>
+    );
+}
+
 const NewProjectForm = (props) => {
     const [name, setName] = useState("");
     const [startDate, setStartDate] = useState("");
@@ -103,7 +127,7 @@ const NewProjectForm = (props) => {
         const projectData = {
             name: name,
             startDate: new Date(Date.parse(startDate)).getTime(),
-            endDate: endDate === null || endDate == "" ? null : new Date(Date.parse(endDate)).getTime(),
+            endDate: endDate === null || endDate === "" ? null : new Date(Date.parse(endDate)).getTime(),
             techStack: techStack.split(",").map((tech) => tech.trim()),
             members: [],
             content: content,
@@ -153,7 +177,7 @@ const NewProjectForm = (props) => {
 const ProjectItem = (props) => {
     const project = props.project;
     const dispatch = useDispatch();
-
+    
     // List of string to string
     const listToString = (li) => {
         let result = "[ ";
@@ -162,7 +186,7 @@ const ProjectItem = (props) => {
         });
         return result.substring(0, result.length - 2) + " ]";
     }
-
+    
     // member list to string
     const memberListToString = (li) => {
         let result = "[ ";

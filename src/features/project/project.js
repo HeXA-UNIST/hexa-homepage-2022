@@ -4,8 +4,8 @@ import { doc, updateDoc, getDoc, deleteDoc, collection, query, orderBy, getDocs,
 export const initialProjectData = {
     name: "",
     id: "",
-    startDate: 0,
-    endDate: null,
+    startDate: 0, // new Date(startDate) 으로 Date 객체로 변환 가능, new Date().getTime() 으로 startDate로 변환 가능
+    endDate: null, // 위와 같은 방식
     techStack: [],
     members: [{
         uid: "",
@@ -35,7 +35,7 @@ const _processRawProjectData = (doc) => {
 // Firebase에 ProjectData를 게시하는 비동기 함수이다.
 // data에 id가 없으면 새 document를 생성하고, id가 있으면 document를 update한다.
 export const postProjectDataFirebase = async (data) => {
-    if (data.id === null || data.id === undefined || data.id == "") {
+    if (data.id === null || data.id === undefined || data.id === "") {
         const colRef = collection(firebaseStore, "projects");
         const projectData = {
             name: data.name,
@@ -97,7 +97,7 @@ export const loadProjectListFirebase = async () => {
     return projectList;
 }
 
-// Todo: Query를 이렇게 쓰는게 맞는지 확인해야 한다.
+
 // Firebase에서 제목과 teckStackList로 검색한 projectData들을 가져오는 비동기 함수이다.
 // page는 0부터 시작한다.
 export const searchProjectListFirebase = async (searchText = null, techStackList = null) => {
@@ -109,7 +109,7 @@ export const searchProjectListFirebase = async (searchText = null, techStackList
     }
     if (!(techStackList === null || techStackList === undefined)) {
         techStackList = techStackList.map((techStack) => techStack.trim())
-            .filter((techStack) => techStack != "");
+            .filter((techStack) => techStack !== "");
         if (techStackList.length === 0) {
             techStackList = null;
         }
@@ -121,8 +121,8 @@ export const searchProjectListFirebase = async (searchText = null, techStackList
         return list.filter((item) => item !== null);
     };
 
-    // Todo : Firebase에서 텍스트 검색을 위한 인덱싱을 지원하지 않는다 함.
-    // Todo : Aloglia를 사용해서 검색을 구현해야 한다.
+    // ! Firebase에서 텍스트 검색을 위한 인덱싱을 지원하지 않는다 함.
+    // ! TODO: Aloglia를 사용해서 검색을 구현해야 한다.
     // 지금은 겨우 string의 startwith정도의 기능밖에 못함.
     const q = query(
         newsRef,
@@ -194,4 +194,20 @@ export const changeMemberProToProjectFirebase = async (uid, pro, id) => {
         return "err: Project not found";
     }
 }
+
+// TODO: query를 올바르게 사용했는지 확인해야 한다.
+// Firebase에서 uid에 해당하는 user가 참가한 프로젝트들을 가져오는 비동기 함수이다.
+export const searchProjectListByMemberFirebase = async (uid) => {
+    const colRef = collection(firebaseStore, "projects");
+    const q = query(colRef, where("members", "array-contains", uid));
+    const querySnapshot = await getDocs(q);
+
+    const projectList = [];
+    querySnapshot.forEach((doc) => {
+        projectList.push(_processRawProjectData(doc));
+    }
+    );
+    return projectList;
+}
+
 
