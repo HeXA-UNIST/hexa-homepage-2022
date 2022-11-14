@@ -116,6 +116,13 @@ const SeminarItem = (props) => {
                 }>
                     delete
                 </button>
+                <button onClick={
+                    () => {
+                        console.log(props.seminar);
+                    }
+                }>
+                    print console log
+                </button>
             </div>
             <p>id: {id}</p>
             <p>description: {description}</p>

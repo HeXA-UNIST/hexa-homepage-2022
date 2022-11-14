@@ -63,7 +63,7 @@ const SearchProjectBar = (props) => {
 const NewProjectForm = (props) => {
     const [name, setName] = useState("");
     const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState(null);
+    const [endDate, setEndDate] = useState("");
     const [techStack, setTechStack] = useState("");
     const [content, setContent] = useState("");
     const [links, setLinks] = useState("");
@@ -78,7 +78,7 @@ const NewProjectForm = (props) => {
     };
 
     const handleEndDateChange = (date) => {
-        setEndDate(date.target.date);
+        setEndDate(date.target.value);
     };
 
     const handleTechStackChange = (text) => {
@@ -103,7 +103,7 @@ const NewProjectForm = (props) => {
         const projectData = {
             name: name,
             startDate: new Date(Date.parse(startDate)).getTime(),
-            endDate: endDate ? new Date(Date.parse(endDate)).getTime() : null,
+            endDate: endDate === null || endDate == "" ? null : new Date(Date.parse(endDate)).getTime(),
             techStack: techStack.split(",").map((tech) => tech.trim()),
             members: [],
             content: content,
@@ -215,6 +215,11 @@ const ProjectItem = (props) => {
                         });
                     }
                 }>Change to not pro Member</button>
+                <button onClick={
+                    (e) => {
+                        console.log(project);
+                    }
+                }>print console log</button>
             </div>
             <p>id : {project.id}</p>
             <p>startDate: {new Date(parseInt(project.startDate)).toLocaleDateString()}</p>
