@@ -1,0 +1,55 @@
+#project-test {
+    padding: 20px;
+}
+
+#project-test h1 {
+    color: blue;
+    text-decoration: underline;
+}
+
+#project-test h2 {
+    margin-left: 1rem;
+}
+
+#project-test h3 {
+    margin-left: 2rem;
+}
+
+#project-test p {
+    margin-left: 3rem;
+}
+
+#project-test label {
+    margin: 10px;
+}
+
+#project-test input {
+    margin: 5px;
+    border-width: 1px;
+    border-radius: 0.3rem;
+    padding: 0.2rem;
+}
+
+#project-test #card {
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    margin: 2rem;
+    padding: 1.6rem;
+    border-radius: 0.8rem;
+}
+
+#project-test #small-card {
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    margin: 2rem;
+    padding: 0.6rem;
+    width: 43rem;
+    border-radius: 0.8rem;
+}
+
+#project-test #title-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+}

@@ -35,7 +35,7 @@ const _processRawProjectData = (doc) => {
 // Firebase에 ProjectData를 게시하는 비동기 함수이다.
 // data에 id가 없으면 새 document를 생성하고, id가 있으면 document를 update한다.
 export const postProjectDataFirebase = async (data) => {
-    if (data.id === null || data.id === undefined) {
+    if (data.id === null || data.id === undefined || data.id == "") {
         const colRef = collection(firebaseStore, "projects");
         const projectData = {
             name: data.name,
@@ -54,9 +54,8 @@ export const postProjectDataFirebase = async (data) => {
         await addDoc(colRef, projectData);
     } else {
         const docRef = doc(firebaseStore, "projects", data.id);
-        if (!data.id) {
-            delete data.id;
-        }
+        delete data.id;
+
         if (!(data.members === undefined || data.members === null)) {
             data.proCount = data.members.filter((member) => member.pro).length;
             data.members = [
@@ -102,9 +101,9 @@ export const loadProjectListFirebase = async () => {
 // Firebase에서 제목과 teckStackList로 검색한 projectData들을 가져오는 비동기 함수이다.
 // page는 0부터 시작한다.
 export const searchProjectListFirebase = async (searchText = null, techStackList = null) => {
-    if(!(searchText === null || searchText === undefined)) {
+    if (!(searchText === null || searchText === undefined)) {
         searchText = searchText.trim();
-        if(searchText === "") {
+        if (searchText === "") {
             searchText = null;
         }
     }

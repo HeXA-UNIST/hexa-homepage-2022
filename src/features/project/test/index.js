@@ -4,16 +4,18 @@ import { loadProjectList } from "../project_reducer";
 import { addMemberToProjectFirebase, changeMemberProToProjectFirebase, deleteProjectDataFirebase, postProjectDataFirebase, removeMemberFromProjectFirebase } from "../project";
 import { selectProjectList } from "../project_reducer";
 
+import './index.css';
+
 const ProjectReducerTestScreen = (props) => {
     const dispatch = useDispatch();
     const projectList = useSelector(selectProjectList);
 
     useEffect(() => {
         dispatch(loadProjectList());
-    }, [dispatch]);
+    }, []);
 
     return (
-        <div>
+        <div id="project-test">
             <h1>Project Reducer Test Screen</h1>
             <h2>Create New Project</h2>
             <NewProjectForm onSubmit={(projectData) => {
@@ -45,7 +47,7 @@ const SearchProjectBar = (props) => {
     }
 
     return (
-        <div>
+        <div id="card">
             <label>
                 Search Text:
                 <input type="text" value={searchText} onChange={(e) => handleSearchTextChange(e.target.value)} />
@@ -111,39 +113,41 @@ const NewProjectForm = (props) => {
         props.onSubmit(projectData);
     };
 
-    return (<div>
-        <form onSubmit={handleSubmit}>
-            <label>
-                Name:
-                <input type="text" value={name} onChange={handleNameChange} />
-            </label>
-            <label>
-                Start Date:
-                <input type="date" value={startDate} onChange={handleStartDateChange} />
-            </label>
-            <label>
-                End Date:
-                <input type="date" value={endDate} onChange={handleEndDateChange} />
-            </label>
-            <label>
-                Tech Stack:
-                <input type="text" value={techStack} onChange={handleTechStackChange} />
-            </label>
-            <label>
-                Content:
-                <input type="text" value={content} onChange={handleContentChange} />
-            </label>
-            <label>
-                Links:
-                <input type="text" value={links} onChange={handleLinksChange} />
-            </label>
-            <label>
-                Thumbnail Url:
-                <input type="text" value={thumbnailUrl} onChange={handleThumbnailUrlChange} />
-            </label>
-            <input type="submit" value="Submit" />
-        </form>
-    </div>);
+    return (
+        <div id="card">
+            <form>
+                <label>
+                    Name:
+                    <input type="text" value={name} onChange={handleNameChange} />
+                </label>
+                <label>
+                    Start Date:
+                    <input type="date" value={startDate} onChange={handleStartDateChange} />
+                </label>
+                <label>
+                    End Date:
+                    <input type="date" value={endDate} onChange={handleEndDateChange} />
+                </label>
+                <label>
+                    Tech Stack:
+                    <input type="text" value={techStack} onChange={handleTechStackChange} />
+                </label>
+                <label>
+                    Content:
+                    <input type="text" value={content} onChange={handleContentChange} />
+                </label>
+                <label>
+                    Links:
+                    <input type="text" value={links} onChange={handleLinksChange} />
+                </label>
+                <label>
+                    Thumbnail Url:
+                    <input type="text" value={thumbnailUrl} onChange={handleThumbnailUrlChange} />
+                </label>
+                <button onClick={handleSubmit}>Create</button>
+            </form>
+        </div>
+    );
 };
 
 const ProjectItem = (props) => {
@@ -169,51 +173,52 @@ const ProjectItem = (props) => {
     }
 
     return (
-        <div>
-            <div>
+        <div id="small-card">
+            <div id="title-bar">
                 <h3>name : {project.name}
-                    <button onClick={
-                        (e) => {
-                            deleteProjectDataFirebase(project.id).then(() => {
-                                dispatch(loadProjectList());
-                            });
-                        }
-                    }>Delete</button>
-                    <button onClick={
-                        (e) => {
-                            addMemberToProjectFirebase("아무uid", true, project.id).then((result) => {
-                                dispatch(loadProjectList());
-                                if (result) {
-                                    console.log(result);
-                                }
-                            });
-                        }
-                    }>Add Member</button>
-                    <button onClick={
-                        (e) => {
-                            removeMemberFromProjectFirebase("아무uid", project.id).then((result) => {
-                                dispatch(loadProjectList());
-                                if (result) {
-                                    console.log(result);
-                                }
-                            });
-                        }
-                    }>Delete Member</button>
-                    <button onClick={
-                        (e) => {
-                            changeMemberProToProjectFirebase("아무uid", false, project.id).then((result) => {
-                                dispatch(loadProjectList());
-                                if (result) {
-                                    console.log(result);
-                                }
-                            });
-                        }
-                    }>Change to not pro Member</button>
+
                 </h3>
+                <button onClick={
+                    (e) => {
+                        deleteProjectDataFirebase(project.id).then(() => {
+                            dispatch(loadProjectList());
+                        });
+                    }
+                }>Delete</button>
+                <button onClick={
+                    (e) => {
+                        addMemberToProjectFirebase("아무uid", true, project.id).then((result) => {
+                            dispatch(loadProjectList());
+                            if (result) {
+                                console.log(result);
+                            }
+                        });
+                    }
+                }>Add Member</button>
+                <button onClick={
+                    (e) => {
+                        removeMemberFromProjectFirebase("아무uid", project.id).then((result) => {
+                            dispatch(loadProjectList());
+                            if (result) {
+                                console.log(result);
+                            }
+                        });
+                    }
+                }>Delete Member</button>
+                <button onClick={
+                    (e) => {
+                        changeMemberProToProjectFirebase("아무uid", false, project.id).then((result) => {
+                            dispatch(loadProjectList());
+                            if (result) {
+                                console.log(result);
+                            }
+                        });
+                    }
+                }>Change to not pro Member</button>
             </div>
             <p>id : {project.id}</p>
             <p>startDate: {new Date(parseInt(project.startDate)).toLocaleDateString()}</p>
-            <p>endDate: {project.endDate ? new Date(project.endDate).toLocaleDateString() : "null"}</p>
+            <p>endDate: {project.endDate ? new Date(parseInt(project.endDate)).toLocaleDateString() : "null"}</p>
             <p>techStack: {listToString(project.techStack)}</p>
             <p>content: {project.content}</p>
             <p>links: {listToString(project.links)}</p>

@@ -10,6 +10,8 @@ import Activity from '../pages/Activity';
 import Apply from '../pages/Apply';
 import NotFound from '../pages/NotFound';
 import Profile from '../pages/Profile';
+import SeminarReducerTestScreen from '../features/seminar/test';
+import ProjectReducerTestScreen from '../features/project/test';
 
 import store from './store';
 import { registerAuthStateChangedObserver } from '../features/auth/auth';
@@ -42,6 +44,8 @@ function App() {
                 <Route path='/About' element={<About />}></Route>
                 <Route path='/Activity' element={<Activity />}></Route>
                 <Route path='/Apply' element={<Apply />}></Route>
+                <Route path='/test/seminar' element={<SeminarReducerTestScreen />}></Route>
+                <Route path='/test/project' element={<ProjectReducerTestScreen />}></Route>
                 <Route path='*' element={<NotFound />}></Route>
               </Routes>
             </BrowserRouter>

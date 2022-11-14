@@ -10,9 +10,6 @@ export const newsSlice = createSlice({
         setNewsList: (state, action) => {
             state.news = action.payload;
         },
-        addNewNews: (state, action) => {
-            state.news.push(action.payload);
-        },
     },
 });
 
@@ -23,14 +20,7 @@ export const loadNewsList = (number) => (dispatch) => {
     });
 };
 
-// Firebase에 새 News를 게시하고 state 갱신. 
-export const postNewNews = (news) => (dispatch) => {
-    postNewNewsFirebase(news).then(() => {
-        dispatch(addNewNews(news));
-    });
-}
-
-export const { setNewsList, addNewNews } = newsSlice.actions;
+export const { setNewsList } = newsSlice.actions;
 
 export const selectNewsList = (state) => state.news.news;
 
