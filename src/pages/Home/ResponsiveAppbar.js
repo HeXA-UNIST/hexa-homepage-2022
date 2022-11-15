@@ -18,17 +18,17 @@ import Button from '@mui/material/Button';
 
 import Link from '@mui/material/Link';
 import Icon2 from '../../img/logo2.png';
-
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, registerAuthStateChangedObserver } from '../../features/auth/auth';
 import { loginSlice, selectIsLoggedIn, setIsLoggedIn } from '../../features/auth/login_reducer';
-import { loadUserPersonalData, selectPersonalName } from "../../features/personal/personal_reducer";
+import { loadUserPersonalData, selectIsPersonalDataLoaded, selectPersonalName } from "../../features/personal/personal_reducer";
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
 const pages = ['동아리 소개', '활동', 'SNS'];
 const settings = ['Profile', 'Account', 'Dashboard'];
-const ResponsiveAppBar = (props) => {
 
+const ResponsiveAppBar = (props) => {
     // const store = configureStore({
     //   reducer:{
     //     f:loginSlice.reducer
@@ -55,6 +55,11 @@ const ResponsiveAppBar = (props) => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
+
+    const isPersonalDataLoaded = useSelector(selectIsPersonalDataLoaded);
+    useEffect(()=>{
+        if(isLoggedIn) dispatch(loadUserPersonalData);
+    },[isLoggedIn])
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -72,12 +77,12 @@ const ResponsiveAppBar = (props) => {
     //   
     const theme = useTheme();
     const colorMode = React.useContext(ColorModeContext);
-
+    const navigate = useNavigate();
     return (
         <AppBar className='Barcontainer' component="nav" color='transparent' elevation={0} >
             <div style={{ backgroundColor: appbarcolor }}>
                 <Toolbar style={{ boxShadow: 'none' }}>
-                    <Button href="/">
+                    <Button onClick={()=>navigate('/', { replace: true })}>
                         <Avatar alt="Hexa_logo" variant="square" sx={{
                             fontStyle: "normal",
                             left: "100px",
@@ -87,12 +92,12 @@ const ResponsiveAppBar = (props) => {
                             ml: 1,
                             display: { xs: 'none', md: 'flex' }
                         }} src={Icon2} />
-                    </Button>
+                    </Button >
+                    <Box onClick={()=>navigate('/', { replace: true })}>
                     <Typography
                         variant="h6"
                         noWrap
                         component="a"
-                        href="/"
                         sx={{
                             fontStyle: "normal",
                             left: "100px",
@@ -108,12 +113,13 @@ const ResponsiveAppBar = (props) => {
                     >
                         HeXA
                     </Typography>
+                    </Box>
                     {isLoggedIn ?
-                        (<Link onClick={logout} underline="none"><Avatar className="Loginbutton" sx={{ fontFamily: "'NanumGothic'", fontStyle: "normal", fontWeight: "800", fontSize: "12px", lineHeight: "18px", textAlign: "center", bgcolor: 'white', mr: 30, width: 60, height: 24, color: '#0A0A50' }} variant="rounded">
-                            로그아웃</Avatar></Link>) : null}
+                        (<Link onClick={logout} key = {isLoggedIn} underline="none"><Avatar className="Loginbutton" sx={{ fontFamily: "'NanumGothic'", fontStyle: "normal", fontWeight: "800", fontSize: "12px", lineHeight: "18px", textAlign: "center", bgcolor: 'white', mr: 30, width: 60, height: 24, color: '#0A0A50' }} variant="rounded">
+                            로그아웃</Avatar></Link>) : <></>}
                     {!isLoggedIn ?
-                        (<Link href="/login" underline="none"><Avatar className="Loginbutton" sx={{ fontFamily: "'NanumGothic'", fontStyle: "normal", fontWeight: "800", fontSize: "12px", lineHeight: "18px", textAlign: "center", bgcolor: 'white', mr: 30, width: 48, height: 24, color: '#0A0A50' }} variant="rounded">
-                            로그인</Avatar></Link>) : null}
+                        (<Link href="/login" key = {isLoggedIn} underline="none"><Avatar className="Loginbutton" sx={{ fontFamily: "'NanumGothic'", fontStyle: "normal", fontWeight: "800", fontSize: "12px", lineHeight: "18px", textAlign: "center", bgcolor: 'white', mr: 30, width: 48, height: 24, color: '#0A0A50' }} variant="rounded">
+                            로그인</Avatar></Link>) : <></>}
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
@@ -172,7 +178,7 @@ const ResponsiveAppBar = (props) => {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt={PersonalName} src="/static/images/avatar/2.jpg" sx={{ fontSize: "13px", fontWeight: '900' }}>{PersonalName}</Avatar>
+                                <Avatar alt={PersonalName} src="/static/images/avatar/2.jpg" sx={{ fontSize: "13px", fontWeight: '900' }}>{isPersonalDataLoaded?PersonalName:""}</Avatar>
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -194,7 +200,7 @@ const ResponsiveAppBar = (props) => {
                             {settings.map((setting) => {
                                 if (setting == "Profile") {
                                     return (
-                                        <Link href="/Profile" underline="none">
+                                        <Link onClick={()=>navigate('/Profile', { replace: true })} key={setting} underline="none">
                                             <MenuItem key={setting} onClick={handleCloseUserMenu}>
                                                 <Typography textAlign="center">{setting}</Typography>
                                             </MenuItem>

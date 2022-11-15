@@ -1,12 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { initialPersonalData, loadPersonalDataFirebase, postPersonalDataFirebase } from './personal';
 import { firebaseAuth } from '../../app/firebase';
+import { fabClasses } from '@mui/material';
 
 
 export const personalSlice = createSlice({
     name: 'personal',
     initialState: {
         uid: "", // 불러온 PersonData에 해당하는 User의 uid
+        isPersonalDataLoaded : false,
         personalData: initialPersonalData,
     },
     reducers: {
@@ -15,6 +17,7 @@ export const personalSlice = createSlice({
         },
         updatePersonData: (state, action) => {
             state.personalData = { ...state.personalData, ...action.payload };
+            state.isPersonalDataLoaded = true;
         },
     },
 });
@@ -61,7 +64,7 @@ export const postUserPersonalData = (data) => (dispatch) => {
 
 export const selectPersonalUid = (state) => state.personal.uid;
 export const selectPersonalData = (state) => state.personal.personalData;
-
+export const selectIsPersonalDataLoaded = (state) => state.personal.isPersonalDataLoaded;
 export const selectPersonalPublic = (state) => state.personal.personalData.public;
 export const selectPersonalName = (state) => state.personal.personalData.name;
 export const selectPersonalTechStack = (state) => state.personal.personalData.techStack;
