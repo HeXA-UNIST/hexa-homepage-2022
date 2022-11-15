@@ -47,6 +47,7 @@ const ResponsiveAppBar = (props) => {
     const handleScroll = () => {
         const position = window.pageYOffset;
         if (props.bgcolor == "transparent") setappbarcolor(position == 0 ? 'transparent' : 'rgba(0, 0, 0, 0.8)');
+        
     };
     useEffect(() => {
         window.addEventListener('scroll', handleScroll, { passive: true });
