@@ -15,7 +15,7 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
-
+import './home.css';
 import Link from '@mui/material/Link';
 import Icon2 from '../../img/logo2.png';
 import { useNavigate } from 'react-router-dom';
@@ -25,7 +25,7 @@ import { loginSlice, selectIsLoggedIn, setIsLoggedIn } from '../../features/auth
 import { loadUserPersonalData, selectIsPersonalDataLoaded, selectPersonalName } from "../../features/personal/personal_reducer";
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
-const pages = ['동아리 소개', '활동', 'SNS'];
+const pages = [{url:"/",name:'동아리 소개'}, {url:"/Project",name:'활동'}, {url:"/",name:'sns'}];
 const settings = ['Profile', 'Account', 'Dashboard'];
 
 const ResponsiveAppBar = (props) => {
@@ -150,8 +150,8 @@ const ResponsiveAppBar = (props) => {
                             }}
                         >
                             {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
+                                <MenuItem key={page.name} >
+                                    <Typography textAlign="center">{page.name}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -160,11 +160,11 @@ const ResponsiveAppBar = (props) => {
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
                             <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
+                                key={page.name}
+                                onClick={()=>navigate(page.url)}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
-                                {page}
+                                {page.name}
                             </Button>
                         ))}
                         <Avatar className="Loginbutton" sx={{ my: 3, ml: 1, fontFamily: 'Roboto', fontStyle: "normal", fontWeight: "600", fontSize: "0.8rem", textAlign: "center", bgcolor: 'white', mr: 3, width: 56, height: '1.2rem', color: '#0A0A50' }} variant="rounded">

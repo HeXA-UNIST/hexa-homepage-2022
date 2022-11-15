@@ -44,18 +44,7 @@ const EditInfo = () => {
                         rows={4}
                         value={introduction}
                         onChange={handleIntroductionChange}
-                        onKeyPress={(ev) => {
-                            if (ev.key === 'Enter') {
-                                ev.target.blur();
-                                ev.preventDefault();
-                            }
-                        }}
-                        onFocus={(ev) => {
-                            ev.target.value = introduction;
-                        }}
-                        onBlur={(ev) => {
-                            ev.target.value = "";
-                        }}
+
                     />
                 </Box>
             </div>
@@ -89,19 +78,41 @@ const EditInfo = () => {
         const ariaLabel = { 'aria-label': 'description' };
         const dispatch = useDispatch();
         let personalSns = useSelector(selectPersonalSns);
-        let [sns, setSns] = useState(personalSns);
+        let [sns, setSns] = useState(personalSns.toString().replaceAll(',', '\n'));
         useEffect(() => {
-            setSns(personalSns);
+            setSns(personalSns.toString().replaceAll(',', '\n'));
+            //console.log(personalSns, sns);
             props.onValueChange(personalSns);
         }, [personalSns])
 
         const handleSnsChange = (event) => {
+            let snsList = event.target.value.split(/\r?\n/);
+            console.log(snsList)
+            props.onValueChange(snsList);
+            console.log(event.target.value);
             setSns(event.target.value);
-            props.onValueChange(event.target.value);
+
         };
+        const snsListtoString = (snsList) => {
+            let snsString = "";
+            snsList.forEach((item, index) => {
+                snsString += item+"\n";
+            })
+            return snsString;
+        }
         return (
             <div>
-                <Input value={sns} sx={{width:300}}inputProps={ariaLabel} onChange={handleSnsChange}/>
+                <TextField
+                        id="outlined-multiline-static"
+                        label="Sns 주소"
+                        sx={{ width: 300 }}
+                        multiline
+                        rows={4}
+                        value={sns}
+                        onChange={handleSnsChange}
+
+                    />
+                {/* <Input value={sns} sx={{width:300}}inputProps={ariaLabel} onChange={handleSnsChange}/> */}
                 <Box sx={{ mt: 1, mb: 1 }}>
 
                 </Box>

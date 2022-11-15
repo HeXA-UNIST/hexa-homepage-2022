@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 import '../Home/home.css';
 import { useSelector } from 'react-redux';
 import { selectIsPersonalDataLoaded, selectPersonalEmail, selectPersonalStatus, selectPersonalIntroduction, selectPersonalName, selectPersonalTechStack, selectPersonalPower, selectPersonalSns } from '../../features/personal/personal_reducer';
-import { Avatar, Typography, Grid, ListItem, ListItemText, Divider, Card, Button} from '@mui/material';
+import { Avatar, Typography, Grid, ListItem, ListItemText, Divider, Card, Button } from '@mui/material';
 import Box from '@mui/material/Box';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
@@ -20,6 +20,13 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import TechStackList from './TechStacklist';
 import { useNavigate } from 'react-router-dom';
+import ProjectList from './ProjectList';
+import LaunchIcon from '@mui/icons-material/Launch';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import EmailIcon from '@mui/icons-material/Email';
+
 const Profile = () => {
     const navigate = useNavigate();
     const isPersonalDataLoaded = useSelector(selectIsPersonalDataLoaded);
@@ -42,14 +49,38 @@ const Profile = () => {
         const personalPower = useSelector(selectPersonalPower);  // common | pro | master
         const personalStatus = useSelector(selectPersonalStatus); // active(활동) | rest(휴면) | glory(명예) | quit(탈퇴) | expel(제명)
         const StatusAndPower = () => {
+            const Powercolor = () => {
+                if (personalPower === 'common') {
+                    return 'black';
+                } else if (personalPower === 'pro') {
+                    return 'blue';
+                } else if (personalPower === 'master') {
+                    return 'red';
+                }
+            }
+            const Statuscolor = () => {
+                if (personalStatus === 'active') {
+                    return 'green';
+                } else if (personalStatus === 'rest') {
+                    return 'gray';
+                } else if (personalStatus === 'glory') {
+                    return 'gold';
+                } else if (personalStatus === 'quit') {
+                    return 'black';
+                } else if (personalStatus === 'expel') {
+                    return 'red';
+                }
+            }
+
+
             const PowerIcon = () => {
                 switch (personalPower) {
                     case "common":
-                        return (<AccountBoxIcon sx={{ width: 30, height: 30 }} />);
+                        return (<AccountBoxIcon sx={{ width: 30, height: 30, color: Powercolor }} />);
                     case "pro":
-                        return (<SupervisorAccountIcon sx={{ width: 30, height: 30 }} />);
+                        return (<SupervisorAccountIcon sx={{ width: 30, height: 30, color: Powercolor }} />);
                     case "master":
-                        return (<AdminPanelSettingsIcon sx={{ width: 30, height: 30 }} />);
+                        return (<AdminPanelSettingsIcon sx={{ width: 30, height: 30, color: Powercolor }} />);
                     default:
                         break;
                 }
@@ -57,15 +88,15 @@ const Profile = () => {
             const StatusIcon = () => {
                 switch (personalStatus) {
                     case "active":
-                        return (<CheckBoxIcon sx={{ width: 30, height: 30 }} />);
+                        return (<CheckBoxIcon sx={{ width: 30, height: 30, color:Statuscolor }} />);
                     case "quit":
-                        return (<HotelIcon sx={{ width: 30, height: 30 }} />);
+                        return (<HotelIcon sx={{ width: 30, height: 30, color:Statuscolor  }} />);
                     case "rest":
-                        return (<RemoveCircleIcon sx={{ width: 30, height: 30 }} />);
+                        return (<RemoveCircleIcon sx={{ width: 30, height: 30, color:Statuscolor  }} />);
                     case "glory":
-                        return (<MilitaryTechIcon sx={{ width: 30, height: 30 }} />);
+                        return (<MilitaryTechIcon sx={{ width: 30, height: 30 , color:Statuscolor }} />);
                     case "expel":
-                        return (<BlockIcon sx={{ width: 30, height: 30 }} />);
+                        return (<BlockIcon sx={{ width: 30, height: 30, color:Statuscolor  }} />);
                     default:
                         break;
                 }
@@ -77,7 +108,12 @@ const Profile = () => {
                             <PowerIcon />
                         }
                     >
-                        <ListItemText primary={personalPower} />
+                    <ListItemText primary={<Typography align="left" sx={{ color: Powercolor }}>
+                        {personalPower}
+                        </Typography>
+                        }
+                        
+                         />
                     </ListItem>
                     <Divider />
                     <ListItem
@@ -85,7 +121,9 @@ const Profile = () => {
                             <StatusIcon />
                         }
                     >
-                        <ListItemText primary={personalStatus} />
+                        <ListItemText primary={
+                            <Typography align="left" sx={{ color: Statuscolor }}>{personalStatus}</Typography>
+                        } />
                     </ListItem>
                     <Divider />
                     {/* <Stack direction="row" spacing={1}>
@@ -115,7 +153,7 @@ const Profile = () => {
     const ProfileMessage = () => {
         const personalIntroduction = useSelector(selectPersonalIntroduction);
         return (
-            <Card sx={{ maxWidth: 380, height:150 }}>
+            <Card sx={{ maxWidth: 380, height: 150 }}>
                 <CardContent>
                     <Typography variant="body2">
                         {personalIntroduction}
@@ -124,27 +162,45 @@ const Profile = () => {
             </Card>
 
         )
-    }
+    } 
     const Email = () => {
         const personalEmail = useSelector(selectPersonalEmail);
         return (
-            <Card sx={{ maxWidth: 380, height:60 }}>
+            <Card sx={{ maxWidth: 380, height: 60 }}>
                 <CardContent>
+
+                    <Stack direction="row" spacing={2}>
+                    <EmailIcon />
                     <Typography variant="body2">
                         {personalEmail}
                     </Typography>
+                    </Stack>
                 </CardContent>
             </Card>
         )
     }
     const SNS = () => {
-        const personalSns= useSelector(selectPersonalSns);
+        const personalSns = useSelector(selectPersonalSns);
+        const SnsIcon = (props) => {   
+            console.log(props.snsLink)
+            const snsLink  = props.snsLink;
+            if(snsLink.includes('https://www.facebook.com/')){
+                return (<FacebookIcon sx={{ width: 60, height: 60, color: 'blue'}} onClick={() => window.open(snsLink, '_blank')} />);
+            }else if(snsLink.includes('https://www.instagram.com/')){
+                return (<InstagramIcon sx={{ width: 60, height: 60 }} onClick={() => window.open(snsLink, '_blank')} />);
+            }
+            else if(snsLink.includes('https://github.com')){
+                    return (<GitHubIcon sx={{ width: 60, height: 60 }} onClick={() => window.open(snsLink, '_blank')} />);
+            }else{
+                return (<LaunchIcon sx={{ width: 60, height: 60 }} onClick={() => window.open(snsLink, '_blank')} />);
+            }
+        }
         return (
-            <Card sx={{ maxWidth: 380, height:80 }}>
+            <Card sx={{ maxWidth: 380, height: 90 }}>
                 <CardContent>
-                    <Typography variant="body2">
-                        {personalSns}
-                    </Typography>
+                        {personalSns.map((sns) => (
+                            <SnsIcon snsLink={sns}/>
+                        ))}
                 </CardContent>
             </Card>
         )
@@ -159,12 +215,12 @@ const Profile = () => {
                         <ProfileMessage />
                         <Email />
                         <SNS />
-                        <Button size="small" onClick={()=>navigate('/editProfile', { replace: true})} sx={{width:30}}>편집하기</Button>
-                    </Stack> 
+                        <Button size="small" onClick={() => navigate('/editProfile', { replace: true })} sx={{ width: 30 }}>편집하기</Button>
+                    </Stack>
                     <TechStackList />
-                    
+                    <ProjectList />
                 </Stack>
-                : 
+                :
                 <></>}
         </div>
     )

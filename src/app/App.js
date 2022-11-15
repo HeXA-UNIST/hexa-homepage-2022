@@ -6,7 +6,7 @@ import About from '../pages/About';
 import Activity from '../pages/Activity';
 import Apply from '../pages/Apply';
 import NotFound from '../pages/NotFound';
-import Profile from '../pages/Profile';
+
 import SeminarReducerTestScreen from '../features/seminar/test';
 import ProjectReducerTestScreen from '../features/project/test';
 
@@ -18,7 +18,7 @@ const Signup = lazy(() => import('../pages/Signup'));
 const Login = lazy(()=> import('../pages/Login'));
 const Profile = lazy(()=> import('../pages/Profile'));
 const EditProfile = lazy(()=> import('../pages/EditProfile'));
-
+const Project = lazy(()=> import('../pages/Project'));
 const RegisterFirebaseObserverComponent = (props) => {
   const dispatch = useDispatch()
   useEffect(() => {
@@ -46,6 +46,7 @@ function App() {
                 <Route path='/About' element={<About />}></Route>
                 <Route path='/Activity' element={<Activity />}></Route>
                 <Route path='/Apply' element={<Apply />}></Route>
+                <Route path='/Project' element={<Project />}></Route>
                 <Route path='/test/seminar' element={<SeminarReducerTestScreen />}></Route>
                 <Route path='/test/project' element={<ProjectReducerTestScreen />}></Route>
                 <Route path='*' element={<NotFound />}></Route>
