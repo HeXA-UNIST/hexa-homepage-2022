@@ -128,8 +128,6 @@
     padding-bottom: 20px;
 }
 .hexaTitle{
-    margin-left: 250px;
-    margin-right: 250px;
     font-family: 'Asap' !important;
     font-style: normal !important;
     font-weight: 700 !important;
@@ -142,9 +140,8 @@
 }
 .hexadescription{
     margin-top: 20px;
-    margin-left: 250px;
-    margin-right: 250px;
     margin-bottom: 0px;
+    width: 70%;
     font-family: 'Asap';
     font-style: normal;
     font-weight: 700;
@@ -156,8 +153,7 @@
     color: #FFFFFF;
 }
 .ContactTitle{
-    margin-left: 100px;
-    margin-right: 50px;
+
     font-family: 'Nanum Gothic Coding';
     font-style: normal;
     font-weight: 700;
@@ -171,8 +167,7 @@
     background-color: white;
 }
 .ContactInfo{
-    margin-left: 100px;
-    margin-right: 50px;
+
     font-family: 'Nanum Gothic Coding';
     font-style: normal;
     font-weight: 700;
@@ -184,10 +179,10 @@
     color: #FFFFFF;
     background-color: black;
 }
-.ExternalLink{
+/* .ExternalLink{
     margin-left: 150px;
     margin-right: 250px;
-}
+} */
 /* .Loginbutton{
     font-family: 'NanumGothic';
     font-style: normal;

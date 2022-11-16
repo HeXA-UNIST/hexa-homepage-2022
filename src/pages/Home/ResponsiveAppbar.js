@@ -86,11 +86,10 @@ const ResponsiveAppBar = (props) => {
                     <Button onClick={()=>navigate('/', { replace: true })}>
                         <Avatar alt="Hexa_logo" variant="square" sx={{
                             fontStyle: "normal",
-                            left: "100px",
                             width: '40px',
                             height: '45px',
-                            mr: 15,
-                            ml: 1,
+                            mr: 3,
+                            ml: 2,
                             display: { xs: 'none', md: 'flex' }
                         }} src={Icon2} />
                     </Button >
@@ -101,7 +100,7 @@ const ResponsiveAppBar = (props) => {
                         component="a"
                         sx={{
                             fontStyle: "normal",
-                            left: "100px",
+                            left: "30px",
                             mr: 2,
                             ml: 0,
                             display: { xs: 'none', md: 'flex' },
@@ -130,7 +129,7 @@ const ResponsiveAppBar = (props) => {
                             onClick={handleOpenNavMenu}
                             color="inherit"
                         >
-                            <MenuIcon />
+                            <MenuIcon sx={{color:"white"}}/>
                         </IconButton>
                         <Menu
                             id="menu-appbar"
@@ -147,7 +146,7 @@ const ResponsiveAppBar = (props) => {
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
                             sx={{
-                                display: { xs: 'block', md: 'none' },
+                                display: { xs: 'white', md: 'none' },
                             }}
                         >
                             {pages.map((page) => (

@@ -23,10 +23,13 @@ const HexaIntro = () => {
     const contactinfo = '$> 동아리 메일: hexa.unist@gmail.com\n$> 회장 메일(김선욱, 2022): d02reams@unist.ac.kr'
     const Contact = () => {
       return (
-        <div>
+        <Box >
+        <Stack>
           <Box className='ContactTitle'>Contact</Box>
           <Box className='ContactInfo'>{contactinfo}</Box>
-        </div>
+        </Stack>
+        </Box>
+
       )
     }
     return (
@@ -34,14 +37,25 @@ const HexaIntro = () => {
         {/* <Box className='hexaTitle'>
               {title}
               </Box> */}
-        <Typography className='hexaTitle' component='div'>
+        <Typography sx={{display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'}}className='hexaTitle' component='div'>
           <Box sx={{ fontWeight: '900', fontSize: '32px' }} display='inline'>H</Box>ACKERS
           <Box sx={{ fontWeight: '900', fontSize: '32px' }} display='inline'> eX</Box>CXCITING
           <Box sx={{ fontWeight: '900', fontSize: '32px' }} display='inline'> A</Box>CADEMY
         </Typography>
-        <Box className='hexadescription'>{subTitle}</Box>
+        <Box sx={{display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center'}}>
+        <Box
+            className='hexadescription'>{subTitle}
+        </Box>
+        </Box>
         <div>
-          <Stack className='ExternalLink' direction="row" spacing={2}>
+          <Stack sx={{display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'}} className='ExternalLink' direction="row" spacing={2}>
             <Contact />
             <Link href="https://ko-kr.facebook.com/unist.hexa/" underline="none">
               <Avatar alt="faceBook" src={Icon3} sx={{ width: "70px", height: "70px" }} variant="rounded" />
