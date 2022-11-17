@@ -6,7 +6,7 @@ import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 
 
-import Icon8 from '../../img/unist.png';
+import Icon8 from '../../assets/img/unist.png';
 import './home.css';
 
 class Sponsor extends Component{

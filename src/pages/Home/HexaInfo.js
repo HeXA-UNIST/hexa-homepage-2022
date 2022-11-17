@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import React, { Component } from 'react';
 import Avatar from '@mui/material/Avatar';
-import Icon2 from '../../img/logo2.png';
+import Icon2 from '../../assets/img/logo2.png';
 import Stack from '@mui/material/Stack';
 
 

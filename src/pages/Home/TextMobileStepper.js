@@ -13,10 +13,11 @@ import Box from '@mui/material/Box';
 import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
 
 
-import background1 from '../../img/background1.jpg';
-import background2 from '../../img/background2.jpg';
-import background3 from '../../img/background3.jpg';
-
+import background1 from '../../assets/img/background1.jpg';
+import background2 from '../../assets/img/background2.jpg';
+import background3 from '../../assets/img/background3.jpg';
+// import SwipeableViews from 'react-swipeable-views';
+// import { autoPlay } from 'react-swipeable-views-utils';
 
 const steps = [
   {
@@ -63,6 +64,15 @@ const TextMobileStepper = () => {
       }
 
       window.addEventListener('resize', handleResize);
+      // setInterval(() => {
+      //   //console.log(activeStep, maxSteps);
+      //   if (activeStep === maxSteps - 1) {
+      //     setActiveStep(0);
+      //   }
+      //   else {
+      //     setActiveStep(activeStep + 1);
+      //   }
+      // }, 5000);
       return () => window.removeEventListener('resize', handleResize);
     }, []);
 
@@ -72,11 +82,20 @@ const TextMobileStepper = () => {
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
-
+  const handleStepChange = (step) => {
+    setActiveStep(step);
+  };
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
+  // const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
   return (
+    // <AutoPlaySwipeableViews
+    //     axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+    //     index={activeStep}
+    //     onChangeIndex={handleStepChange}
+    //     enableMouseEvents
+    //   >
     <div style={{ backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundImage: `url(${steps[activeStep].background})` }} >
       <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
         <Box sx={{ p: 6, height:(height-85)}}>
@@ -117,7 +136,9 @@ const TextMobileStepper = () => {
               </Button>
             }
           />
-        </Box></div></div>
+        </Box></div>
+        </div>
+        // </AutoPlaySwipeableViews> 
   );
 }
 export default TextMobileStepper;

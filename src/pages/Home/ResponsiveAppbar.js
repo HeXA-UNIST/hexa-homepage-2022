@@ -17,7 +17,7 @@ import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import './home.css';
 import Link from '@mui/material/Link';
-import Icon2 from '../../img/logo2.png';
+import Icon2 from '../../assets/img/logo2.png';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, registerAuthStateChangedObserver } from '../../features/auth/auth';

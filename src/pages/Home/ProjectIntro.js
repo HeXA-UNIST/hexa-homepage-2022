@@ -9,9 +9,9 @@ import Avatar from '@mui/material/Avatar';
 
 import Link from '@mui/material/Link';
 
-import Icon1 from '../../img/logo1.png';
+import Icon1 from '../../assets/img/logo1.png';
 
-import Icon7 from '../../img/github1.png';
+import Icon7 from '../../assets/img/github1.png';
 
 class BusHexaInfo extends Component{
     render(){

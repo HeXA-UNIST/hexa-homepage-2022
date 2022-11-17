@@ -26,13 +26,14 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
+import InstaIcon from 'assets/img/Instagram_icon.webp';
 
 const Profile = () => {
     const navigate = useNavigate();
     const isPersonalDataLoaded = useSelector(selectIsPersonalDataLoaded);
     const Name = () => {
         const NameAndIcon = () => {
-            return (<Box >
+            return (<Box sx={{width:"70%",minWidth:"50%"}}>
                 <Stack direction="row" spacing={2}>
                     <Avatar alt={personalName} src="/static/images/avatar/2.jpg" sx={{ fontSize: "18px", fontWeight: '900', width: 80, height: 80 }} >{personalName}</Avatar>
                     {/* <Box sx={{ fontSize: "36px", mr: 10 }}>{personalName}</Box> */}
@@ -42,6 +43,7 @@ const Profile = () => {
                         </Typography>
                     </Box>
                 </Stack>
+
                 <Divider />
             </Box>)
         }
@@ -102,13 +104,13 @@ const Profile = () => {
                 }
             }
             return (
-                <Box>
-                    <ListItem
+                <Box sx ={{width:"40%"}}>
+                    <ListItem sx={{justifyContent:'center', }}
                         secondaryAction={
                             <PowerIcon />
                         }
                     >
-                    <ListItemText primary={<Typography align="left" sx={{ color: Powercolor }}>
+                    <ListItemText primary={<Typography align="left" sx={{ color: Powercolor, width:"40%" }}>
                         {personalPower}
                         </Typography>
                         }
@@ -116,7 +118,7 @@ const Profile = () => {
                          />
                     </ListItem>
                     <Divider />
-                    <ListItem
+                    <ListItem sx={{justifyContent:'center' }}
                         secondaryAction={
                             <StatusIcon />
                         }
@@ -140,7 +142,7 @@ const Profile = () => {
                 </Box >)
         }
         return (
-            <Box sx={{ width: '100%', maxWidth: 400, bgcolor: 'background.paper' }}>
+            <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
                 <Stack direction="row" spacing={2}>
                     <NameAndIcon />
                     <Divider orientation="vertical" flexItem />
@@ -153,7 +155,7 @@ const Profile = () => {
     const ProfileMessage = () => {
         const personalIntroduction = useSelector(selectPersonalIntroduction);
         return (
-            <Card sx={{ maxWidth: 380, height: 150 }}>
+            <Card sx={{ Width: '100%', height: 150 }}>
                 <CardContent>
                     <Typography variant="body2">
                         {personalIntroduction}
@@ -166,7 +168,7 @@ const Profile = () => {
     const Email = () => {
         const personalEmail = useSelector(selectPersonalEmail);
         return (
-            <Card sx={{ maxWidth: 380, height: 60 }}>
+            <Card sx={{ Width: '100%', height: 60 }}>
                 <CardContent>
 
                     <Stack direction="row" spacing={2}>
@@ -187,7 +189,8 @@ const Profile = () => {
             if(snsLink.includes('https://www.facebook.com/')){
                 return (<FacebookIcon sx={{ width: 60, height: 60, color: 'blue'}} onClick={() => window.open(snsLink, '_blank')} />);
             }else if(snsLink.includes('https://www.instagram.com/')){
-                return (<InstagramIcon sx={{ width: 60, height: 60 }} onClick={() => window.open(snsLink, '_blank')} />);
+                return (<Avatar  sx={{ width: 60, height: 60 }} src={InstaIcon} variant="rounded" onClick={() => window.open(snsLink, '_blank')}/>)
+                // return (<InstagramIcon sx={{ width: 60, height: 60, color: 'linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d)' }} onClick={() => window.open(snsLink, '_blank')} />);
             }
             else if(snsLink.includes('https://github.com')){
                     return (<GitHubIcon sx={{ width: 60, height: 60 }} onClick={() => window.open(snsLink, '_blank')} />);
@@ -196,11 +199,13 @@ const Profile = () => {
             }
         }
         return (
-            <Card sx={{ maxWidth: 380, height: 90 }}>
+            <Card sx={{ Width: '100%', height: 90 }}>
                 <CardContent>
-                        {personalSns.map((sns) => (
+                    <Stack direction="row" spacing={2}>
+                    {personalSns.map((sns) => (
                             <SnsIcon snsLink={sns}/>
                         ))}
+                    </Stack>
                 </CardContent>
             </Card>
         )
@@ -210,7 +215,7 @@ const Profile = () => {
             <ResponsiveAppBar bgcolor="rgba(0, 0, 0, 0.8)" />
             {isPersonalDataLoaded ?
                 <Stack direction="row" spacing={2}>
-                    <Stack sx={{ mt: 10, ml: 2 }} spacing={2}>
+                    <Stack sx={{ mt: 10, ml: 2 , minWidth:'28%'}} spacing={2}>
                         <Name />
                         <ProfileMessage />
                         <Email />
