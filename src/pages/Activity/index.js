@@ -5,7 +5,7 @@ import ActivityTopArea from './components/ActivityTopArea';
 import SeminarPage from './seminar/SeminarPage';
 
 export const activityContentMaxWidth = 1000;
-export const activityMinPadding = 40;
+export const activityMinPadding = 45;
 
 const Activity = (props) => {
     const [activityIndex, setActivityIndex] = useState(0);

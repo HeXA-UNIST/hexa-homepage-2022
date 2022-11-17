@@ -32,7 +32,7 @@ const SeminarPage = (props) => {
 const SeminarTitleArea = () => {
     return (
         <Box sx={{ mb: '26px' }}>
-            <Typography sx={{ fontWeight: '700', fontSize: '30px', lineHeight: '1.8' }}>
+            <Typography sx={{ fontWeight: '700', fontSize: '36px', lineHeight: '1.8' }}>
                 HeXA가 진행한 세미나
             </Typography>
             <Typography sx={{ fontWeight: '500', fontSize: '14px' }}>
@@ -142,9 +142,9 @@ const SeminarListArea = (props) => {
             <List>
                 {seminarList.map((seminar, index) => {
                     return (
-                        <Box >
+                        <Box key={index}>
                             {index == 0 && <Divider />}
-                            <SeminarListItem key={index} seminar={seminar} />
+                            <SeminarListItem seminar={seminar} />
                             <Divider />
                         </Box>
                     );
