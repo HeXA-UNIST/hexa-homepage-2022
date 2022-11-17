@@ -22,7 +22,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, registerAuthStateChangedObserver } from '../../features/auth/auth';
 import { loginSlice, selectIsLoggedIn, setIsLoggedIn } from '../../features/auth/login_reducer';
-import { loadUserPersonalData, selectIsPersonalDataLoaded, selectPersonalName } from "../../features/personal/personal_reducer";
+import { loadUserPersonalData, selectIsPersonalDataLoaded, selectPersonalName,selectPersonalUid } from "../../features/personal/personal_reducer";
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
 const pages = [{url:"/",name:'동아리 소개'}, {url:"/Project",name:'활동'}, {url:"/",name:'sns'}];
@@ -37,6 +37,7 @@ const ResponsiveAppBar = (props) => {
     const dispatch = useDispatch()
     const PersonalName = useSelector(selectPersonalName);
     const isLoggedIn = useSelector(selectIsLoggedIn);
+    const personalUid = useSelector(selectPersonalUid);
     useEffect(() => {
         dispatch(loadUserPersonalData);
     }, [isLoggedIn]);
@@ -200,7 +201,7 @@ const ResponsiveAppBar = (props) => {
                             {settings.map((setting) => {
                                 if (setting == "Profile") {
                                     return (
-                                        <Link onClick={()=>navigate('/Profile', { replace: true })} key={setting} underline="none">
+                                        <Link onClick={()=>navigate(`/Profile?uid=${personalUid}`, { replace: true })} key={setting} underline="none">
                                             <MenuItem key={setting} onClick={handleCloseUserMenu}>
                                                 <Typography textAlign="center">{setting}</Typography>
                                             </MenuItem>

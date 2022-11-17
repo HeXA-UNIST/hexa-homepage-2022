@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadPersonalData, loadUserPersonalData, postUserPersonalData, selectPersonalEmail, selectPersonalIntroduction, selectPersonalName, selectPersonalSns, selectPersonalTechStack } from '../../features/personal/personal_reducer';
+import { loadPersonalData, loadUserPersonalData, postUserPersonalData, selectPersonalEmail,selectPersonalUid, selectPersonalIntroduction, selectPersonalName, selectPersonalSns, selectPersonalTechStack } from '../../features/personal/personal_reducer';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
@@ -17,7 +17,7 @@ import { Avatar } from '@mui/material';
 import Input from '@mui/material/Input';
 
 const EditInfo = () => {
-    
+     const personalUid = useSelector(selectPersonalUid);
     const ProfileMessageEditor = (props) => {
         const dispatch = useDispatch();
 
@@ -152,7 +152,7 @@ const EditInfo = () => {
             sns: snsValue.current
 
         }));
-        navigate('/Profile'); 
+        navigate(`/Profile?uid=${personalUid}`); 
     }
 
     return (

@@ -96,6 +96,59 @@ const TechStacksSearch = (props) => {
         );
 
     }
+    function renderPersonalTechStacks(props) {
+        const { index, style } = props;
+        const handleRemove = (item) => {
+            if (personalTechStack.indexOf(item) > -1) {
+                personalTechStack = Object.assign([], personalTechStack);
+                personalTechStack.splice(personalTechStack.indexOf(item), 1)
+                dispatch(postUserPersonalData({
+                    techStack: personalTechStack
+                }))
+            }
+            dispatch(postUserPersonalData({
+                techStack: personalTechStack
+            }))
+        };
+        return (
+            <ListItem style={style} key={index} component="div" disablePadding>
+                <ListItemButton>
+                    <ListItemText primary={personalTechStack[index]} />
+                    <IconButton
+                            edge="end"
+                            aria-label="delete"
+                            title="Delete"
+                            onClick={() => handleRemove(personalTechStack[index])}
+                        >
+                            <DeleteIcon />
+                        </IconButton>
+                </ListItemButton>
+                <Divider/>
+            </ListItem>
+            
+        );
+
+    }
+    function PersonalTechStacks() {
+        return (
+            <Box
+                sx={{ mt: 10, width: '100%', height: 400, maxWidth: 360, bgcolor: 'background.paper' }}
+            >   
+                <Box className='TechStackTitle'>기술 스택</Box>
+                <FixedSizeList
+                    height={400}
+                    width={360}
+                    itemSize={46}
+                    itemCount={personalTechStack.length}
+                    overscanCount={5}
+                    itemData={personalTechStack.data}
+                >
+                    {renderPersonalTechStacks}
+                </FixedSizeList>
+                <Divider/>
+            </Box>
+        );
+    }
     function FilteredTechStacks(data) {
         return (
             <Box
@@ -206,14 +259,15 @@ const TechStacksSearch = (props) => {
             const { index, style } = props;
             const item = personalTechStack[index]
             return (
-                <>
-                <TransitionGroup>
-                    <Collapse key={item}>
+
+                // <TransitionGroup>
+                //     <Collapse key={item}>
+                    <Box>
                         {renderPersonalTechStack({ item, handleRemove })}
                         <Divider/>
-                    </Collapse>
-                </TransitionGroup>
-                </>
+                        </Box>
+                //     </Collapse>
+                // </TransitionGroup>
 
             );
         }
@@ -227,20 +281,11 @@ const TechStacksSearch = (props) => {
                         itemSize={46}
                         itemCount={personalTechStack.length}
                         overscanCount={5}
+                        itemData={personalTechStack}
                     >
                         {renderPersonalTechStacks}
                     </FixedSizeList>
                     <Divider/>
-
-                    {/* <List>
-                        <TransitionGroup>
-                            {personalTechStack.map((item) => (
-                                <Collapse key={item}>
-                                    {renderItem({ item, handleRemove })}
-                                </Collapse>
-                            ))}
-                        </TransitionGroup>
-                    </List> */}
                 </Box>
             </div>
         );
@@ -270,7 +315,7 @@ const TechStacksSearch = (props) => {
     return (
         <Box>
             <Stack direction="row" spacing={0}>
-                <TechStacksTranslist />
+                <PersonalTechStacks />
                 <TechStackSearch />
             </Stack>
 
