@@ -7,7 +7,8 @@ import './style.css';
 
 // Icons 
 import DataObjectIcon from '@mui/icons-material/DataObject';
-import CampaignIcon from '@mui/icons-material/Campaign';
+import LightModeIcon from '@mui/icons-material/LightMode';
+
 import { activityContentMaxWidth, activityMinPadding } from "..";
 
 
@@ -36,14 +37,14 @@ const ActivityTopArea = (props) => {
                     <Box sx={{ mb: '30px' }}>
                         <Typography component="span" sx={{
                             fontFamily: "'Orbitron', sans-serif",
-                            fontWeight: "700",
-                            fontSize: "50px",
+                            fontWeight: "800",
+                            fontSize: "60px",
                             marginRight: "10px",
                         }}>HeXA</Typography>
                         <Typography component="span" sx={{
                             fontFamily: "'Orbitron', sans-serif",
                             fontWeight: "700",
-                            fontSize: "30px",
+                            fontSize: "36px",
                             letterSpacing: "0.1em",
                         }}>에서 진행한 활동 탐색하기</Typography>
                     </Box>
@@ -63,7 +64,7 @@ const ActivityToggleButtons = (props) => {
         '& .MuiToggleButtonGroup-grouped': {
             width: '209px',
             height: '65px',
-            fontSize: '18px',
+            fontSize: '16px',
             fontFamily: 'Roboto',
             transitionProperty: 'box-shadow background',
             transitionDuration: '0.3s',
@@ -130,7 +131,7 @@ const ActivityToggleButtons = (props) => {
                     display: "flex",
                     alignItems: "center",
                 }}>
-                    <CampaignIcon sx={{ mr: "8px" }} />
+                    <LightModeIcon sx={{ mr: "8px" }} />
                     세미나
                 </Box>
             </ToggleButton>
