@@ -31,32 +31,24 @@ import InstaIcon from 'assets/img/Instagram_icon.webp';
 import TwitterIcon from 'assets/img/twitter_icon.png';
 import FacebookIcon from 'assets/img/Facebook_icon.webp';
 import { loadPersonalDataFirebase } from 'features/personal/personal';
+import { selectIsLoggedIn } from 'features/auth/login_reducer';
 const Profile = () => {
     const navigate = useNavigate();
     //const isPersonalDataLoaded = useSelector(selectIsPersonalDataLoaded);
-    const [isPersonalDataLoaded, setisPersonalDataLoaded] = useState(false);
     const [isMyAccount, setisMyAccount] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
     const [isUidValid, setisUidValid] = useState(false);
     const uid = searchParams.get("uid")
-    // console.log(useSelector(loadPersonalDataFirebase(uid)))
-    // const dispatch = useDispatch();
-    // console.log(dispatch(loadPersonalData(uid)));
+    const isLoggedIn = useSelector(selectIsLoggedIn);
     const personalUid = useSelector(selectPersonalUid);
-    //setisMyAccount(personalUid == uid);
-    const [uidPersonalData, setUidPersonalData] = useState();
+    const isPersonalDataLoaded = useSelector(selectIsPersonalDataLoaded);
+    const dispatch = useDispatch();
+    // useEffect(() => {
+    //     dispatch(loadUserPersonalData);
+    // }, [isLoggedIn]);
+    // const [uidPersonalData, setUidPersonalData] = useState();
     useEffect(() => {
-        async function fetchData() {
-            const resp = await loadPersonalDataFirebase(uid);
-            setUidPersonalData(resp);
-            if(resp==null){
-                setisUidValid(false);
-            }else{
-                setisPersonalDataLoaded(true);
-                setisUidValid(true);
-            }
-        }
-        fetchData()
+        dispatch(loadPersonalData(uid))
     }, []);
     const Name = () => {
         const NameAndIcon = () => {
@@ -79,9 +71,9 @@ const Profile = () => {
 
             </Box>)
         }
-        const personalName = uidPersonalData.name //useSelector(selectPersonalName);
-        const personalPower = uidPersonalData.power//useSelector(selectPersonalPower);  // common | pro | master
-        const personalStatus = uidPersonalData.status//useSelector(selectPersonalStatus); // active(활동) | rest(휴면) | glory(명예) | quit(탈퇴) | expel(제명)
+        const personalName = useSelector(selectPersonalName);
+        const personalPower = useSelector(selectPersonalPower);  // common | pro | master
+        const personalStatus = useSelector(selectPersonalStatus); // active(활동) | rest(휴면) | glory(명예) | quit(탈퇴) | expel(제명)
         const StatusAndPower = () => {
             const Powercolor = () => {
                 if (personalPower === 'common') {
@@ -191,7 +183,7 @@ const Profile = () => {
 
     }
     const ProfileMessage = () => {
-        const personalIntroduction = uidPersonalData.introduction//useSelector(selectPersonalIntroduction);
+        const personalIntroduction = useSelector(selectPersonalIntroduction);
         return (
             <Card sx={{ Width: '100%', height: 150 }}>
                 <CardContent>
@@ -204,7 +196,7 @@ const Profile = () => {
         )
     }
     const Email = () => {
-        const personalEmail = uidPersonalData.email//useSelector(selectPersonalEmail);
+        const personalEmail = useSelector(selectPersonalEmail);
         return (
             <Card sx={{ Width: '100%', height: 60 }}>
                 <CardContent>
@@ -220,7 +212,7 @@ const Profile = () => {
         )
     }
     const SNS = () => {
-        const personalSns = uidPersonalData.sns//useSelector(selectPersonalSns);
+        const personalSns = useSelector(selectPersonalSns);
         const SnsIcon = (props) => {
             //console.log(props.snsLink)
             const snsLink = props.snsLink;
@@ -257,14 +249,14 @@ const Profile = () => {
     return (
         <div>
             <ResponsiveAppBar bgcolor="rgba(0, 0, 0, 0.8)" />
-            {isPersonalDataLoaded && isUidValid?
+            {isPersonalDataLoaded?
                 <Stack direction="row" spacing={2}>
                     <Stack sx={{ mt: 10, ml: 2, minWidth: '28%' }} spacing={2}>
                         <Name />
                         <ProfileMessage />
                         <Email />
                         <SNS />
-                        {personalUid == uid ? <Button size="big" variant="outlined" onClick={() => navigate('/editProfile', { replace: true })} sx={{ width: '10em', fontWeight: 900 }}>편집하기</Button> : <></>}
+                        {isLoggedIn ? <Button size="big" variant="outlined" onClick={() => navigate('/editProfile', { replace: true })} sx={{ width: '10em', fontWeight: 900 }}>편집하기</Button> : <></>}
                     </Stack>
                     <TechStackList />
                     <ProjectList />

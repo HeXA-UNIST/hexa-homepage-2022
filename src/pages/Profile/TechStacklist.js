@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 
 
 import '../Home/home.css';
-import { useSelector } from 'react-redux';
-import {  selectPersonalTechStack, selectPersonalPower, selectPersonalUid} from '../../features/personal/personal_reducer';
+import { useDispatch, useSelector } from 'react-redux';
+import {  selectPersonalTechStack, selectPersonalPower, selectPersonalUid, loadPersonalData, selectIsPersonalDataLoaded} from '../../features/personal/personal_reducer';
 import ResponsiveAppBar from "../Home/ResponsiveAppbar";
 import { ListItem, ListItemText, Divider, Card, Typography, ImageList, ListItemButton, Tooltip} from '@mui/material';
 import Box from '@mui/material/Box';
@@ -15,31 +15,21 @@ import { TransitionGroup } from 'react-transition-group';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import { useSearchParams } from 'react-router-dom';
 import { loadPersonalDataFirebase } from 'features/personal/personal';
+import { selectIsLoggedIn } from 'features/auth/login_reducer';
 const TechStackList = () => {
     
     const techStackImgList = ['.net','asp.net','api','angularjs', 'c#', 'c', 'c++', 'css', 'django','flutter', 'html','java','javascript', 'jquery', 'linux',
     'node.js','php','python','reactjs','ruby','swift','tensorflow','xml','typescript', 'amazon-web-services'];
 
-    const [isPersonalDataLoaded, setisPersonalDataLoaded] = useState(false);
-    const [isMyAccount, setisMyAccount] = useState(false);
+
     const [searchParams, setSearchParams] = useSearchParams();
-    const [isUidValid, setisUidValid] = useState(false);
     const uid = searchParams.get("uid")
-    const personalUid = useSelector(selectPersonalUid);
-    const [uidPersonalData, setUidPersonalData] = useState();
     
+    const dispatch = useDispatch();
+    const isLoggedIn = useSelector(selectIsLoggedIn)
+    const isPersonalDataLoaded = useSelector(selectIsPersonalDataLoaded)
     useEffect(() => {
-        async function fetchData() {
-            const resp = await loadPersonalDataFirebase(uid);
-            setUidPersonalData(resp);
-            if(resp==null){
-                setisUidValid(false);
-            }else{
-                setisPersonalDataLoaded(true);
-                setisUidValid(true);
-            }
-        }
-        fetchData()
+        dispatch(loadPersonalData(uid))
     }, []);
     //useSelector(selectPersonalTechStack);
     // function renderPersonalTechStack({ item }) {
@@ -106,7 +96,8 @@ const TechStackList = () => {
         );
     }
     const TechList = (props) => {
-        const techList = uidPersonalData.techStack;
+        const techList = useSelector(selectPersonalTechStack)
+        console.log(useSelector(selectPersonalTechStack))
         return (
             <div>
                 <ImageList sx={{ width: '500px', height: "460px" }} cols={3} rowHeight={164}>
@@ -118,7 +109,7 @@ const TechStackList = () => {
         );
     }
     return (<div>
-        {isPersonalDataLoaded && isUidValid?<Box sx={{ mt: 10 }}>
+        {isPersonalDataLoaded?<Box sx={{ mt: 10 }}>
             <Box >
             <Typography variant="h5" sx={{color:'black', fontFamily:'Raleway, Arial',fontWeight:900}}component="div" gutterBottom>기술 스택</Typography></Box>
             <Divider/>
