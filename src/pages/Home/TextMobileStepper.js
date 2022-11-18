@@ -112,7 +112,9 @@ const TextMobileStepper = () => {
             nextButton={
               <Button
                 size='large'
-                sx={styles.nextbutton}
+                sx={
+                  { "position": "absolute", "width": "50px", "height": "100px", "right": "0px", "top": (height/2.3) }
+                }
                 onClick={handleNext}
                 disabled={activeStep === maxSteps - 1}
               >
@@ -126,7 +128,9 @@ const TextMobileStepper = () => {
             }
 
             backButton={
-              <Button sx={styles.backbutton} size='200' onClick={handleBack} disabled={activeStep === 0}>
+              <Button sx={
+                { "position": "absolute", "width": "50px", "height": "100px", "left": "0px", "top": (height/2.3) }
+              } size='200' onClick={handleBack} disabled={activeStep === 0}>
                 {theme.direction === 'rtl' ? (
                   <KeyboardArrowRight className="ArrowRight" fontSize='large' />
                 ) : (

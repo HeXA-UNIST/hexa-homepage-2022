@@ -31,11 +31,11 @@ import InstaIcon from 'assets/img/Instagram_icon.webp';
 import TwitterIcon from 'assets/img/twitter_icon.png';
 import FacebookIcon from 'assets/img/Facebook_icon.webp';
 import { loadPersonalDataFirebase } from 'features/personal/personal';
-import { selectIsLoggedIn } from 'features/auth/login_reducer';
+import { selectIsLoggedIn, selectUser } from 'features/auth/login_reducer';
 const Profile = () => {
     const navigate = useNavigate();
     //const isPersonalDataLoaded = useSelector(selectIsPersonalDataLoaded);
-    const [isMyAccount, setisMyAccount] = useState(false);
+    //const [isMyAccount, setisMyAccount] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
     const [isUidValid, setisUidValid] = useState(false);
     const uid = searchParams.get("uid")
@@ -43,6 +43,10 @@ const Profile = () => {
     const personalUid = useSelector(selectPersonalUid);
     const isPersonalDataLoaded = useSelector(selectIsPersonalDataLoaded);
     const dispatch = useDispatch();
+    const userselectUser = useSelector(selectUser);
+    const userUid = userselectUser ==null? null : userselectUser.uid;
+    const isMyAccount = userUid == uid;
+    //console.log(userUid)
     // useEffect(() => {
     //     dispatch(loadUserPersonalData);
     // }, [isLoggedIn]);
@@ -256,7 +260,7 @@ const Profile = () => {
                         <ProfileMessage />
                         <Email />
                         <SNS />
-                        {isLoggedIn ? <Button size="big" variant="outlined" onClick={() => navigate('/editProfile', { replace: true })} sx={{ width: '10em', fontWeight: 900 }}>편집하기</Button> : <></>}
+                        {isMyAccount ? <Button size="big" variant="outlined" onClick={() => navigate('/editProfile', { replace: true })} sx={{ width: '10em', fontWeight: 900 }}>편집하기</Button> : <></>}
                     </Stack>
                     <TechStackList />
                     <ProjectList />

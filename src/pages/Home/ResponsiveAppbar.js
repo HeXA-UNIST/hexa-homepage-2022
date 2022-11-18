@@ -26,7 +26,7 @@ import { loadUserPersonalData, selectIsPersonalDataLoaded, selectPersonalName,se
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
 const pages = [{url:"/",name:'동아리 소개'}, {url:"/Project",name:'활동'}, {url:"/",name:'sns'}];
-const settings = ['Profile', 'Account', 'Dashboard'];
+const settings = ['프로필', 'Account', 'Dashboard'];
 
 const ResponsiveAppBar = (props) => {
     // const store = configureStore({
@@ -38,6 +38,7 @@ const ResponsiveAppBar = (props) => {
     const PersonalName = useSelector(selectPersonalName);
     const isLoggedIn = useSelector(selectIsLoggedIn);
     const personalUid = useSelector(selectPersonalUid);
+    //console.log(personalUid)
     useEffect(() => {
         dispatch(loadUserPersonalData);
     }, [isLoggedIn]);
@@ -177,12 +178,12 @@ const ResponsiveAppBar = (props) => {
                         {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
                     </IconButton>
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
+                        <Tooltip title={isLoggedIn?"메뉴 열기":"로그인 필요"}>
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt={PersonalName} src="/static/images/avatar/2.jpg" sx={{ fontSize: "13px", fontWeight: '900' }}>{isPersonalDataLoaded?PersonalName:""}</Avatar>
+                                <Avatar alt={PersonalName} src="/static/images/avatar/2.jpg" sx={{ fontSize: "13px", fontWeight: '900' }}>{isPersonalDataLoaded&&isLoggedIn?PersonalName:""}</Avatar>
                             </IconButton>
                         </Tooltip>
-                        <Menu
+                        {isLoggedIn?<Menu
                             sx={{ mt: '45px' }}
                             id="menu-appbar"
                             anchorEl={anchorElUser}
@@ -199,7 +200,7 @@ const ResponsiveAppBar = (props) => {
                             onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting) => {
-                                if (setting == "Profile") {
+                                if (setting == "프로필") {
                                     return (
                                         <Link onClick={()=>navigate(`/Profile?uid=${personalUid}`, { replace: true })} key={setting} underline="none">
                                             <MenuItem key={setting} onClick={handleCloseUserMenu}>
@@ -212,7 +213,7 @@ const ResponsiveAppBar = (props) => {
                                     </MenuItem>)
                                 }
                             })}
-                        </Menu>
+                        </Menu>:<></>}
                     </Box>
                 </Toolbar>
             </div>
