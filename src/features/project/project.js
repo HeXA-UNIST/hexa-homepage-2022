@@ -1,5 +1,6 @@
 import { firebaseStore } from '../../app/firebase';
 import { doc, updateDoc, getDoc, deleteDoc, collection, query, orderBy, getDocs, where, addDoc } from "firebase/firestore";
+import { configureTechStackWithProjectDeleteFierebase, configureTechStackWithProjectFirebase } from 'features/tech_stack/tech_stack';
 
 export const initialProjectData = {
     name: "",
@@ -17,7 +18,7 @@ export const initialProjectData = {
 };
 
 const _processRawProjectData = (doc) => {
-    return {
+    const result = {
         ...doc.data(),
         id: doc.id,
         members: [
@@ -29,6 +30,8 @@ const _processRawProjectData = (doc) => {
             })
         ]
     };
+    configureTechStackWithProjectFirebase(result);
+    return result;
 };
 
 
@@ -81,6 +84,8 @@ export const loadProjectDataFirebase = async (id) => {
 // Firebase에서 id에 해당하는 ProjectData를 삭제하는 비동기 함수이다.
 export const deleteProjectDataFirebase = async (id) => {
     const docRef = doc(firebaseStore, "projects", id);
+    const data = await loadProjectDataFirebase(id);
+    await configureTechStackWithProjectDeleteFierebase(data);
     await deleteDoc(docRef);
 };
 

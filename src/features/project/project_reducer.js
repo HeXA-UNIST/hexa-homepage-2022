@@ -5,10 +5,12 @@ import { searchProjectListFirebase, searchProjectListByMemberFirebase } from './
 export const projectSlice = createSlice({
     name: 'project',
     initialState: {
+        isProjectListLoaded: false,
         projectList: [],
     },
     reducers: {
         setProjectList: (state, action) => {
+            state.isProjectListLoaded = true;
             state.projectList = action.payload;
         },
     },
@@ -45,5 +47,6 @@ export const loadProjectListByUser = (dispatch) => {
 
 
 export const selectProjectList = (state) => state.project.projectList;
+export const selectIsProjectListLoaded = (state) => state.project.isProjectListLoaded;
 
 export default projectSlice.reducer;

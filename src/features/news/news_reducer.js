@@ -4,10 +4,12 @@ import { loadNewsFirebase, postNewNewsFirebase } from './news';
 export const newsSlice = createSlice({
     name: 'news',
     initialState: {
+        isNewsLoaded: false,
         news: [],
     },
     reducers: {
         setNewsList: (state, action) => {
+            state.isNewsLoaded = true;
             state.news = action.payload;
         },
     },
@@ -23,6 +25,7 @@ export const loadNewsList = (number) => (dispatch) => {
 export const { setNewsList } = newsSlice.actions;
 
 export const selectNewsList = (state) => state.news.news;
+export const isNewsLoaded = (state) => state.news.isNewsLoaded;
 
 export default newsSlice.reducer;
 

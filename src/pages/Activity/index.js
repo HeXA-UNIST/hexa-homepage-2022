@@ -2,6 +2,7 @@ import { Box, Container } from '@mui/system';
 import React, { useState } from 'react';
 import ResponsiveAppBar from '../Home/ResponsiveAppbar';
 import ActivityTopArea from './components/ActivityTopArea';
+import ProjectPage from './project/ProjectPage';
 import SeminarPage from './seminar/SeminarPage';
 
 export const activityContentMaxWidth = 1000;
@@ -19,7 +20,9 @@ const Activity = (props) => {
             <Box sx={{ mt: '64px' }}>
                 <ActivityTopArea onActivityChange={handleOnActivityChange} />
             </Box>
+            
             {activityIndex === 1 && <SeminarPage />}
+            {activityIndex === 0 && <ProjectPage />}
         </Box>
     );
 }

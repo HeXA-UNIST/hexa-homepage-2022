@@ -5,6 +5,7 @@ import { addMemberToProjectFirebase, changeMemberProToProjectFirebase, deletePro
 import { selectProjectList } from "../project_reducer";
 
 import './index.css';
+import { loadTechStackList, selectTechStackList } from "features/tech_stack/tech_stack_reducer";
 
 const ProjectReducerTestScreen = (props) => {
     const dispatch = useDispatch();
@@ -31,6 +32,8 @@ const ProjectReducerTestScreen = (props) => {
             <SearchProjectByMemberForm onSearch={(uid) => {
                 dispatch(loadProjectListByMember(uid));
             }} />
+            <h2>TechStack Information</h2>
+            <TechStackArea />
             <h2>Project List</h2>
             <ProjectList projectList={projectList} />
         </div>
@@ -177,7 +180,7 @@ const NewProjectForm = (props) => {
 const ProjectItem = (props) => {
     const project = props.project;
     const dispatch = useDispatch();
-    
+
     // List of string to string
     const listToString = (li) => {
         let result = "[ ";
@@ -186,7 +189,7 @@ const ProjectItem = (props) => {
         });
         return result.substring(0, result.length - 2) + " ]";
     }
-    
+
     // member list to string
     const memberListToString = (li) => {
         let result = "[ ";
@@ -268,5 +271,50 @@ const ProjectList = (props) => {
     );
 }
 
+const TechStackArea = (props) => {
+    const techStackList = useSelector(selectTechStackList);
+    const projectList = useSelector(selectProjectList);
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(loadTechStackList);
+    }, [dispatch, projectList]);
+
+    const TechStackItem = (props) => {
+        return (
+            <div style={
+                {
+                    display: "inline-block",
+                    margin: "0px 10px",
+                    padding: "7px 16px",
+                    border: "1px solid grey",
+                    borderRadius: "999px",
+                }
+            }>
+                <span>{props.name}</span>
+                <span> ({props.count})</span>
+            </div>
+        );
+    }
+
+    return (
+        <div id="card" style={
+            {
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+            }
+        }>
+            <button onClick={
+                (e) => {
+                    dispatch(loadProjectList());
+                }
+            }>Reload</button>
+            {techStackList.map((techStack) => {
+                return <TechStackItem name={techStack.name} count={techStack.count} key={techStack.id} />
+            })}
+        </div>
+    );
+}
 
 export default ProjectReducerTestScreen;
