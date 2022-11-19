@@ -1,39 +1,47 @@
 // mui
 import { Box, Card, CardContent, CardMedia, Chip, Typography } from "@mui/material";
 
-// TODO: 레이아웃 제대로 짜기, 이미지에 inner shadow 주기, 마우스 hover, active 효과 주기
+import './ProjectCardStyle.css';
+
+// TODO: 마우스 hover, active 제대로 효과 주기
 const ProjectCard = (props) => {
     const { name, startDate, endDate, techStack, thumbnailUrl } = props.project;
     return (
-        <Card sx={{
-            width: '320px',
-            height: '400px',
-            borderRadius: '10px',
-            boxShadow: '0px 4px 18px 1px rgba(0, 0, 0, 0.15)',
-            border: '0.8px solid #C5C5C5',
-        }}>
-            <CardMedia
-                component="img"
-                alt={name + " thumbnail"}
-                height="200"
-                image={thumbnailUrl}
-            />
-            <CardContent sx={{
-                p: '36px 24px'
+        <div
+            className="project-card">
+            <div className="project-card-image">
+                <img
+                    alt={name + " thumbnail"}
+                    height="200"
+                    src={thumbnailUrl}
+                />
+            </div>
+            <div style={{
+                padding: '36px 24px',
+                flex: '1',
+                display: 'flex',
+                flexDirection: 'column',
             }}>
-                <Typography sx={{ mb: '4px' }}
-                    fontSize='24px'
+                <Typography
+                    sx={{ marginBottom: '2px' }}
+                    fontSize='28px'
                     fontWeight={700}
                     letterSpacing="120%">
                     {name}
                 </Typography>
-                <Typography fontSize='14px'>
+                <Typography fontSize='14px' color='rgba(0, 0, 0, 0.7)' sx={{ pl: '2px' }}>
                     {new Date(startDate).toLocaleDateString()}
                     {endDate ? " ~ " + new Date(endDate).toLocaleDateString() : " ~ 진행중"}
                 </Typography>
-                <ProjectTechStackArea techStackList={techStack} />
-            </CardContent>
-        </Card>
+                <div style={{
+                    display: 'flex',
+                    flex: '1',
+                    alignItems: 'end',
+                }}>
+                    <ProjectTechStackArea techStackList={techStack} />
+                </div>
+            </div>
+        </div>
     );
 }
 
@@ -51,6 +59,10 @@ const ProjectTechStackArea = (props) => {
                     fontSize: '14px',
                     borderRadius: '40px',
                     padding: '0px 4px',
+                    border: '0.8px solid rgba(132, 132, 132, 0.5)',
+                    backgroundColor: 'white',
+                    fontSize: '12px',
+                    color: 'rgba(0, 0, 0, 0.7)',
                 }}
             />
         );
@@ -66,7 +78,7 @@ const ProjectTechStackArea = (props) => {
         }}>
             {techStackList.map((techStack) => {
                 return (
-                    <TechStackChip techStack={techStack} />
+                    <TechStackChip key={techStack} techStack={techStack} />
                 );
             })}
         </Box>

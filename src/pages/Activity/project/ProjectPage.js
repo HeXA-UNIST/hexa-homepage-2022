@@ -38,7 +38,7 @@ const ProjectPage = (props) => {
                 mt: '50px',
                 mb: '100px',
                 p: `50px ${activityMinPadding}px`,
-                backgroundColor: '#F6F6F6'
+                backgroundColor: '#F8F8Fa'
             }}>
                 <ProjectListArea filter={techStackFilter.length > 0 ? techStackFilter : null} />
             </Box>
@@ -108,7 +108,7 @@ const ProjectListArea = (props) => {
         }}>
             {projectList.map((project) => {
                 return (
-                    <ProjectCard project={project} />
+                    <ProjectCard key={project.id} project={project} />
                 );
             })
             }

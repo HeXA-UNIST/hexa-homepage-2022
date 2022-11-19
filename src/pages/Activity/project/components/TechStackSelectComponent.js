@@ -11,8 +11,9 @@ import { useState } from "react";
 
 
 export const TechStackSelectArea = (props) => {
-    const [selectedItems, setSelectedItems] = useState([]);
-    const [unselectedItems, setUnselectedItems] = useState(props.items);
+    const [selectedItems, setSelectedItems] = useState(props.items);
+    const [unselectedItems, setUnselectedItems] = useState([]);
+    const [isActive, setIsActive] = useState(false);
 
     const handleOnSelect = (item) => {
         const newSelectedItems = [...selectedItems, item];
@@ -36,32 +37,45 @@ export const TechStackSelectArea = (props) => {
         }
     }
 
+    const handleOnSwitchChange = (event) => {
+        setIsActive(event.target.checked);
+    }
+
+
     return (
         <Box>
             <Box sx={{
-                display: 'flex',
-                alignItems: 'center',
-                border: '0.8px solid rgba(132, 132, 132, 0.5)',
-                borderRadius: '8px',
-                mb: '10px',
-                p: '10px',
-                backgroundColor: 'white'
-            }}>
-                <Typography fontSize={14}>필터링</Typography>
-                <Switch />
-                <Divider orientation="vertical" flexItem sx={{ ml: '10px', mr: '20px' }} />
-                <ChipItemsArea items={selectedItems} onAction={handleOnUnselect}
-                    isDelete={true} />
-            </Box>
-            <Box sx={{
                 border: '0.8px solid rgba(132, 132, 132, 0.5)',
                 borderRadius: '8px',
                 p: '10px',
-                backgroundColor: 'white'
+                backgroundColor: 'white',
             }}>
-                <ChipItemsArea items={unselectedItems} onAction={handleOnSelect}
-                    isDelete={false} />
+                <Box sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    p: '10px',
+                }}>
+                    <Typography fontSize={14} color='rgba(0, 0, 0, 0.7)'>필터링</Typography>
+                    <Switch onChange={handleOnSwitchChange} />
+                    <Divider orientation="vertical" flexItem sx={{ ml: '10px', mr: '20px' }} />
+                    <ChipItemsArea items={isActive ? selectedItems : props.items} onAction={handleOnUnselect}
+                        isDelete={true} active={isActive} />
+                </Box>
+                {
+                    isActive && <Box>
+                        <Divider sx={{ margin: '10px 0px ' }} />
+                        <Box sx={{
+                            p: '10px',
+                            minHeight: '20px'
+                        }}>
+                            <ChipItemsArea items={unselectedItems} onAction={handleOnSelect}
+                                isDelete={false} active={isActive} />
+                        </Box>
+                    </Box>
+                }
+
             </Box>
+
         </Box>
     );
 }
@@ -79,13 +93,20 @@ const ChipItemsArea = (props) => {
         <Box sx={{
             display: 'flex',
             flexWrap: 'wrap',
+            gap: '12px 10px',
         }}>
             {items.map((item, index) => {
                 return (
                     <Chip key={item.name}
-                        sx={{ mr: index !== items.length - 1 ? '10px' : '0px' }}
+                        sx={{
+                            backgroundColor: !isDelete || !props.active ? 'white' : '#F4F4F4',
+                            boxShadow: !isDelete || !props.active ? 'none' : '0px 2px 4px rgba(0, 0, 0, 0.1)',
+                            border: '0.8px solid rgba(132, 132, 132, 0.5)',
+                            color: !isDelete || !props.active ? 'rgba(0, 0, 0, 0.7)' : '#000000',
+                            p: '5px',
+                        }}
                         deleteIcon={isDelete ? <RemoveCircleOutlineIcon /> : <AddIcon />}
-                        onDelete={() => handleAction(item)}
+                        onDelete={props.active ? () => handleAction(item) : null}
                         label={item.name + " (" + item.count + ")"}
                     />
                 );
