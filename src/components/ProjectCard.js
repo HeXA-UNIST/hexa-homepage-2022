@@ -17,14 +17,14 @@ const ProjectCard = (props) => {
                 />
             </div>
             <div style={{
-                padding: '36px 24px',
+                padding: '30px 20px',
                 flex: '1',
                 display: 'flex',
                 flexDirection: 'column',
             }}>
                 <Typography
                     sx={{ marginBottom: '2px' }}
-                    fontSize='28px'
+                    fontSize='24px'
                     fontWeight={700}
                     letterSpacing="120%">
                     {name}

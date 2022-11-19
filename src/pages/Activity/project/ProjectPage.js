@@ -34,13 +34,19 @@ const ProjectPage = (props) => {
                     <ProjectFilterArea onChange={handleOnFilterChanged} />
                 </Box>
             </Box>
-            <Box sx={{
-                mt: '50px',
-                mb: '100px',
-                p: `50px ${activityMinPadding}px`,
-                backgroundColor: '#F8F8Fa'
-            }}>
-                <ProjectListArea filter={techStackFilter.length > 0 ? techStackFilter : null} />
+            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                <Box sx={{
+                    mt: '50px',
+                    mb: '100px',
+                    flex: `0 1 ${activityContentMaxWidth * 8 / 5}px`,
+                    p: `50px ${activityMinPadding}px`,
+                    backgroundColor: '#F8F8Fa',
+                    borderRadius: '20px',
+                    ml: `${activityMinPadding}px`,
+                    mr: `${activityMinPadding}px`
+                }}>
+                    <ProjectListArea filter={techStackFilter.length > 0 ? techStackFilter : null} />
+                </Box>
             </Box>
         </Box>
 
@@ -94,7 +100,7 @@ const ProjectListArea = (props) => {
     }
 
     if (!isProjectListLoaded) {
-        return <Box sx={{display:'flex', justifyContent:'center', alignItems:'center', minHeight:'100px'}}>
+        return <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100px' }}>
             <CircularProgress />
         </Box>;
     }
@@ -103,7 +109,7 @@ const ProjectListArea = (props) => {
         <Box sx={{
             display: 'flex',
             flexWrap: 'wrap',
-            gap: '40px 28px',
+            gap: '50px 30px',
             justifyContent: 'center',
         }}>
             {projectList.map((project) => {

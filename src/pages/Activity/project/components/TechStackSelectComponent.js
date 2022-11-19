@@ -55,7 +55,7 @@ export const TechStackSelectArea = (props) => {
                     alignItems: 'center',
                     p: '10px',
                 }}>
-                    <Typography fontSize={14} color='rgba(0, 0, 0, 0.7)'>필터링</Typography>
+                    <Typography fontSize={14} minWidth={'43px'}>필터링</Typography>
                     <Switch onChange={handleOnSwitchChange} />
                     <Divider orientation="vertical" flexItem sx={{ ml: '10px', mr: '20px' }} />
                     <ChipItemsArea items={isActive ? selectedItems : props.items} onAction={handleOnUnselect}

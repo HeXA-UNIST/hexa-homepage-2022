@@ -6,6 +6,10 @@ import { loadSeminarList, selectIsSeminarListLoaded, selectSeminarList } from ".
 // mui
 import { Box, Divider, InputBase, List, MenuItem, Paper, Select, Typography, Link, CircularProgress } from "@mui/material";
 
+// icon
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import DownloadIcon from '@mui/icons-material/Download';
+
 import { activityContentMaxWidth, activityMinPadding } from "..";
 import TextSearchField from "../components/TextSearchField";
 
@@ -120,10 +124,13 @@ const SeminarListArea = (props) => {
         const { title, description, date, fileName, fileUrl } = props.seminar;
         return (
             <Box sx={{ display: 'flex', padding: '44px 0px', mr: '10px', ml: '10px' }}>
-                ▶
+                <Box sx={{ height: '30px', display: 'flex', alignItems: 'center' }}>
+                    <NavigateNextIcon sx={{color:"#5F5F5F"}}/>
+                </Box>
+
                 <Box sx={{ ml: '10px', mr: '10px', flex: '1' }}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: '8px' }}>
-                        <Typography sx={{ fontWeight: '700', fontSize: '18px' }}>
+                        <Typography sx={{ fontWeight: '600', fontSize: '22px', letterSpacing:'1.3px' }}>
                             {title}
                         </Typography>
                         <Typography sx={{ fontWeight: '400', fontSize: '14px', ml: '5px' }}>
