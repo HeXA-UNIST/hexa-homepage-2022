@@ -85,17 +85,14 @@ const ResponsiveAppBar = (props) => {
         <AppBar className='Barcontainer' component="nav" color='transparent' elevation={0} >
             <div style={{ backgroundColor: appbarcolor }}>
                 <Toolbar style={{ boxShadow: 'none' }}>
-                    <Button onClick={()=>navigate('/', { replace: true })}>
+                    <Button onClick={()=>navigate('/')} sx = {{textTransform: 'none'}}>
                         <Avatar alt="Hexa_logo" variant="square" sx={{
                             fontStyle: "normal",
                             width: '40px',
                             height: '45px',
-                            mr: 3,
-                            ml: 2,
                             display: { xs: 'none', md: 'flex' }
                         }} src={Icon2} />
-                    </Button >
-                    <Box onClick={()=>navigate('/', { replace: true })}>
+                    
                     <Typography
                         variant="h6"
                         noWrap
@@ -103,8 +100,8 @@ const ResponsiveAppBar = (props) => {
                         sx={{
                             fontStyle: "normal",
                             left: "30px",
-                            mr: 2,
-                            ml: 0,
+                            mr: 1,
+                            ml: 1,
                             display: { xs: 'none', md: 'flex' },
                             fontFamily: 'Orbitron',
                             fontWeight: 900,
@@ -115,7 +112,7 @@ const ResponsiveAppBar = (props) => {
                     >
                         HeXA
                     </Typography>
-                    </Box>
+                    </Button>
                     {isLoggedIn ?
                         (<Link onClick={logout} key = {isLoggedIn} underline="none"><Avatar className="Loginbutton" sx={{ fontFamily: "'NanumGothic'", fontStyle: "normal", fontWeight: "800", fontSize: "12px", lineHeight: "18px", textAlign: "center", bgcolor: 'white', mr: 30, width: 60, height: 24, color: '#0A0A50' }} variant="rounded">
                             로그아웃</Avatar></Link>) : <></>}

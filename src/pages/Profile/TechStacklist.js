@@ -97,7 +97,6 @@ const TechStackList = () => {
     }
     const TechList = (props) => {
         const techList = useSelector(selectPersonalTechStack)
-        console.log(useSelector(selectPersonalTechStack))
         return (
             <Card sx={{
                 Width: '100%', height: "100%", display: 'flex',

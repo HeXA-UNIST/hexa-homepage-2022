@@ -47,6 +47,8 @@ const styles = {
 const TextMobileStepper = () => {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
+  const activeStepRef = useRef(null);
+  activeStepRef.current = {activeStep, setActiveStep};
   const maxSteps = steps.length;
   function getWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
@@ -62,19 +64,22 @@ const TextMobileStepper = () => {
       function handleResize() {
         setWindowDimensions(getWindowDimensions());
       }
-
-      window.addEventListener('resize', handleResize);
-      // setInterval(() => {
-      //   //console.log(activeStep, maxSteps);
-      //   if (activeStep === maxSteps - 1) {
-      //     setActiveStep(0);
-      //   }
-      //   else {
-      //     setActiveStep(activeStep + 1);
-      //   }
-      // }, 5000);
       return () => window.removeEventListener('resize', handleResize);
     }, []);
+    useEffect(
+      () => {
+        const id = setInterval(() => {
+          if (activeStepRef.current.activeStep === maxSteps - 1) {
+            activeStepRef.current.setActiveStep(0);
+          }
+          else {
+            activeStepRef.current.setActiveStep(activeStepRef.current.activeStep + 1);
+          }
+        }, 5000);
+        return () => {
+          clearInterval(id);
+        };
+      },[]);
 
     return windowDimensions;
   }
@@ -98,10 +103,10 @@ const TextMobileStepper = () => {
     //   >
     <div style={{ backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundImage: `url(${steps[activeStep].background})` }} >
       <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-        <Box sx={{ p: 6, height:(height-85)}}>
+        <Box sx={{ p: 6, height: (height - 85) }}>
           <Box className='Introtitle' >{steps[activeStep].label}</Box>
           <Box className='Introdescription'>{steps[activeStep].description}</Box>
-          <Box sx={{height:(height-380)}}></Box>
+          <Box sx={{ height: (height - 380) }}></Box>
           <MobileStepper
             variant="dots"
             steps={maxSteps}
@@ -113,7 +118,7 @@ const TextMobileStepper = () => {
               <Button
                 size='large'
                 sx={
-                  { "position": "absolute", "width": "50px", "height": "100px", "right": "0px", "top": (height/2.3) }
+                  { "position": "absolute", "width": "50px", "height": "100px", "right": "0px", "top": (height / 2.3) }
                 }
                 onClick={handleNext}
                 disabled={activeStep === maxSteps - 1}
@@ -129,7 +134,7 @@ const TextMobileStepper = () => {
 
             backButton={
               <Button sx={
-                { "position": "absolute", "width": "50px", "height": "100px", "left": "0px", "top": (height/2.3) }
+                { "position": "absolute", "width": "50px", "height": "100px", "left": "0px", "top": (height / 2.3) }
               } size='200' onClick={handleBack} disabled={activeStep === 0}>
                 {theme.direction === 'rtl' ? (
                   <KeyboardArrowRight className="ArrowRight" fontSize='large' />
@@ -141,8 +146,8 @@ const TextMobileStepper = () => {
             }
           />
         </Box></div>
-        </div>
-        // </AutoPlaySwipeableViews> 
+    </div>
+    // </AutoPlaySwipeableViews> 
   );
 }
 export default TextMobileStepper;

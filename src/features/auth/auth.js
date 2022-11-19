@@ -1,8 +1,13 @@
-import { firebaseAuth } from '../../app/firebase';
+import { firebaseAuth, firebase } from '../../app/firebase';
+
 import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
     signOut,
+    signInWithPopup,
+    signInWithRedirect,
+    GoogleAuthProvider,
+    GithubAuthProvider,
 } from 'firebase/auth';
 
 import { setIsLoggedIn, setUser } from './login_reducer';
@@ -46,4 +51,27 @@ export const registerWithEmail = async (email, password) => {
 
 export const logout = async () => {
     await signOut(firebaseAuth);
+}
+export const registerWithGoogle = async () => {
+    var provider = new GoogleAuthProvider()
+    try{
+        const data = await signInWithPopup(firebaseAuth, provider)
+        await postPersonalDataFirebase(data.user.reloadUserInfo.localId, { email: data.user.email });
+        return data;
+    }catch(e){
+        return e.message.replace("Firebase: Error ", "");
+    }
+
+    //console.log(data);
+}
+export const registerWithGithub = async () => {
+    var provider = new GithubAuthProvider();
+    try{
+        const data = await signInWithPopup(firebaseAuth, provider);
+        await postPersonalDataFirebase(data.user.reloadUserInfo.localId, { email: data.user.email });
+        return data;
+    }catch(e){
+        return e.message.replace("Firebase: Error ", "");
+    }
+    
 }
