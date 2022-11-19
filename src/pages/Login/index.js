@@ -5,48 +5,73 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
+import {Link,Grid, styled} from '@mui/material';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { loginWithEmail, registerWithEmail } from "../../features/auth/auth";
+import { loginWithEmail, registerWithEmail, registerWithGithub, registerWithGoogle } from "../../features/auth/auth";
 import HeXAInfo from '../Home/HexaInfo';
 // import { useHistory } from "react-router-dom";
 import '../Home/home.css';
-import { loadUserPersonalData } from '../../features/personal/personal_reducer';
 import { useDispatch } from 'react-redux';
 import ResponsiveAppBar from '../Home/ResponsiveAppbar';
-import { setIsLoggedIn } from '../../features/auth/login_reducer';
 
-const theme = createTheme();
+import GoogleIcon from '@mui/icons-material/Google';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import { useNavigate } from 'react-router';
+
+
+
+
 
 export default function SignIn() {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     loginWithEmail(data.get('email'),data.get('password')).then((err)=>{
-        // console.log(err);
-        // console.log(loadUserPersonalData());
-        window.location.href = window.location.origin+"/home";
+
+        navigate('/home');
     });
     // console.log({
     //   email: data.get('email'),
     //   password: data.get('password'),
     // });
   };
-
+  const signupWithGoogle = () => {
+    registerWithGoogle().then(()=>{
+      navigate('/home');
+    })
+  }
+  const signupWithGithub = () => {
+    registerWithGithub().then(()=>{
+      navigate('/home');
+    })  
+  }
+  // const SignupWithGoogleButton = styled(Button)({
+  //   background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+  //   border: 0,
+  //   borderRadius: 3,
+  //   boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+  //   color: 'white',
+  //   height: 48,
+  //   padding: '0 30px',
+  //   '&$hover:hover': {
+  //     // Set hover color
+  //     backgroundColor: '#49bb7b',
+  //   },
+  // });
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <ResponsiveAppBar bgcolor="rgba(0, 0, 0, 0.8)"/>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 12,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -87,10 +112,18 @@ export default function SignIn() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 1, mb: 1 }}
             >
               로그인
-            </Button>
+            </Button >
+            <Button fullWidth
+              variant="contained"
+              sx={{ mb: 1, backgroundColor: '#4285F4', textTransform: 'none'}}
+              onClick={signupWithGoogle}><GoogleIcon sx={{mr:1}}/>Google 로그인 </Button>
+            <Button fullWidth
+              variant="contained"
+              sx={{ mb: 2, backgroundColor: '#24292E', textTransform: 'none'}}
+              onClick={signupWithGithub}><GitHubIcon sx={{mr:1}}/>Github 로그인 </Button>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
@@ -108,7 +141,7 @@ export default function SignIn() {
         {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
       <HeXAInfo/>
-    </ThemeProvider>
+      </>
   );
 }
 

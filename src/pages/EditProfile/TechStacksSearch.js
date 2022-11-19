@@ -90,9 +90,9 @@ const TechStacksSearch = (props) => {
                     <ListItemText primary={data[index]} />
                     <AlertDialogSlide item={data[index]} />
                 </ListItemButton>
-                <Divider/>
+                <Divider />
             </ListItem>
-            
+
         );
 
     }
@@ -115,17 +115,17 @@ const TechStacksSearch = (props) => {
                 <ListItemButton>
                     <ListItemText primary={personalTechStack[index]} />
                     <IconButton
-                            edge="end"
-                            aria-label="delete"
-                            title="Delete"
-                            onClick={() => handleRemove(personalTechStack[index])}
-                        >
-                            <DeleteIcon />
-                        </IconButton>
+                        edge="end"
+                        aria-label="delete"
+                        title="Delete"
+                        onClick={() => handleRemove(personalTechStack[index])}
+                    >
+                        <DeleteIcon />
+                    </IconButton>
                 </ListItemButton>
-                <Divider/>
+                <Divider />
             </ListItem>
-            
+
         );
 
     }
@@ -133,7 +133,7 @@ const TechStacksSearch = (props) => {
         return (
             <Box
                 sx={{ mt: 10, width: '100%', height: 400, maxWidth: 360, bgcolor: 'background.paper' }}
-            >   
+            >
                 <Box className='TechStackTitle'>기술 스택</Box>
                 <FixedSizeList
                     height={400}
@@ -145,7 +145,7 @@ const TechStacksSearch = (props) => {
                 >
                     {renderPersonalTechStacks}
                 </FixedSizeList>
-                <Divider/>
+                <Divider />
             </Box>
         );
     }
@@ -153,7 +153,7 @@ const TechStacksSearch = (props) => {
         return (
             <Box
                 sx={{ width: '100%', height: 400, maxWidth: 360, bgcolor: 'background.paper' }}
-            >   
+            >
                 <FixedSizeList
                     height={400}
                     width={360}
@@ -164,7 +164,7 @@ const TechStacksSearch = (props) => {
                 >
                     {renderFilteredTechStacks}
                 </FixedSizeList>
-                <Divider/>
+                <Divider />
             </Box>
         );
     }
@@ -262,10 +262,10 @@ const TechStacksSearch = (props) => {
 
                 // <TransitionGroup>
                 //     <Collapse key={item}>
-                    <Box>
-                        {renderPersonalTechStack({ item, handleRemove })}
-                        <Divider/>
-                        </Box>
+                <Box>
+                    {renderPersonalTechStack({ item, handleRemove })}
+                    <Divider />
+                </Box>
                 //     </Collapse>
                 // </TransitionGroup>
 
@@ -285,7 +285,7 @@ const TechStacksSearch = (props) => {
                     >
                         {renderPersonalTechStacks}
                     </FixedSizeList>
-                    <Divider/>
+                    <Divider />
                 </Box>
             </div>
         );

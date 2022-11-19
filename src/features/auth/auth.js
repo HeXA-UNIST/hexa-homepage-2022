@@ -1,8 +1,13 @@
-import { firebaseAuth } from '../../app/firebase';
+import { firebaseAuth, firebase } from '../../app/firebase';
+
 import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
     signOut,
+    signInWithPopup,
+    signInWithRedirect,
+    GoogleAuthProvider,
+    GithubAuthProvider,
 } from 'firebase/auth';
 
 import { setIsLoggedIn, setUser } from './login_reducer';
@@ -46,4 +51,14 @@ export const registerWithEmail = async (email, password) => {
 
 export const logout = async () => {
     await signOut(firebaseAuth);
+}
+export const registerWithGoogle = async () => {
+    var provider = new GoogleAuthProvider()
+    
+    const data = await signInWithPopup(firebaseAuth, provider);
+    //console.log(data);
+}
+export const registerWithGithub = async () => {
+    var provider = new GithubAuthProvider();
+    const data = await signInWithPopup(firebaseAuth, provider);
 }

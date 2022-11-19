@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 import '../Home/home.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectPersonalUid, selectIsPersonalDataLoaded, selectPersonalEmail, selectPersonalStatus, selectPersonalIntroduction, selectPersonalName, selectPersonalTechStack, selectPersonalPower, selectPersonalSns, loadPersonalData } from '../../features/personal/personal_reducer';
-import { Avatar, Typography, Grid, ListItem, ListItemText, Divider, Card, Button } from '@mui/material';
+import { Avatar, Typography, Grid, ListItem, ListItemText, Divider, Card, Button, Tooltip } from '@mui/material';
 import Box from '@mui/material/Box';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
@@ -221,19 +221,48 @@ const Profile = () => {
             //console.log(props.snsLink)
             const snsLink = props.snsLink;
             if (snsLink.includes('https://www.facebook.com/')) {
-                return (<Avatar sx={{ width: 60, height: 60 }} src={FacebookIcon} variant="rounded" onClick={() => window.open(snsLink, '_blank')} />);
+                return (
+                    <Button onClick={() => window.open(snsLink, '_blank')}>
+                <Tooltip title={snsLink} placement="top">
+                <Avatar sx={{ width: 60, height: 60 }} src={FacebookIcon} variant="rounded" onClick={() => window.open(snsLink, '_blank')} />
+                </Tooltip>
+                </Button>
+                
+                );
             } else if (snsLink.includes('https://www.instagram.com/')) {
-                return (<Avatar sx={{ width: 60, height: 60 }} src={InstaIcon} variant="rounded" onClick={() => window.open(snsLink, '_blank')} />)
-                // return (<InstagramIcon sx={{ width: 60, height: 60, color: 'linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d)' }} onClick={() => window.open(snsLink, '_blank')} />);
+                return (
+                    <Button onClick={() => window.open(snsLink, '_blank')}>
+                    <Tooltip title={snsLink} placement="top">
+                    <Avatar sx={{ width: 60, height: 60 }} src={InstaIcon} variant="rounded" onClick={() => window.open(snsLink, '_blank')} />
+                    </Tooltip>
+                    </Button>
+                    )
+                
             }
             else if (snsLink.includes('https://github.com')) {
-                return (<GitHubIcon sx={{ width: 60, height: 60 }} onClick={() => window.open(snsLink, '_blank')} />);
+                return (<Button onClick={() => window.open(snsLink, '_blank')}>
+                <Tooltip title={snsLink} placement="top">
+                <GitHubIcon sx={{ width: 60, height: 60 }} onClick={() => window.open(snsLink, '_blank')} />
+                </Tooltip>
+                </Button>);
+                
             }
             else if (snsLink.includes('https://twitter.com/')) {
-                return (<Avatar sx={{ width: 60, height: 60 }} src={TwitterIcon} variant="rounded" onClick={() => window.open(snsLink, '_blank')} />)
+                return (<Button onClick={() => window.open(snsLink, '_blank')}>
+                     <Tooltip title={snsLink} placement="top">
+                     <Avatar sx={{ width: 60, height: 60 }} src={TwitterIcon} variant="rounded" />
+                     </Tooltip>
+                </Button>)
             }
             else {
-                return (<LaunchIcon sx={{ width: 60, height: 60 }} onClick={() => window.open(snsLink, '_blank')} />);
+                return (
+                    <Button onClick={() => window.open(snsLink, '_blank')}>
+                <Tooltip title={snsLink} placement="top">
+                <LaunchIcon sx={{ width: 60, height: 60 }} onClick={() => window.open(snsLink, '_blank')} />
+                </Tooltip>
+                </Button>
+                
+                );
             }
         }
         return (
