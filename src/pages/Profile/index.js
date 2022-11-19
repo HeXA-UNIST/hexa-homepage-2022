@@ -295,7 +295,7 @@ const Profile = () => {
                     <ProjectList />
                 </Stack>
                 :
-                <Box sx = {{mt:10, fontSize:"28px"}}>Bad request</Box>}
+                <Box sx = {{mt:10, fontSize:"28px"}}>Loading</Box>}
         </div>
     )
 }

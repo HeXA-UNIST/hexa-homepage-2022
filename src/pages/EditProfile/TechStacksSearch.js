@@ -53,7 +53,7 @@ const TechStacksSearch = (props) => {
             setOpen(false);
         };
         const deleteTechStack = () => {
-            console.log(personalTechStack.indexOf(props.item))
+            //console.log(personalTechStack.indexOf(props.item))
             if (personalTechStack.indexOf(props.item) > -1) {
                 personalTechStack = Object.assign([], personalTechStack);
                 personalTechStack.splice(personalTechStack.indexOf(props.item), 1)

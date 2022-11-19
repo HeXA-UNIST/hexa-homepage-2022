@@ -54,11 +54,24 @@ export const logout = async () => {
 }
 export const registerWithGoogle = async () => {
     var provider = new GoogleAuthProvider()
-    
-    const data = await signInWithPopup(firebaseAuth, provider);
+    try{
+        const data = await signInWithPopup(firebaseAuth, provider)
+        await postPersonalDataFirebase(data.user.reloadUserInfo.localId, { email: data.user.email });
+        return data;
+    }catch(e){
+        return e.message.replace("Firebase: Error ", "");
+    }
+
     //console.log(data);
 }
 export const registerWithGithub = async () => {
     var provider = new GithubAuthProvider();
-    const data = await signInWithPopup(firebaseAuth, provider);
+    try{
+        const data = await signInWithPopup(firebaseAuth, provider);
+        await postPersonalDataFirebase(data.user.reloadUserInfo.localId, { email: data.user.email });
+        return data;
+    }catch(e){
+        return e.message.replace("Firebase: Error ", "");
+    }
+    
 }

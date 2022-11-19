@@ -19,15 +19,15 @@ export { personalStatusDomain, personalPowerDomain };
 
 export const initialPersonalData = {
     public: true,
-    name: "홍길동",
+    name: "",
     introduction: "",
     photo: null,
     techStack: [], // list of  techStack ids
-    email: "example@unist.ac.kr",
+    email: "",
     links: [],
     sns: [],
     power: personalPowerDomain.PERSONAL_POWER_COMMON, // common | pro | master
-    studentId: null,
+    studentId: "",
     status: personalStatusDomain.PERSONAL_STATUS_ACTIVE, // active(활동) | rest(휴면) | glory(명예) | quit(탈퇴) | expel(제명)
 };
 

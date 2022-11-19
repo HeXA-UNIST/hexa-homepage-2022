@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import {Link,Grid, styled} from '@mui/material';
+import {Link,Grid, styled, Card, Divider} from '@mui/material';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
@@ -21,6 +21,7 @@ import ResponsiveAppBar from '../Home/ResponsiveAppbar';
 import GoogleIcon from '@mui/icons-material/Google';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { useNavigate } from 'react-router';
+import { loadPersonalDataFirebase } from 'features/personal/personal';
 
 
 
@@ -42,13 +43,27 @@ export default function SignIn() {
     // });
   };
   const signupWithGoogle = () => {
-    registerWithGoogle().then(()=>{
-      navigate('/home');
+    registerWithGoogle().then((result)=>{
+      const uid = result.user.reloadUserInfo.localId
+      loadPersonalDataFirebase(uid).then((data)=>{
+         if(data.email == "" || data.name ==""|| data.studentId==""){
+            navigate('/editProfile');
+         }else{
+            navigate('/home');
+         }
+      })
     })
   }
   const signupWithGithub = () => {
-    registerWithGithub().then(()=>{
-      navigate('/home');
+    registerWithGithub().then((result)=>{
+      const uid = result.user.reloadUserInfo.localId
+      loadPersonalDataFirebase(uid).then((data)=>{
+        if(data.email == "" || data.name ==""|| data.studentId==""){
+           navigate('/editProfile');
+        }else{
+           navigate('/home');
+        }
+     })
     })  
   }
   // const SignupWithGoogleButton = styled(Button)({
@@ -83,6 +98,7 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             로그인
           </Typography>
+          <Card sx={{paddingLeft:4, paddingRight:4}}>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
@@ -116,27 +132,34 @@ export default function SignIn() {
             >
               로그인
             </Button >
-            <Button fullWidth
-              variant="contained"
-              sx={{ mb: 1, backgroundColor: '#4285F4', textTransform: 'none'}}
-              onClick={signupWithGoogle}><GoogleIcon sx={{mr:1}}/>Google 로그인 </Button>
-            <Button fullWidth
-              variant="contained"
-              sx={{ mb: 2, backgroundColor: '#24292E', textTransform: 'none'}}
-              onClick={signupWithGithub}><GitHubIcon sx={{mr:1}}/>Github 로그인 </Button>
+
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
                   비밀번호 찾기
                 </Link>
               </Grid>
-              <Grid item sx={{mb:4}}>
+              <Grid item sx={{mb:1}}>
                 <Link href="/Signup" variant="body2">
                   {"회원가입"}
                 </Link>
               </Grid>
             </Grid>
+  
           </Box>
+          </Card>
+          <Divider/>
+
+          <Button fullWidth
+              variant="contained"
+              sx={{ mt:3, mb: 1, backgroundColor: '#4285F4', textTransform: 'none'}}
+              onClick={signupWithGoogle}><GoogleIcon sx={{mr:1}}/>Google 로그인 </Button>
+            <Button fullWidth
+              variant="contained"
+              sx={{ mb: 2, backgroundColor: '#24292E', textTransform: 'none'}}
+              onClick={signupWithGithub}><GitHubIcon sx={{mr:1}}/>Github 로그인 
+              </Button>
+
         </Box>
         {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>

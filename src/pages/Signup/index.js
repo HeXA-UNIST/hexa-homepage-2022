@@ -33,7 +33,7 @@ function SignUp() {
       if (typeof result == "string") return alert(result);
       postPersonalDataFirebase(result.user.uid, { name: data.get('Name') }).then((r) => {
         loadPersonalDataFirebase(result.user.uid).then((data) => {
-          navigate('/home');
+          navigate('/editProfile');
         });
       })
     });
