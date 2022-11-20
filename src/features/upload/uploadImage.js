@@ -1,5 +1,4 @@
 import { ref, uploadBytesResumable, getDownloadURL,getStorage, uploadString } from "firebase/storage";
-import firebase from "app/firebase";
 import { firebaseStorage } from "app/firebase";
 import { v4 as uuidv4 } from 'uuid';
 const handleUploadimg = async (file, attachment) => {

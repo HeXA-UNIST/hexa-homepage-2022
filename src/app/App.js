@@ -12,7 +12,7 @@ import ProjectReducerTestScreen from '../features/project/test';
 
 import store from './store';
 import { registerAuthStateChangedObserver } from '../features/auth/auth';
-
+import UploadProject from 'pages/uploadProject';
 const Home = lazy(() => import('../pages/Home'));
 const Signup = lazy(() => import('../pages/Signup'));
 const Login = lazy(()=> import('../pages/Login'));
@@ -49,6 +49,7 @@ function App() {
                 <Route path='/Project' element={<Project />}></Route>
                 <Route path='/test/seminar' element={<SeminarReducerTestScreen />}></Route>
                 <Route path='/test/project' element={<ProjectReducerTestScreen />}></Route>
+                <Route path='/uploadProject' element={<UploadProject />}></Route>
                 <Route path='*' element={<NotFound />}></Route>
               </Routes>
             </BrowserRouter>
