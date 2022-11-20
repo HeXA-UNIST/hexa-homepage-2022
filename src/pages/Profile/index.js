@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 
 import '../Home/home.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectPersonalUid, selectIsPersonalDataLoaded, selectPersonalEmail, selectPersonalStatus, selectPersonalIntroduction, selectPersonalName, selectPersonalTechStack, selectPersonalPower, selectPersonalSns, loadPersonalData } from '../../features/personal/personal_reducer';
+import { selectPersonalUid, selectIsPersonalDataLoaded, selectPersonalEmail, selectPersonalStatus, selectPersonalIntroduction, selectPersonalName, selectPersonalTechStack, selectPersonalPower, selectPersonalSns, loadPersonalData, selectPersonalCreatedAt, selectPersonallastLoginAt } from '../../features/personal/personal_reducer';
 import { Avatar, Typography, Grid, ListItem, ListItemText, Divider, Card, Button, Tooltip } from '@mui/material';
 import Box from '@mui/material/Box';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
@@ -22,6 +22,8 @@ import TechStackList from './TechStacklist';
 import { useNavigate } from 'react-router-dom';
 import ProjectList from './ProjectList';
 import LaunchIcon from '@mui/icons-material/Launch';
+import CakeIcon from '@mui/icons-material/Cake';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { useSearchParams } from "react-router-dom";
 // import FacebookIcon from '@mui/icons-material/Facebook';
 import GitHubIcon from '@mui/icons-material/GitHub';
@@ -34,50 +36,77 @@ import { loadPersonalDataFirebase } from 'features/personal/personal';
 import { selectIsLoggedIn, selectUser } from 'features/auth/login_reducer';
 const Profile = () => {
     const navigate = useNavigate();
-    //const isPersonalDataLoaded = useSelector(selectIsPersonalDataLoaded);
-    //const [isMyAccount, setisMyAccount] = useState(false);
+
     const [searchParams, setSearchParams] = useSearchParams();
     const [isUidValid, setisUidValid] = useState(false);
     const uid = searchParams.get("uid")
     const isLoggedIn = useSelector(selectIsLoggedIn);
     const personalUid = useSelector(selectPersonalUid);
+    const personalName = useSelector(selectPersonalName);
+    const personalPower = useSelector(selectPersonalPower);  // common | pro | master
+    const personalStatus = useSelector(selectPersonalStatus); // active(활동) | rest(휴면) | glory(명예) | quit(탈퇴) | expel(제명)
+    const personalCreatedAt = useSelector(selectPersonalCreatedAt);
+    const personallastLoginAt = useSelector(selectPersonallastLoginAt);
+
     const isPersonalDataLoaded = useSelector(selectIsPersonalDataLoaded);
     const dispatch = useDispatch();
     const userselectUser = useSelector(selectUser);
-    const userUid = userselectUser ==null? null : userselectUser.uid;
+    const userUid = userselectUser == null ? null : userselectUser.uid;
     const isMyAccount = userUid == uid;
-    //console.log(userUid)
-    // useEffect(() => {
-    //     dispatch(loadUserPersonalData);
-    // }, [isLoggedIn]);
-    // const [uidPersonalData, setUidPersonalData] = useState();
+
+    const memberFor = (new Date().getTime() - personalCreatedAt)
+    Date.prototype.yyyymmdd = function () {
+        var mm = this.getMonth() + 1; // getMonth() is zero-based
+        var dd = this.getDate();
+
+        return [this.getFullYear(),
+        (mm > 9 ? '' : '0') + "/" + mm,
+        (dd > 9 ? '' : '0') + "/" + dd
+        ].join('');
+    };
     useEffect(() => {
         dispatch(loadPersonalData(uid))
     }, []);
     const Name = () => {
         const NameAndIcon = () => {
-            return (<Box sx={{ width: "70%", minWidth: "50%" }}>
+            return (<Box sx={{ width: "100%", minWidth: "50%" }}>
                 <Stack direction="row" spacing={2} sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'center'
+
                 }}>
-                    <Avatar alt={personalName} src="/static/images/avatar/2.jpg" sx={{ fontSize: "18px", fontWeight: '900', width: 80, height: 80 }} >{personalName}</Avatar>
+                    <Avatar alt={personalName} src="/static/images/avatar/2.jpg" sx={{ fontSize: "36px", fontWeight: '900', width: 128, height: 128 }} >{personalName}</Avatar>
                     {/* <Box sx={{ fontSize: "36px", mr: 10 }}>{personalName}</Box> */}
-                    <Box sx={{ height: 98 }}>
-                        <Typography gutterBottom variant="h3" component="div" sx={{ mt: 5, lineHeight: '10px', fontFamily: 'Roboto', fontWeight: '700' }}>
+                    <Stack sx={{ height: 98 }}> 
+                        
+                        <Typography gutterBottom component="div" sx={{ mt: 4, mb: 2, fontFamily:'Noto Sans KR',lineHeight: '10px', fontWeight: '500', fontSize: "34px"}}>
                             {personalName}
                         </Typography>
-                    </Box>
+                        
+                        <Stack direction="row" sx={{
+                        }}>
+                            <CakeIcon sx={{width:"18", height:"18px", color:"#6A737C"}}/>
+                            <Typography sx={{fontSize:"14px", color:"#6A737C"}}>
+                            {`가입 날짜, ${new Date(parseInt(personalCreatedAt)).yyyymmdd()}`}
+                            </Typography>
+
+                            
+                            <AccessTimeIcon sx={{width:"18", height:"18px", color:"#6A737C"}}/>
+                            <Typography sx={{fontSize:"14px", color:"#6A737C"}}>
+                                {`최근 방문, ${new Date(parseInt(personallastLoginAt)).yyyymmdd()}`}
+                            </Typography>
+                            {isMyAccount ? 
+                            <Box sx={{ flexGrow: 0 }}>
+                                <Button size="big" variant="outlined" onClick={() => navigate('/editProfile', { replace: true })} 
+                            sx={{ ml:3,fontWeight: 900,p:0, width:'10em'}}>
+                                편집하기</Button>
+                                </Box> : <></>}
+                        </Stack>
+                        <StatusAndPower />
+                    </Stack>
                 </Stack>
 
 
             </Box>)
         }
-        const personalName = useSelector(selectPersonalName);
-        const personalPower = useSelector(selectPersonalPower);  // common | pro | master
-        const personalStatus = useSelector(selectPersonalStatus); // active(활동) | rest(휴면) | glory(명예) | quit(탈퇴) | expel(제명)
         const StatusAndPower = () => {
             const Powercolor = () => {
                 if (personalPower === 'common') {
@@ -106,11 +135,11 @@ const Profile = () => {
             const PowerIcon = () => {
                 switch (personalPower) {
                     case "common":
-                        return (<AccountBoxIcon sx={{ width: 30, height: 30, color: Powercolor }} />);
+                        return (<AccountBoxIcon sx={{ width: 24, height: 24, color: Powercolor }} />);
                     case "pro":
-                        return (<SupervisorAccountIcon sx={{ width: 30, height: 30, color: Powercolor }} />);
+                        return (<SupervisorAccountIcon sx={{ width: 24, height: 24, color: Powercolor }} />);
                     case "master":
-                        return (<AdminPanelSettingsIcon sx={{ width: 30, height: 30, color: Powercolor }} />);
+                        return (<AdminPanelSettingsIcon sx={{ width: 24, height: 24, color: Powercolor }} />);
                     default:
                         break;
                 }
@@ -118,64 +147,39 @@ const Profile = () => {
             const StatusIcon = () => {
                 switch (personalStatus) {
                     case "active":
-                        return (<CheckBoxIcon sx={{ width: 30, height: 30, color: Statuscolor }} />);
+                        return (<CheckBoxIcon sx={{ width: 24, height: 24, color: Statuscolor }} />);
                     case "quit":
-                        return (<HotelIcon sx={{ width: 30, height: 30, color: Statuscolor }} />);
+                        return (<HotelIcon sx={{ width: 24, height: 24, color: Statuscolor }} />);
                     case "rest":
-                        return (<RemoveCircleIcon sx={{ width: 30, height: 30, color: Statuscolor }} />);
+                        return (<RemoveCircleIcon sx={{ width: 24, height: 24, color: Statuscolor }} />);
                     case "glory":
-                        return (<MilitaryTechIcon sx={{ width: 30, height: 30, color: Statuscolor }} />);
+                        return (<MilitaryTechIcon sx={{ width: 24, height: 24, color: Statuscolor }} />);
                     case "expel":
-                        return (<BlockIcon sx={{ width: 30, height: 30, color: Statuscolor }} />);
+                        return (<BlockIcon sx={{ width: 24, height: 24, color: Statuscolor }} />);
                     default:
                         break;
                 }
             }
             return (
-                <Box sx={{ width: "40%" }}>
-                    <ListItem sx={{ justifyContent: 'center', }}
-                        secondaryAction={
-                            <PowerIcon />
-                        }
-                    >
-                        <ListItemText primary={<Typography align="left" variant="h7" sx={{ color: Powercolor, width: "40%", fontWeight: 700 }}>
+                <Box> 
+                    <Stack direction="row" >
+                        <PowerIcon />
+                        <Typography sx={{ fontSize: "16px",fontWeight:500, color: Powercolor, fontFamily:'Noto Sans KR', }}>
                             {personalPower}
                         </Typography>
-                        }
-
-                        />
-                    </ListItem>
-                    <Divider />
-                    <ListItem sx={{ justifyContent: 'center' }}
-                        secondaryAction={
-                            <StatusIcon />
-                        }
-                    >
-                        <ListItemText primary={
-                            <Typography variant="h7" align="left" sx={{ color: Statuscolor, width: "40%", fontWeight: 700 }}>{personalStatus}</Typography>
-                        } />
-                    </ListItem>
-                    {/* <Stack direction="row" spacing={1}>
-                    <Typography gutterBottom variant="h6" component="div" xs={4}>
-                        {personalPower}
-                    </Typography>
-                    <PowerIcon />
-                </Stack>
-                <Stack direction="row" spacing={1}>
-                <Typography gutterBottom variant="h6" Box sx={{ color: 'error.main' }} component="div" xs={4}>
-                    {personalStatus}
-                </Typography>
-                <StatusIcon /> </Stack>*/}
+                        <StatusIcon />
+                        <Typography sx={{ fontSize: "16px", fontWeight:500, color: Statuscolor,fontFamily:'Noto Sans KR', }}>
+                            {personalStatus}
+                        </Typography>
+                    </Stack>
                 </Box >)
         }
         return (
-            <Card sx={{ Width: '100%' }}>
-                <Stack direction="row" spacing={2}>
+            <Box sx={{ Width: '100%'}}>
+                <Stack direction = 'row' spacing={2}>
                     <NameAndIcon />
-                    <Divider orientation="vertical" flexItem />
-                    <StatusAndPower />
                 </Stack>
-            </Card>
+            </Box>
             // <Box sx={{ width: '100%', bgcolor: 'background.paper', border:'0.8px solid rgba(132, 132, 132, 0.47)', borderRadius:'1em' }}>
             //     <Stack direction="row" spacing={2}>
             //         <NameAndIcon />
@@ -189,30 +193,31 @@ const Profile = () => {
     const ProfileMessage = () => {
         const personalIntroduction = useSelector(selectPersonalIntroduction);
         return (
-            <Card sx={{ Width: '100%', height: 150 }}>
+            <Box sx={{ width: '100%' }}>
+                <Typography sx={{ fontSize: "21px", fontWeight: 500,fontFamily:'Noto Sans KR', color: "#232629" }}>
+                    프로필 메세지
+                </Typography>
                 <CardContent>
                     <Typography variant="body2">
                         {personalIntroduction}
                     </Typography>
                 </CardContent>
-            </Card>
+            </Box>
 
         )
     }
     const Email = () => {
         const personalEmail = useSelector(selectPersonalEmail);
         return (
-            <Card sx={{ Width: '100%', height: 60 }}>
-                <CardContent>
-
-                    <Stack direction="row" spacing={2}>
-                        <EmailIcon />
-                        <Typography variant="body2">
+            <Box sx={{ width: '100%' }}>
+                    <Stack direction="row">
+                        <EmailIcon sx={{width:'21px',height:'21px'}} />
+                        <Typography variant="body2"  sx= {{fontSize:'16px'}}>
                             {personalEmail}
                         </Typography>
                     </Stack>
-                </CardContent>
-            </Card>
+                
+            </Box>
         )
     }
     const SNS = () => {
@@ -223,51 +228,53 @@ const Profile = () => {
             if (snsLink.includes('https://www.facebook.com/')) {
                 return (
                     <Button onClick={() => window.open(snsLink, '_blank')}>
-                <Tooltip title={snsLink} placement="top">
-                <Avatar sx={{ width: 60, height: 60 }} src={FacebookIcon} variant="rounded" onClick={() => window.open(snsLink, '_blank')} />
-                </Tooltip>
-                </Button>
-                
+                        <Tooltip title={snsLink} placement="top">
+                            <Avatar sx={{ width: 60, height: 60 }} src={FacebookIcon} variant="rounded" onClick={() => window.open(snsLink, '_blank')} />
+                        </Tooltip>
+                    </Button>
+
                 );
             } else if (snsLink.includes('https://www.instagram.com/')) {
                 return (
                     <Button onClick={() => window.open(snsLink, '_blank')}>
-                    <Tooltip title={snsLink} placement="top">
-                    <Avatar sx={{ width: 60, height: 60 }} src={InstaIcon} variant="rounded" onClick={() => window.open(snsLink, '_blank')} />
-                    </Tooltip>
+                        <Tooltip title={snsLink} placement="top">
+                            <Avatar sx={{ width: 60, height: 60 }} src={InstaIcon} variant="rounded" onClick={() => window.open(snsLink, '_blank')} />
+                        </Tooltip>
                     </Button>
-                    )
-                
+                )
+
             }
             else if (snsLink.includes('https://github.com')) {
                 return (<Button onClick={() => window.open(snsLink, '_blank')}>
-                <Tooltip title={snsLink} placement="top">
-                <GitHubIcon sx={{ width: 60, height: 60 }} onClick={() => window.open(snsLink, '_blank')} />
-                </Tooltip>
+                    <Tooltip title={snsLink} placement="top">
+                        <GitHubIcon sx={{ width: 60, height: 60, color:'#232629' }} onClick={() => window.open(snsLink, '_blank')} />
+                    </Tooltip>
                 </Button>);
-                
+
             }
             else if (snsLink.includes('https://twitter.com/')) {
                 return (<Button onClick={() => window.open(snsLink, '_blank')}>
-                     <Tooltip title={snsLink} placement="top">
-                     <Avatar sx={{ width: 60, height: 60 }} src={TwitterIcon} variant="rounded" />
-                     </Tooltip>
+                    <Tooltip title={snsLink} placement="top">
+                        <Avatar sx={{ width: 60, height: 60 }} src={TwitterIcon} variant="rounded" />
+                    </Tooltip>
                 </Button>)
             }
             else {
                 return (
                     <Button onClick={() => window.open(snsLink, '_blank')}>
-                <Tooltip title={snsLink} placement="top">
-                <LaunchIcon sx={{ width: 60, height: 60 }} onClick={() => window.open(snsLink, '_blank')} />
-                </Tooltip>
-                </Button>
-                
+                        <Tooltip title={snsLink} placement="top">
+                            <LaunchIcon sx={{ width: 60, height: 60 }} onClick={() => window.open(snsLink, '_blank')} />
+                        </Tooltip>
+                    </Button>
+
                 );
             }
         }
         return (
-            <Card sx={{ Width: '100%', height: 90 }}>
-                <CardContent>
+            <Box sx={{ Width: '100%'}}>
+                <Typography sx={{ fontSize: "21px", fontWeight: 500,fontFamily:'Noto Sans KR', color: "#232629" }}>
+                    SNS 계정
+                </Typography>
                     <Stack direction="row" spacing={2}>
                         {personalSns.map((sns) => (
                             <Box key={sns}>
@@ -275,27 +282,28 @@ const Profile = () => {
                             </Box>
                         ))}
                     </Stack>
-                </CardContent>
-            </Card>
+            </Box>
         )
     }
     return (
         <div>
             <ResponsiveAppBar bgcolor="rgba(0, 0, 0, 0.8)" />
-            {isPersonalDataLoaded?
-                <Stack direction="row" spacing={2}>
+            {isPersonalDataLoaded ?
+                <Stack direction="row" spacing={2} sx={{ml:5, mr:10}}>
                     <Stack sx={{ mt: 10, ml: 2, minWidth: '28%' }} spacing={2}>
                         <Name />
-                        <ProfileMessage />
                         <Email />
+                        <ProfileMessage />
+                        
                         <SNS />
-                        {isMyAccount ? <Button size="big" variant="outlined" onClick={() => navigate('/editProfile', { replace: true })} sx={{ width: '10em', fontWeight: 900 }}>편집하기</Button> : <></>}
+                        <TechStackList />
+                    <ProjectList /> 
                     </Stack>
-                    <TechStackList />
-                    <ProjectList />
+                    {/* <TechStackList />
+                    <ProjectList /> */}
                 </Stack>
                 :
-                <Box sx = {{mt:10, fontSize:"28px"}}>Loading</Box>}
+                <Box sx={{ mt: 10, fontSize: "28px" }}>Loading</Box>}
         </div>
     )
 }

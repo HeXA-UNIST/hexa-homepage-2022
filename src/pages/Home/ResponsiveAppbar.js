@@ -82,13 +82,14 @@ const ResponsiveAppBar = (props) => {
     const colorMode = React.useContext(ColorModeContext);
     const navigate = useNavigate();
     return (
-        <AppBar className='Barcontainer' component="nav" color='transparent' elevation={0} >
+        <AppBar className='Barcontainer' component="nav"  color='transparent' elevation={0} >
             <div style={{ backgroundColor: appbarcolor }}>
-                <Toolbar style={{ boxShadow: 'none' }}>
-                    <Button onClick={()=>navigate('/')} sx = {{textTransform: 'none'}}>
+                <Toolbar style={{ boxShadow: 'none' }} sx={{minHeight:'70px', maxHeight: '70px'}}>
+                    <Button onClick={()=>navigate('/')} sx = {{textTransform: 'none', minWidth: '150px'}}>
                         <Avatar alt="Hexa_logo" variant="square" sx={{
                             fontStyle: "normal",
                             width: '40px',
+                            minWidth: '40px',
                             height: '45px',
                             display: { xs: 'none', md: 'flex' }
                         }} src={Icon2} />
@@ -114,11 +115,11 @@ const ResponsiveAppBar = (props) => {
                     </Typography>
                     </Button>
                     {isLoggedIn ?
-                        (<Link onClick={logout} key = {isLoggedIn} underline="none"><Avatar className="Loginbutton" sx={{ fontFamily: "'NanumGothic'", fontStyle: "normal", fontWeight: "800", fontSize: "12px", lineHeight: "18px", textAlign: "center", bgcolor: 'white', mr: 30, width: 60, height: 24, color: '#0A0A50' }} variant="rounded">
-                            로그아웃</Avatar></Link>) : <></>}
+                        (<Button onClick={logout} key = {isLoggedIn} underline="none"><Avatar className="Loginbutton" sx={{ fontFamily: "'NanumGothic'", fontStyle: "normal", fontWeight: "800", fontSize: "12px", textAlign: "center", bgcolor: 'white', mr: 30, width: 60, height: 24, color: '#0A0A50' }} variant="rounded">
+                            로그아웃</Avatar></Button>) : <></>}
                     {!isLoggedIn ?
-                        (<Link href="/login" key = {isLoggedIn} underline="none"><Avatar className="Loginbutton" sx={{ fontFamily: "'NanumGothic'", fontStyle: "normal", fontWeight: "800", fontSize: "12px", lineHeight: "18px", textAlign: "center", bgcolor: 'white', mr: 30, width: 48, height: 24, color: '#0A0A50' }} variant="rounded">
-                            로그인</Avatar></Link>) : <></>}
+                        (<Button href="/login" key = {isLoggedIn} underline="none"><Avatar className="Loginbutton" sx={{ fontFamily: "'NanumGothic'", fontStyle: "normal", fontWeight: "800", fontSize: "12px", textAlign: "center", bgcolor: 'white', mr: 30, width: 48, height: 24, color: '#0A0A50' }} variant="rounded">
+                            로그인</Avatar></Button>) : <></>}
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
@@ -166,7 +167,7 @@ const ResponsiveAppBar = (props) => {
                                 {page.name}
                             </Button>
                         ))}
-                        <Avatar className="Loginbutton" sx={{ my: 3, ml: 1, fontFamily: 'Roboto', fontStyle: "normal", fontWeight: "600", fontSize: "0.8rem", textAlign: "center", bgcolor: 'white', mr: 3, width: 56, height: '1.2rem', color: '#0A0A50' }} variant="rounded">
+                        <Avatar className="Loginbutton" sx={{ my: 3, ml: 1, fontFamily: 'Roboto', fontStyle: "normal", fontWeight: "600", fontSize: "12px", textAlign: "center", bgcolor: 'white', mr: 3, width: 56, height: '1.2rem', color: '#0A0A50' }} variant="rounded">
                             지원하기
                         </Avatar>
                     </Box>

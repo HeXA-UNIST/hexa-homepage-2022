@@ -9,10 +9,7 @@ import ResponsiveAppBar from "../Home/ResponsiveAppbar";
 import { ListItem, ListItemText, Divider, Card, Typography, ImageList, ListItemButton, Tooltip } from '@mui/material';
 import Box from '@mui/material/Box';
 
-import { FixedSizeList } from 'react-window';
-import Collapse from '@mui/material/Collapse';
-import { TransitionGroup } from 'react-transition-group';
-import HowToRegIcon from '@mui/icons-material/HowToReg';
+import useWindowDimensions from 'pages/Home/windowDimension';
 import { useSearchParams } from 'react-router-dom';
 import { loadPersonalDataFirebase } from 'features/personal/personal';
 import { selectIsLoggedIn } from 'features/auth/login_reducer';
@@ -27,7 +24,7 @@ const TechStackList = () => {
 
     const dispatch = useDispatch();
     const isLoggedIn = useSelector(selectIsLoggedIn)
-    const isPersonalDataLoaded = useSelector(selectIsPersonalDataLoaded)
+    const isPersonalDataLoaded = useSelector(selectIsPersonalDataLoaded);
     useEffect(() => {
         dispatch(loadPersonalData(uid))
     }, []);
@@ -77,9 +74,9 @@ const TechStackList = () => {
         const techStack = props.techStack; // each item
 
         return (
-            <Box display="flex" >
+            <Box display="flex" sx={{flexWrap: 'wrap'}} >
                 <Tooltip title={techStack} placement="top">
-                    <ListItemButton key={techStack}  sx={{ width: "150px", height: "150px", border: "solid", borderRadius: "1rem" }}>
+                    <ListItemButton key={techStack}  sx={{ width: "150px", height: "150px", border: "solid",borderColor:'#bdbdbd' ,borderWidth:'2px', borderRadius: "1rem" }}>
                         <ListItemText primary={
                             techStackImgList.includes(techStack) ? <Box display="flex" justifyContent="center" alignItems="center">
                                 <img src={require(`assets/img/techstackicon/${techStack}.png`)} width='100%' height='100%'></img>
@@ -97,33 +94,31 @@ const TechStackList = () => {
     }
     const TechList = (props) => {
         const techList = useSelector(selectPersonalTechStack)
+        const {height, width} = useWindowDimensions();
         return (
-            <Card sx={{
+            <Box sx={{
                 Width: '100%', height: "100%", display: 'flex',
                 
 
                 
             }} >
-                <ImageList sx={{
-                    width: '500px', hegiht:"306px",maxheight: "460px",
-                }} cols={3} rowHeight={164}>
+                <ImageList sx={{ hegiht:"306px",maxheight: "460px",
+                }} cols={Math.floor(width/164)} rowHeight={164}>
                     {techList.map((tech) => {
                         return <TechItem techStack={tech} key={tech} />
                     })}
                 </ImageList>
                 
-            </Card>
+            </Box>
         );
     }
     return (<div>
-        {isPersonalDataLoaded ? <Box sx={{ mt: 10 }}>
-            <Card sx={{
-                Width: '100%', height: "100%", display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center'
-            }} >
-                <Typography variant="h5" sx={{ color: 'black', fontFamily: 'Raleway, Arial', fontWeight: 900 }} component="div" gutterBottom>기술 스택</Typography></Card>
-            <Divider />
+        {isPersonalDataLoaded ? <Box>
+            <Box >
+            <Typography sx={{ fontSize: "21px", fontWeight: 500,fontFamily:'Noto Sans KR', color: "#232629" }}>
+                    기술 스택
+                </Typography>
+                </Box>  
             <TechList />
             {/* <FixedSizeList
                 height={400}
@@ -134,7 +129,6 @@ const TechStackList = () => {
             >
                 {renderPersonalTechStacks}
             </FixedSizeList> */}
-            <Divider />
         </Box> : <></>}
     </div>)
 }
