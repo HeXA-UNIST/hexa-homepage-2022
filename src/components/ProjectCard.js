@@ -17,7 +17,7 @@ const ProjectCard = (props) => {
                 />
             </div>
             <div style={{
-                padding: '30px 20px',
+                padding: '30px 20px 20px 20px',
                 flex: '1',
                 display: 'flex',
                 flexDirection: 'column',
@@ -35,8 +35,8 @@ const ProjectCard = (props) => {
                 </Typography>
                 <div style={{
                     display: 'flex',
-                    flex: '1',
-                    alignItems: 'end',
+                    flex: '1 0 0',
+                    overflowY: 'hidden',
                 }}>
                     <ProjectTechStackArea techStackList={techStack} />
                 </div>
@@ -45,7 +45,6 @@ const ProjectCard = (props) => {
     );
 }
 
-// TODO: Card 크기에 비해 TechStack수가 만아질 때 고려하기
 const ProjectTechStackArea = (props) => {
     const techStackList = props.techStackList;
 
@@ -70,8 +69,10 @@ const ProjectTechStackArea = (props) => {
 
     return (
         <Box sx={{
+            flex: '1 0 0',
             display: 'flex',
             flexDirection: 'row',
+            alignItems: 'end',
             flexWrap: 'wrap',
             gap: '8px',
             mt: '16px'

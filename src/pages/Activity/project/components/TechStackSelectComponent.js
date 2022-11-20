@@ -39,6 +39,11 @@ export const TechStackSelectArea = (props) => {
 
     const handleOnSwitchChange = (event) => {
         setIsActive(event.target.checked);
+        if (props.onSelectedChange) {
+            props.onSelectedChange(
+                event.target.checked ? selectedItems : []
+            );
+        }
     }
 
 
