@@ -75,5 +75,7 @@ export const selectPersonalPower = (state) => state.personal.personalData.power;
 export const selectPersonalStudentId = (state) => state.personal.personalData.studentId;
 export const selectPersonalStatus = (state) => state.personal.personalData.status;
 export const selectPersonalIntroduction = (state) => state.personal.personalData.introduction;
-
+export const selectPersonallastLoginAt = (state) => state.personal.personalData.lastLoginAt;
+export const selectPersonalCreatedAt = (state) => state.personal.personalData.createdAt;
+export const selectPersonalPhotoUrl = (state) => state.personal.personalData.photo;
 export default personalSlice.reducer;

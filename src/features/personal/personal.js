@@ -29,6 +29,8 @@ export const initialPersonalData = {
     power: personalPowerDomain.PERSONAL_POWER_COMMON, // common | pro | master
     studentId: "",
     status: personalStatusDomain.PERSONAL_STATUS_ACTIVE, // active(활동) | rest(휴면) | glory(명예) | quit(탈퇴) | expel(제명)
+    createdAt: "",
+    lastLoginAt: "",
 };
 
 // Firebase에서 uid에 해당하는 PersonalData를 가져오는 비동기 함수이다.

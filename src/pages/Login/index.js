@@ -45,6 +45,7 @@ export default function SignIn() {
   const signupWithGoogle = () => {
     registerWithGoogle().then((result)=>{
       const uid = result.user.reloadUserInfo.localId
+      
       loadPersonalDataFirebase(uid).then((data)=>{
          if(data.email == "" || data.name ==""|| data.studentId==""){
             navigate('/editProfile');
