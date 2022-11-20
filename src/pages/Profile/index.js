@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 
 import '../Home/home.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectPersonalUid, selectIsPersonalDataLoaded, selectPersonalEmail, selectPersonalStatus, selectPersonalIntroduction, selectPersonalName, selectPersonalTechStack, selectPersonalPower, selectPersonalSns, loadPersonalData, selectPersonalCreatedAt, selectPersonallastLoginAt } from '../../features/personal/personal_reducer';
+import { selectPersonalUid, selectIsPersonalDataLoaded, selectPersonalEmail, selectPersonalStatus, selectPersonalIntroduction, selectPersonalName, selectPersonalTechStack, selectPersonalPower, selectPersonalSns, loadPersonalData, selectPersonalCreatedAt, selectPersonallastLoginAt, selectPersonalPhotoUrl } from '../../features/personal/personal_reducer';
 import { Avatar, Typography, Grid, ListItem, ListItemText, Divider, Card, Button, Tooltip } from '@mui/material';
 import Box from '@mui/material/Box';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
@@ -34,6 +34,8 @@ import TwitterIcon from 'assets/img/twitter_icon.png';
 import FacebookIcon from 'assets/img/Facebook_icon.webp';
 import { loadPersonalDataFirebase } from 'features/personal/personal';
 import { selectIsLoggedIn, selectUser } from 'features/auth/login_reducer';
+import { getStorage, ref } from "firebase/storage";
+import handleUpload from 'features/upload/uploadImage';
 const Profile = () => {
     const navigate = useNavigate();
 
@@ -69,35 +71,42 @@ const Profile = () => {
     }, []);
     const Name = () => {
         const NameAndIcon = () => {
+            const personalProfileImage = useSelector(selectPersonalPhotoUrl);
+            const [attachment, setAttachment] = useState(personalProfileImage)
             return (<Box sx={{ width: "100%", minWidth: "50%" }}>
                 <Stack direction="row" spacing={2} sx={{
 
                 }}>
-                    <Avatar alt={personalName} src="/static/images/avatar/2.jpg" sx={{ fontSize: "36px", fontWeight: '900', width: 128, height: 128 }} >{personalName}</Avatar>
+                        {attachment==""?
+                        <Avatar alt={personalName} src="/static/images/avatar/2.jpg" sx={{ fontSize: "36px", fontWeight: '900', width: 128, height: 128 }} >{personalName}</Avatar>:
+                        <Avatar alt={personalName} src={attachment} sx={{ fontSize: "36px", fontWeight: '900', width: 128, height: 128 }} ></Avatar>
+                        }
+
                     {/* <Box sx={{ fontSize: "36px", mr: 10 }}>{personalName}</Box> */}
-                    <Stack sx={{ height: 98 }}> 
-                        
-                        <Typography gutterBottom component="div" sx={{ mt: 4, mb: 2, fontFamily:'Noto Sans KR',lineHeight: '10px', fontWeight: '500', fontSize: "34px"}}>
+                    
+                    <Stack sx={{ height: 98 }}>
+
+                        <Typography gutterBottom component="div" sx={{ mt: 4, mb: 2, fontFamily: 'Noto Sans KR', lineHeight: '10px', fontWeight: '500', fontSize: "34px" }}>
                             {personalName}
                         </Typography>
-                        
+
                         <Stack direction="row" sx={{
                         }}>
-                            <CakeIcon sx={{width:"18", height:"18px", color:"#6A737C"}}/>
-                            <Typography sx={{fontSize:"14px", color:"#6A737C"}}>
-                            {`가입 날짜, ${new Date(parseInt(personalCreatedAt)).yyyymmdd()}`}
+                            <CakeIcon sx={{ width: "18", height: "18px", color: "#6A737C" }} />
+                            <Typography sx={{ fontSize: "14px", color: "#6A737C" }}>
+                                {`가입 날짜, ${new Date(parseInt(personalCreatedAt)).yyyymmdd()}`}
                             </Typography>
 
-                            
-                            <AccessTimeIcon sx={{width:"18", height:"18px", color:"#6A737C"}}/>
-                            <Typography sx={{fontSize:"14px", color:"#6A737C"}}>
+
+                            <AccessTimeIcon sx={{ width: "18", height: "18px", color: "#6A737C" }} />
+                            <Typography sx={{ fontSize: "14px", color: "#6A737C" }}>
                                 {`최근 방문, ${new Date(parseInt(personallastLoginAt)).yyyymmdd()}`}
                             </Typography>
-                            {isMyAccount ? 
-                            <Box sx={{ flexGrow: 0 }}>
-                                <Button size="big" variant="outlined" onClick={() => navigate('/editProfile', { replace: true })} 
-                            sx={{ ml:3,fontWeight: 900,p:0, width:'10em'}}>
-                                편집하기</Button>
+                            {isMyAccount ?
+                                <Box sx={{ flexGrow: 0 }}>
+                                    <Button size="big" variant="outlined" onClick={() => navigate('/editProfile', { replace: true })}
+                                        sx={{ ml: 3, fontWeight: 900, p: 0, width: '10em' }}>
+                                        편집하기</Button>
                                 </Box> : <></>}
                         </Stack>
                         <StatusAndPower />
@@ -161,22 +170,22 @@ const Profile = () => {
                 }
             }
             return (
-                <Box> 
+                <Box>
                     <Stack direction="row" >
                         <PowerIcon />
-                        <Typography sx={{ fontSize: "16px",fontWeight:500, color: Powercolor, fontFamily:'Noto Sans KR', }}>
+                        <Typography sx={{ fontSize: "16px", fontWeight: 500, color: Powercolor, fontFamily: 'Noto Sans KR', }}>
                             {personalPower}
                         </Typography>
                         <StatusIcon />
-                        <Typography sx={{ fontSize: "16px", fontWeight:500, color: Statuscolor,fontFamily:'Noto Sans KR', }}>
+                        <Typography sx={{ fontSize: "16px", fontWeight: 500, color: Statuscolor, fontFamily: 'Noto Sans KR', }}>
                             {personalStatus}
                         </Typography>
                     </Stack>
                 </Box >)
         }
         return (
-            <Box sx={{ Width: '100%'}}>
-                <Stack direction = 'row' spacing={2}>
+            <Box sx={{ Width: '100%' }}>
+                <Stack direction='row' spacing={2}>
                     <NameAndIcon />
                 </Stack>
             </Box>
@@ -194,7 +203,7 @@ const Profile = () => {
         const personalIntroduction = useSelector(selectPersonalIntroduction);
         return (
             <Box sx={{ width: '100%' }}>
-                <Typography sx={{ fontSize: "21px", fontWeight: 500,fontFamily:'Noto Sans KR', color: "#232629" }}>
+                <Typography sx={{ fontSize: "21px", fontWeight: 500, fontFamily: 'Noto Sans KR', color: "#232629" }}>
                     프로필 메세지
                 </Typography>
                 <CardContent>
@@ -210,13 +219,13 @@ const Profile = () => {
         const personalEmail = useSelector(selectPersonalEmail);
         return (
             <Box sx={{ width: '100%' }}>
-                    <Stack direction="row">
-                        <EmailIcon sx={{width:'21px',height:'21px'}} />
-                        <Typography variant="body2"  sx= {{fontSize:'16px'}}>
-                            {personalEmail}
-                        </Typography>
-                    </Stack>
-                
+                <Stack direction="row">
+                    <EmailIcon sx={{ width: '21px', height: '21px' }} />
+                    <Typography variant="body2" sx={{ fontSize: '16px' }}>
+                        {personalEmail}
+                    </Typography>
+                </Stack>
+
             </Box>
         )
     }
@@ -247,7 +256,7 @@ const Profile = () => {
             else if (snsLink.includes('https://github.com')) {
                 return (<Button onClick={() => window.open(snsLink, '_blank')}>
                     <Tooltip title={snsLink} placement="top">
-                        <GitHubIcon sx={{ width: 60, height: 60, color:'#232629' }} onClick={() => window.open(snsLink, '_blank')} />
+                        <GitHubIcon sx={{ width: 60, height: 60, color: '#232629' }} onClick={() => window.open(snsLink, '_blank')} />
                     </Tooltip>
                 </Button>);
 
@@ -271,17 +280,17 @@ const Profile = () => {
             }
         }
         return (
-            <Box sx={{ Width: '100%'}}>
-                <Typography sx={{ fontSize: "21px", fontWeight: 500,fontFamily:'Noto Sans KR', color: "#232629" }}>
+            <Box sx={{ Width: '100%' }}>
+                <Typography sx={{ fontSize: "21px", fontWeight: 500, fontFamily: 'Noto Sans KR', color: "#232629" }}>
                     SNS 계정
                 </Typography>
-                    <Stack direction="row" spacing={2}>
-                        {personalSns.map((sns) => (
-                            <Box key={sns}>
-                                <SnsIcon snsLink={sns} />
-                            </Box>
-                        ))}
-                    </Stack>
+                <Stack direction="row" spacing={2}>
+                    {personalSns.map((sns) => (
+                        <Box key={sns}>
+                            <SnsIcon snsLink={sns} />
+                        </Box>
+                    ))}
+                </Stack>
             </Box>
         )
     }
@@ -289,15 +298,15 @@ const Profile = () => {
         <div>
             <ResponsiveAppBar bgcolor="rgba(0, 0, 0, 0.8)" />
             {isPersonalDataLoaded ?
-                <Stack direction="row" spacing={2} sx={{ml:5, mr:10}}>
+                <Stack direction="row" spacing={2} sx={{ ml: "50px", mr: "80px" }}>
                     <Stack sx={{ mt: 10, ml: 2, minWidth: '28%' }} spacing={2}>
                         <Name />
                         <Email />
                         <ProfileMessage />
-                        
+
                         <SNS />
                         <TechStackList />
-                    <ProjectList /> 
+                        <ProjectList />
                     </Stack>
                     {/* <TechStackList />
                     <ProjectList /> */}

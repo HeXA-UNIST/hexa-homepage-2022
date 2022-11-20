@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadPersonalData, loadUserPersonalData, postUserPersonalData, selectPersonalEmail, selectPersonalUid, selectPersonalIntroduction, selectPersonalName, selectPersonalSns, selectPersonalTechStack, selectPersonalStudentId } from '../../features/personal/personal_reducer';
+import { loadPersonalData, loadUserPersonalData, postUserPersonalData, selectPersonalEmail, selectPersonalUid, selectPersonalIntroduction, selectPersonalName, selectPersonalSns, selectPersonalTechStack, selectPersonalStudentId, selectPersonalPhotoUrl } from '../../features/personal/personal_reducer';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
@@ -15,6 +15,7 @@ import '../Home/home.css';
 import { Avatar } from '@mui/material';
 
 import Input from '@mui/material/Input';
+import handleUploadimg from 'features/upload/uploadImage';
 
 const EditInfo = () => {
     const personalUid = useSelector(selectPersonalUid);
@@ -123,8 +124,7 @@ const EditInfo = () => {
         )
     }
     const SnsEditor = (props) => {
-        const ariaLabel = { 'aria-label': 'description' };
-        const dispatch = useDispatch();
+
         let personalSns = useSelector(selectPersonalSns);
         let [sns, setSns] = useState(personalSns.toString().replaceAll(',', '\n'));
         useEffect(() => {
@@ -168,12 +168,43 @@ const EditInfo = () => {
         )
     }
 
-    const ProfileContainer = () => {
+    const ProfileContainer = (props) => {
         const personalName = useSelector(selectPersonalName);
+        const personalProfileImage = useSelector(selectPersonalPhotoUrl);
+        const [attachment, setAttachment] = useState(personalProfileImage);
+
+        const [imageUrl, setImageUrl] = useState();
+        const dispatch = useDispatch();
+        const onChange = (e) => {
+            const img = e.target.files[0];
+            const reader = new FileReader();
+            reader.onloadend = (finishedEvent) => {
+                const { currentTarget: { result } } = finishedEvent;
+                setAttachment(result);
+                handleUploadimg(img.name, result).then((url) => {
+                    setImageUrl(url);
+                    dispatch(postUserPersonalData({
+                        photo: url
+                    }))
+                })
+            }
+            reader.readAsDataURL(img);
+
+        }
         return (
             <Stack direction="row" spacing={2} >
-                <Avatar alt={personalName} src="/static/images/avatar/2.jpg" sx={{ fontSize: "18px", fontWeight: '900', width: 80, height: 80 }} >{personalName}</Avatar>
-                <Stack>
+                {attachment == "" ?
+                    <Avatar alt={personalName} src="/static/images/avatar/2.jpg" sx={{ fontSize: "36px", fontWeight: '900', width: 128, height: 128 }} >{personalName}</Avatar> :
+                    <Avatar alt={personalName} src={attachment} sx={{ fontSize: "36px", fontWeight: '900', width: 128, height: 128 }} ></Avatar>}
+
+                <Stack spacing={2}>
+                    <div>
+                        <input type='file'
+                            accept='image/jpg,impge/png,image/jpeg,image/gif'
+
+                            onChange={onChange}>
+                        </input>
+                    </div>
                     <NameEditor onValueChange={handleOnNameChange} />
                     <StudentIdEditor onValueChange={handleOnStudentIdChange} />
                 </Stack>
@@ -188,6 +219,10 @@ const EditInfo = () => {
     let studentIdValue = useRef("");
     let snsValue = useRef("");
     let nameValue = useRef("");
+    let profileImageValue = useRef("");
+    const handleOnprofileImageChange = (value) => {
+        profileImageValue.current = value;
+    }
     const handleOnNameChange = (value) => {
         nameValue.current = value;
     }
@@ -216,16 +251,15 @@ const EditInfo = () => {
             email: emailValue.current,
             sns: snsValue.current,
             studentId: studentIdValue.current,
-            name: nameValue.current,
-
+            name: nameValue.current
         }));
         if (studentIdValue.current !== "" && nameValue.current !== "" && emailValue.current != "") {
-            if(checkStudentNumber(studentIdValue.current)&& validateEmail(emailValue.current)){
+            if (checkStudentNumber(studentIdValue.current) && validateEmail(emailValue.current)) {
                 navigate(`/Profile?uid=${personalUid}`);
-            }else{
+            } else {
                 setAnchorEl(event.currentTarget);
             }
-        }else{
+        } else {
             setAnchorEl(event.currentTarget);
         }
     }
@@ -242,7 +276,7 @@ const EditInfo = () => {
         <div>
             <Box sx={{ mt: 10, mb: 3, ml: 3 }}>
                 <Stack spacing={2} sx={{ minWidth: '28%' }}>
-                    <ProfileContainer />
+                    <ProfileContainer onValueChange={handleOnprofileImageChange} />
                     <EmailEditor onValueChange={handleOnEmailChange} />
                     <ProfileMessageEditor onValueChange={handleOnProfileMessageChange} />
                     <SnsEditor onValueChange={handleOnSnsChange} />

@@ -103,7 +103,7 @@ const TechStackList = () => {
                 
             }} >
                 <ImageList sx={{ hegiht:"306px",maxheight: "460px",
-                }} cols={Math.floor(width/164)} rowHeight={164}>
+                }} cols={Math.floor((width-130)/164)} rowHeight={164}>
                     {techList.map((tech) => {
                         return <TechItem techStack={tech} key={tech} />
                     })}
