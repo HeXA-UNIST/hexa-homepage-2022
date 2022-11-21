@@ -7,16 +7,20 @@ export const initialSeminarData = {
     description: "", // Nullable
     fileName: "", // Nullable
     fileUrl: "", // Nullable only if filename is null
-    date: 0, // new Date(date) 으로 Date 객체로 변환 가능, new Date().getTime() 으로 date로 변환 가능
+    date: 0, // new Date(date) 으로 Date 객체로 변환 가능, new Date().getTime() 으로 date로 변환 가능,
+    creator: "", // Nullable
+    createdAt: 0,
 }
 
-export const createSeminarData = (title, description, fileName, fileUrl, date) => {
+export const createSeminarData = (title, description, fileName, fileUrl, date, creator) => {
     return {
         title: title,
         description: description,
         fileName: fileName,
         fileUrl: fileUrl,
         date: date,
+        creator: creator,
+        createdAt: new Date().getTime(),
     }
 }
 

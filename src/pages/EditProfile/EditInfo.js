@@ -15,7 +15,8 @@ import '../Home/home.css';
 import { Avatar } from '@mui/material';
 
 import Input from '@mui/material/Input';
-import handleUploadimg from 'features/upload/uploadImage';
+import { handleUploadimg } from 'features/upload/uploadImage';
+
 
 const EditInfo = () => {
     const personalUid = useSelector(selectPersonalUid);
