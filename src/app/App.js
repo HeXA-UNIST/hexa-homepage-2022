@@ -15,6 +15,7 @@ import store from './store';
 import { registerAuthStateChangedObserver } from '../features/auth/auth';
 
 
+import UploadSeminar from 'pages/UploadSeminar';
 const Home = lazy(() => import('../pages/Home'));
 const Signup = lazy(() => import('../pages/Signup'));
 const Login = lazy(()=> import('../pages/Login'));
@@ -53,6 +54,7 @@ function App() {
                 <Route path='/test/seminar' element={<SeminarReducerTestScreen />}></Route>
                 <Route path='/test/project' element={<ProjectReducerTestScreen />}></Route>
                 <Route path='/UploadProject' element={<UploadProject />}></Route>
+                <Route path='/uploadSeminar' element={<UploadSeminar />}></Route>
                 <Route path='*' element={<NotFound />}></Route>
               </Routes>
             </BrowserRouter>
