@@ -15,7 +15,6 @@ import ProjectContentArea from './Area/ProjectContentArea';
 
 import { loadProjectDataFirebase } from 'features/project/project';
 import { firebaseAuth } from 'app/firebase';
-import handleUploadimg from 'features/upload/uploadImage';
 
 
 export const activityContentMaxWidth = 1020;
@@ -117,7 +116,6 @@ const UploadProjectArea = (props) => {
         if (projectRef.current.thumbnailUrl) {
 
         }
-        handleUploadimg()
     }
 
     return (

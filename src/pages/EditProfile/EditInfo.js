@@ -182,7 +182,7 @@ const EditInfo = () => {
             reader.onloadend = (finishedEvent) => {
                 const { currentTarget: { result } } = finishedEvent;
                 setAttachment(result);
-                uploadDataUrlFirebase(img.name, result).then((url) => {
+                handleUploadimg(img.name, result).then((url) => {
                     setImageUrl(url);
                     dispatch(postUserPersonalData({
                         photo: url
