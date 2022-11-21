@@ -13,7 +13,7 @@ const ProjectCard = (props) => {
                 <img
                     alt={name + " thumbnail"}
                     height="200"
-                    src={thumbnailUrl}
+                    src={props.project.thumnailDataUrl ?? thumbnailUrl}
                 />
             </div>
             <div style={{

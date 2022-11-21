@@ -15,7 +15,7 @@ import '../Home/home.css';
 import { Avatar } from '@mui/material';
 
 import Input from '@mui/material/Input';
-import handleUploadimg from 'features/upload/uploadImage';
+import uploadDataUrlFirebase from 'features/upload/uploadImage';
 
 const EditInfo = () => {
     const personalUid = useSelector(selectPersonalUid);
@@ -181,7 +181,7 @@ const EditInfo = () => {
             reader.onloadend = (finishedEvent) => {
                 const { currentTarget: { result } } = finishedEvent;
                 setAttachment(result);
-                handleUploadimg(img.name, result).then((url) => {
+                uploadDataUrlFirebase(img.name, result).then((url) => {
                     setImageUrl(url);
                     dispatch(postUserPersonalData({
                         photo: url

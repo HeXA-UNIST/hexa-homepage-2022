@@ -8,7 +8,6 @@ import { Box, Divider, InputBase, List, MenuItem, Paper, Select, Typography, Lin
 
 // icon
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import DownloadIcon from '@mui/icons-material/Download';
 
 import { activityContentMaxWidth, activityMinPadding } from "..";
 import TextSearchField from "../components/TextSearchField";
@@ -157,6 +156,7 @@ const SeminarListArea = (props) => {
     }
 
     const NoSeminarListItem = () => {
+        // TODO: NoSeminarListItem 만들기
     }
 
     const minHeight = `${window.innerHeight}px`;

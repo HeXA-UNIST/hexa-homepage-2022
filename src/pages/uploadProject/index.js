@@ -1,85 +1,138 @@
-import { TextField } from '@mui/material';
+// react
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+
+// mui
 import { Box } from '@mui/system';
-import { loadProjectList, selectProjectList } from 'features/project/project_reducer';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import ProjectTechStacksSearch from './TechStackSearch';
+import { Button, Typography } from '@mui/material';
+
+import ResponsiveAppBar from 'pages/Home/ResponsiveAppbar';
+import ProjectCommonInfoArea from './Area/ProjectCommonInfoArea';
+import ProjectPreviewArea from './Area/ProjectPreviewArea';
+import ProjectTechStackListArea from './Area/ProjectTechStackListArea';
+import ProjectMemberArea from './Area/ProjectMemberArea';
+import ProjectContentArea from './Area/ProjectContentArea';
+
+import { loadProjectDataFirebase } from 'features/project/project';
+import { firebaseAuth } from 'app/firebase';
+import handleUploadimg from 'features/upload/uploadImage';
+
+
+export const activityContentMaxWidth = 1020;
+export const activityMinPadding = 45;
+
+class ProjectDataFlowController {
+    constructor() {
+        this.listener = [];
+    }
+    addListener(listener) {
+        this.listener.push(listener);
+    }
+    removeListener(listener) {
+        this.listener = this.listener.filter((l) => l !== listener);
+    }
+    notify() {
+        this.listener.forEach((listener) => listener());
+    }
+}
+
+const createNewProjectData = () => {
+    return {
+        name: "HeXA Project",
+        id: "",
+        startDate: new Date().getTime(), // new Date(startDate) 으로 Date 객체로 변환 가능, new Date().getTime() 으로 startDate로 변환 가능
+        endDate: null, // 위와 같은 방식
+        techStack: ['python'],
+        members: firebaseAuth.currentUser != null ? [
+            {
+                uid: firebaseAuth.currentUser.uid,
+                pro: true,
+            }
+        ] : [],
+        content: "**HeXA New Project!!!**",
+        links: [],
+        thumbnailUrl: "",
+    };
+}
 
 const UploadProject = (props) => {
     const dispatch = useDispatch();
-    const projectList = useSelector(selectProjectList);
-    const [name, setName] = useState("");
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
-    const [techStack, setTechStack] = useState("");
-    const [content, setContent] = useState("");
-    const [links, setLinks] = useState("");
-    const [thumbnailUrl, setThumbnailUrl] = useState("");
-    const [memberList, setMemberList] = useState("");   
+    const [_, setState] = useState();
+
+    const projectRef = useRef(null);
+    const controllerRef = useRef(new ProjectDataFlowController());
+
     useEffect(() => {
-        dispatch(loadProjectList());
-    }, [dispatch]);
-    const handleNameChange = (text) => {
-        setName(text.target.value);
-    };
+        if (props.projectId) {
+            loadProjectDataFirebase(props.projectId).then((projectData) => {
+                // TODO : handle error case (projectData is null)
+                projectRef.current = projectData;
+                setState({});
+            });
+        } else {
+            projectRef.current = createNewProjectData();
+            setState({});
+        }
+    }, [dispatch, props.projectId]);
 
-    const handleStartDateChange = (date) => {
-        setStartDate(date.target.value);
-    };
 
-    const handleEndDateChange = (date) => {
-        setEndDate(date.target.value);
-    };
-
-    const handleTechStackChange = (text) => {
-        setTechStack(text.target.value);
-    };
-
-    const handleContentChange = (text) => {
-        setContent(text.target.value);
-    };
-
-    const handleLinksChange = (text) => {
-        setLinks(text.target.value);
-    };
-
-    const handleThumbnailUrlChange = (text) => {
-        setThumbnailUrl(text.target.value);
-    };
-
-    const handleSubmit = function (e) {
-        e.preventDefault();
-
-        const projectData = {
-            name: name,
-            startDate: new Date(Date.parse(startDate)).getTime(),
-            endDate: endDate === null || endDate === "" ? null : new Date(Date.parse(endDate)).getTime(),
-            techStack: techStack.split(",").map((tech) => tech.trim()),
-            members: [],
-            content: content,
-            links: links.split(",").map((link) => link.trim()),
-            thumbnailUrl: thumbnailUrl,
-        };
-        props.onSubmit(projectData);
-    };
     return (
-        <Box sx={{ justifyContent: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
-            <TextField id="standard-basic" label="프로젝트 이름" variant="standard"
-                value={name}
-                sx={{ width: '800px', minWidth: '200px', mt: 3, }}
-                onChange={handleNameChange} />
-                <TextField
-                    id="outlined-multiline-static"
-                    label="프로젝트 설명"
-                    sx={{ width: '800px', mt:3 }}
-                    multiline
-                    rows={4}
-                    onChange={handleContentChange}
+        <Box>
+            <ResponsiveAppBar bgcolor="rgba(0, 0, 0, 0.8)" />\
+            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', mt: '110px' }}>
+                <Box sx={{ flex: `0 1 ${activityContentMaxWidth}px`, ml: `${activityMinPadding}px`, mr: `${activityMinPadding}px` }}>
+                    <Typography fontSize='36px' fontWeight={800}>
+                        새 프로젝트 만들기
+                    </Typography>
+                    {projectRef.current &&
+                        <Box>
+                            <Box
+                                sx={{
+                                    mt: '60px',
+                                    width: '100%',
+                                    display: 'flex', flexDirection: 'row', justifyContent: 'start',
+                                    flexWrap: 'wrap', gap: '60px 50px'
+                                }}
+                            >
+                                <ProjectCommonInfoArea sx={{ flex: '1 1 480px' }} projectRef={projectRef} controllerRef={controllerRef} />
+                                <ProjectPreviewArea sx={{ flex: '1 1 480px' }} projectRef={projectRef} controllerRef={controllerRef} />
+                            </Box>
+                            <ProjectTechStackListArea sx={{ mt: '80px' }} projectRef={projectRef} controllerRef={controllerRef} />
+                            <ProjectMemberArea sx={{ mt: '80px' }} projectRef={projectRef} controllerRef={controllerRef} />
+                            <ProjectContentArea sx={{ mt: '80px' }} projectRef={projectRef} controllerRef={controllerRef} />
+                            <UploadProjectArea sx={{ mt: '40px' }} />
+                            <Box sx={{ height: '200px' }} />
+                        </Box>
+                    }
+                </Box>
+            </Box>
+        </Box >
+    );
+}
 
-                />
-                <ProjectTechStacksSearch/>
+const UploadProjectArea = (props) => {
+    const { projectRef } = props;
+    const handleOnClick = async () => {
+        console.log("upload");
+        if (projectRef.current.thumbnailUrl) {
+
+        }
+        handleUploadimg()
+    }
+
+    return (
+        <Box sx={{
+            ...props.sx,
+            display: 'flex', flexDirection: 'row', justifyContent: 'right', alignItems: 'center',
+        }}>
+            <Button variant="contained"
+                size='large'
+                onClick={handleOnClick}>
+                새 프로젝트 만들기
+            </Button>
         </Box>
     );
 }
+
 
 export default UploadProject;

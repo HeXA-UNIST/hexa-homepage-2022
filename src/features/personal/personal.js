@@ -1,5 +1,5 @@
 import { firebaseStore } from '../../app/firebase';
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from "firebase/firestore";
 
 const personalStatusDomain = {
     PERSONAL_STATUS_ACTIVE: "active",
@@ -41,11 +41,14 @@ export const loadPersonalDataFirebase = async (uid) => {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-        return docSnap.data();
+        return {
+            ...docSnap.data(),
+            uid: uid
+        };
     } else {
         return null;
     }
-}; 
+};
 
 // Firebase에 uid에 해당하는 document에 PersonalData를 update하는 비동기 함수이다.
 // personal_reducer의 postPersonData에서 이 함수를 사용하며,
@@ -54,6 +57,10 @@ export const postPersonalDataFirebase = async (uid, data, existGuaranteed = fals
     const docRef = doc(firebaseStore, "users", uid);
     // 만약 uid에 해당하는 document가 없으면 initialPersonData에 data 덧씌운걸로 새 docoument 만들고,
     // 이미 존재하면 data에 있는 내용을 firestore의 document에 update함.
+    if (data.uid) {
+        delete data.uid;
+    }
+
     if (!existGuaranteed && !(await getDoc(docRef)).exists()) {
         data = { ...initialPersonalData, ...data };
         await setDoc(docRef, data);
@@ -61,3 +68,18 @@ export const postPersonalDataFirebase = async (uid, data, existGuaranteed = fals
         await updateDoc(docRef, data);
     }
 };
+
+// Firebase에서 name에 해당하는 PersonalData를 가져오는 비동기 함수이다.
+export const searchPersonalDataByNameFirebase = async (name) => {
+    const usersRef = collection(firebaseStore, "users");
+    const q = query(usersRef, where("name", "==", name));
+    const querySnapshot = await getDocs(q);
+    const result = [];
+    querySnapshot.forEach((doc) => {
+        result.push({
+            ...doc.data(),
+            uid: doc.id
+        });
+    });
+    return result;
+}
