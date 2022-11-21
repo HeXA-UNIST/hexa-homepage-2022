@@ -1,4 +1,4 @@
-import { Button, TextField, Typography, Link, InputAdornment } from '@mui/material';
+import { Button, TextField, Typography, Link, InputAdornment, CircularProgress } from '@mui/material';
 import { Box } from '@mui/system';
 import { createSeminarData, postSeminarDataFirebase } from 'features/seminar/seminar';
 import { handleUploadblob } from 'features/upload/uploadImage';
@@ -17,13 +17,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectIsLoggedIn } from 'features/auth/login_reducer';
 import { loadUserPersonalData, selectPersonalUid } from 'features/personal/personal_reducer';
 import { useNavigate } from 'react-router';
-
+import { async } from '@firebase/util';
+import { useStateWithCallbackLazy } from 'use-state-with-callback';
 const UploadSeminar = (props) => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [fileName, setFileName] = useState("");
-    const [fileUrl, setFileUrl] = useState([]);
+    let fileUrl = []
+
     const [date, setDate] = useState(new Date());
+    const [fileResult, setFileResult] = useState([]);
+    const [isfileUploading, setIsfileUploading] = useState(false);
     const fileInput = createRef();
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -32,26 +36,42 @@ const UploadSeminar = (props) => {
     useEffect(() => {
         dispatch(loadUserPersonalData);
     }, [isLoggedIn]);
+    // useEffect(() => {
+    //     console.log(fileUrl.length,fileResult.length)
+    //     if (fileUrl.length == fileResult.length) {
+    //         let seminarData = createSeminarData(title, description, fileUrl, new Date(Date.parse(date)).getTime(), personalUid);
+    //         postSeminarDataFirebase(seminarData).then(() => {
+    //             dispatch(loadSeminarList);
+    //             //navigate(-1);
+    //         });
+    //     }
+    // }, [fileUrl]);
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
     };
     const handleDescriptionChange = (event) => {
         setDescription(event.target.value);
     };
+    const uploadAndSetUrl = async (file, index) => {
+        const url = await handleUploadblob(file.filename, file.content);
+        fileUrl.push({ 'filename': file.filename, 'fileurl': url })
+        if (index == fileResult.length - 1) {
+            let seminarData = createSeminarData(title, description, fileUrl, new Date(Date.parse(date)).getTime(), personalUid);
+            postSeminarDataFirebase(seminarData).then(() => {
+                dispatch(loadSeminarList);
+                navigate(-1);
+            });
+        }
 
-
-    const handleFileUrlChange = (event) => {
-        setFileUrl(event.target.value);
-    };
-
-
+    }
     const handleSubmit = (event) => {
         event.preventDefault();
-        let seminarData = createSeminarData(title, description, fileName, fileUrl, new Date(Date.parse(date)).getTime(), personalUid);
-        postSeminarDataFirebase(seminarData).then(() => {
-            dispatch(loadSeminarList);
-            navigate(-1);
-        });
+        setIsfileUploading(true);
+        Promise.all(fileResult.map((file, index) => {
+            return uploadAndSetUrl(file, index);
+        })).then(() => {
+            console.log(setIsfileUploading(false));
+        })
     };
     const handleButtonClick = e => {
         fileInput.current.click();
@@ -63,21 +83,18 @@ const UploadSeminar = (props) => {
     };
     const handleChange = e => {
         const file = e.target.files[0];
-        // handleUploadblob(file.name, file).then((url) => {
-        //     console.log(url);
-        // });
+
         const reader = new FileReader();
         reader.onloadend = (finishedEvent) => {
             const { currentTarget: { result } } = finishedEvent;
             const filename = file.name;
-            handleUploadblob(file.name, result).then((url) => {
-                setFileUrl([...fileUrl, { 'filename': filename, 'fileurl': url }]);
-            });
+            setFileResult([...fileResult, { 'filename': filename, 'content': result }]);
+            //setFileUrl([...fileUrl, { 'filename': filename }]);
         }
         reader.readAsDataURL(file);
     };
     const handleDelete = (item) => {
-        setFileUrl(fileUrl.filter((i) => i !== item));
+        setFileResult(fileResult.filter((i) => i.filename !== item.filename));
     }
     return (<>
         <ResponsiveAppBar bgcolor="rgba(0, 0, 0, 0.8)" />
@@ -93,19 +110,19 @@ const UploadSeminar = (props) => {
             <TextField
                 id="standard-basic"
                 variant="outlined"
-                sx={{width:800,mt:2,mb:2}}
+                sx={{ width: 800, mt: 2, mb: 2 }}
                 disabled
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
                             <Box sx={{ justifyContent: 'start', display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
-                                <Button onClick={handleButtonClick}>파일 업로드<UploadIcon/></Button>
-                                {fileUrl.map((file) => {
-                                    return (<><Link onClick={() => window.open(file.fileurl, '_blank')} underline="always" sx={{ ml: 2 }}>
+                                <Button onClick={handleButtonClick}>파일 업로드<UploadIcon /></Button>
+                                {fileResult.map((file) => {
+                                    return (<><Link underline="always" sx={{ ml: 2 }}>
                                         {file.filename}
                                     </Link>
-                                    <DeleteIcon onClick={()=>handleDelete(file)} sx={{width:18,height:18,color:"#232629"}}/>
-                                    {/* <Box onClick={handleDelete(file)}><DeleteIcon sx={{width:18,height:18,color:"#232629"}}/></Box> */}
+                                        <DeleteIcon onClick={() => handleDelete(file)} sx={{ width: 18, height: 18, color: "#232629" }} />
+                                        {/* <Box onClick={handleDelete(file)}><DeleteIcon sx={{width:18,height:18,color:"#232629"}}/></Box> */}
                                     </>)
                                 })
                                 }
@@ -138,7 +155,7 @@ const UploadSeminar = (props) => {
                     renderInput={(params) => <TextField {...params} />}
                 />
             </LocalizationProvider>
-            <Button onClick={handleSubmit} variant='outlined' sx={{ mt: 2, width: '250px' }}>등록</Button>
+            {isfileUploading?<CircularProgress />:<Button onClick={handleSubmit} variant='outlined' sx={{ mt: 2, width: '250px' }}>등록</Button>}
         </Box>
     </>)
 }
