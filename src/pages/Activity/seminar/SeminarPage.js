@@ -8,7 +8,6 @@ import { Box, Divider, InputBase, List, MenuItem, Paper, Select, Typography, Lin
 
 // icon
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import DownloadIcon from '@mui/icons-material/Download';
 
 import { activityContentMaxWidth, activityMinPadding } from "..";
 import TextSearchField from "../components/TextSearchField";
@@ -130,7 +129,7 @@ const SeminarListArea = (props) => {
 
                 <Box sx={{ ml: '10px', mr: '10px', flex: '1' }}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: '8px' }}>
-                        <Typography sx={{ fontWeight: '600', fontSize: '22px', letterSpacing:'1.3px' }}>
+                        <Typography sx={{ fontWeight: '600', fontSize: '18px' }}>
                             {title}
                         </Typography>
                         <Typography sx={{ fontWeight: '400', fontSize: '14px', ml: '5px' }}>
@@ -157,6 +156,7 @@ const SeminarListArea = (props) => {
     }
 
     const NoSeminarListItem = () => {
+        // TODO: NoSeminarListItem 만들기
     }
 
     const minHeight = `${window.innerHeight}px`;

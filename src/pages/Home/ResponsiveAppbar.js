@@ -25,7 +25,7 @@ import { loginSlice, selectIsLoggedIn, setIsLoggedIn } from '../../features/auth
 import { loadUserPersonalData, selectIsPersonalDataLoaded, selectPersonalName,selectPersonalUid } from "../../features/personal/personal_reducer";
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
-const pages = [{url:"/",name:'동아리 소개'}, {url:"/Project",name:'활동'}, {url:"/",name:'sns'}];
+const pages = [{url:"/",name:'동아리 소개'}, {url:"/Activity",name:'활동'}, {url:"/",name:'sns'}];
 const settings = ['프로필', 'Account', 'Dashboard'];
 
 const ResponsiveAppBar = (props) => {

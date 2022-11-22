@@ -6,13 +6,15 @@ import About from '../pages/About';
 import Activity from '../pages/Activity';
 import Apply from '../pages/Apply';
 import NotFound from '../pages/NotFound';
+import UploadProject from 'pages/UploadProject';
 
 import SeminarReducerTestScreen from '../features/seminar/test';
 import ProjectReducerTestScreen from '../features/project/test';
 
 import store from './store';
 import { registerAuthStateChangedObserver } from '../features/auth/auth';
-import UploadProject from 'pages/uploadProject';
+
+
 import UploadSeminar from 'pages/UploadSeminar';
 const Home = lazy(() => import('../pages/Home'));
 const Signup = lazy(() => import('../pages/Signup'));
@@ -20,6 +22,7 @@ const Login = lazy(()=> import('../pages/Login'));
 const Profile = lazy(()=> import('../pages/Profile'));
 const EditProfile = lazy(()=> import('../pages/EditProfile'));
 const Project = lazy(()=> import('../pages/Project'));
+
 const RegisterFirebaseObserverComponent = (props) => {
   const dispatch = useDispatch()
   useEffect(() => {
@@ -50,7 +53,7 @@ function App() {
                 <Route path='/Project' element={<Project />}></Route>
                 <Route path='/test/seminar' element={<SeminarReducerTestScreen />}></Route>
                 <Route path='/test/project' element={<ProjectReducerTestScreen />}></Route>
-                <Route path='/uploadProject' element={<UploadProject />}></Route>
+                <Route path='/UploadProject' element={<UploadProject />}></Route>
                 <Route path='/uploadSeminar' element={<UploadSeminar />}></Route>
                 <Route path='*' element={<NotFound />}></Route>
               </Routes>

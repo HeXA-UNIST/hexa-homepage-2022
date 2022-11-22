@@ -8,10 +8,12 @@ export const initialProjectData = {
     startDate: 0, // new Date(startDate) 으로 Date 객체로 변환 가능, new Date().getTime() 으로 startDate로 변환 가능
     endDate: null, // 위와 같은 방식
     techStack: [],
-    members: [{
-        uid: "",
-        pro: false,
-    }],
+    members: [
+        {
+            uid: "",
+            pro: false,
+        }
+    ],
     content: "",
     links: [],
     thumbnailUrl: "",
