@@ -129,7 +129,7 @@ const SeminarListArea = (props) => {
 
                 <Box sx={{ ml: '10px', mr: '10px', flex: '1' }}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: '8px' }}>
-                        <Typography sx={{ fontWeight: '600', fontSize: '22px', letterSpacing:'1.3px' }}>
+                        <Typography sx={{ fontWeight: '600', fontSize: '18px' }}>
                             {title}
                         </Typography>
                         <Typography sx={{ fontWeight: '400', fontSize: '14px', ml: '5px' }}>
