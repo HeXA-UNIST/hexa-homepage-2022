@@ -107,7 +107,39 @@ const UploadSeminar = (props) => {
                 sx={{ width: 800 }}
                 onChange={handleTitleChange}
             />
-            <TextField
+            <Box sx={{
+                width: 800, borderRadius: '4px', border: '0.8px solid rgba(0,0,0,0.3)',
+                display: 'flex', alignItems: 'center', mt:1, mb:1
+            }}>
+                <Button onClick={handleButtonClick}>파일 업로드<UploadIcon /></Button>
+                <Box sx={{ flex: '1', display: 'flex', justifyContent: 'start', alignItems: 'center', flexWrap: 'wrap' }}>
+                    {fileResult.map((file) => {
+                        return (<><Link underline="always" sx={{ ml: 2 }}>
+                            {file.filename}
+                        </Link>
+                            <DeleteIcon onClick={() => handleDelete(file)} sx={{ width: 18, height: 18, color: "#232629" }} />
+                            {/* <Box onClick={handleDelete(file)}><DeleteIcon sx={{width:18,height:18,color:"#232629"}}/></Box> */}
+                        </>)
+                    })
+                    }
+                    <input type="file"
+                        ref={fileInput}
+                        onChange={handleChange}
+                        style={{ display: "none" }} />
+                </Box>
+            </Box>
+            <Box sx={{width:'800px', display: 'flex', alignItems: 'start',mb:1}}>
+            <LocalizationProvider adapterLocale='ko' dateAdapter={AdapterDayjs}>
+                <DateTimePicker
+                    label="세미나 날짜"
+                    value={date}
+                    onChange={handleDateChange}
+                    renderInput={(params) => <TextField {...params} />}
+                />
+            </LocalizationProvider>
+            </Box>
+
+            {/* <TextField
                 id="standard-basic"
                 variant="outlined"
                 sx={{ width: 800, mt: 2, mb: 2 }}
@@ -115,28 +147,12 @@ const UploadSeminar = (props) => {
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
-                            <Box sx={{ justifyContent: 'start', display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
-                                <Button onClick={handleButtonClick}>파일 업로드<UploadIcon /></Button>
-                                {fileResult.map((file) => {
-                                    return (<><Link underline="always" sx={{ ml: 2 }}>
-                                        {file.filename}
-                                    </Link>
-                                        <DeleteIcon onClick={() => handleDelete(file)} sx={{ width: 18, height: 18, color: "#232629" }} />
-                                        {/* <Box onClick={handleDelete(file)}><DeleteIcon sx={{width:18,height:18,color:"#232629"}}/></Box> */}
-                                    </>)
-                                })
-                                }
-                                <input type="file"
-                                    ref={fileInput}
-                                    onChange={handleChange}
-                                    style={{ display: "none" }} />
-                            </Box>
+
                         </InputAdornment>
                     ),
                 }}
             >
-            </TextField>
-
+            </TextField> */}
             <TextField
                 id="standard-basic"
                 variant="outlined"
@@ -147,15 +163,9 @@ const UploadSeminar = (props) => {
                 rows={10}
                 onChange={handleDescriptionChange}
             />
-            <LocalizationProvider adapterLocale='ko' dateAdapter={AdapterDayjs}>
-                <DateTimePicker
-                    label="세미나 날짜"
-                    value={date}
-                    onChange={handleDateChange}
-                    renderInput={(params) => <TextField {...params} />}
-                />
-            </LocalizationProvider>
-            {isfileUploading?<CircularProgress />:<Button onClick={handleSubmit} variant='outlined' sx={{ mt: 2, width: '250px' }}>등록</Button>}
+            <Box sx={{width:'800px', display: 'flex', alignItems: 'start'}}>
+            {isfileUploading ? <CircularProgress /> : <Button onClick={handleSubmit} variant='outlined' sx={{ width: '250px' }}>등록</Button>}
+            </Box>
         </Box>
     </>)
 }
