@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import ResponsiveAppBar from '../Home/ResponsiveAppbar';
+import ResponsiveAppBar from '../../components/ResponsiveAppbar';
 import Stack from '@mui/material/Stack';
 
 import '../Home/home.css';

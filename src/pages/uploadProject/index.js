@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { Box } from '@mui/system';
 import { Button, Typography } from '@mui/material';
 
-import ResponsiveAppBar from 'pages/Home/ResponsiveAppbar';
+import ResponsiveAppBar from 'components/ResponsiveAppbar';
 import ProjectCommonInfoArea from './Area/ProjectCommonInfoArea';
 import ProjectPreviewArea from './Area/ProjectPreviewArea';
 import ProjectTechStackListArea from './Area/ProjectTechStackListArea';

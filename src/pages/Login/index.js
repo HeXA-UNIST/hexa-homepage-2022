@@ -16,7 +16,7 @@ import HeXAInfo from '../Home/HexaInfo';
 // import { useHistory } from "react-router-dom";
 import '../Home/home.css';
 import { useDispatch } from 'react-redux';
-import ResponsiveAppBar from '../Home/ResponsiveAppbar';
+import ResponsiveAppBar from '../../components/ResponsiveAppbar';
 
 import GoogleIcon from '@mui/icons-material/Google';
 import GitHubIcon from '@mui/icons-material/GitHub';

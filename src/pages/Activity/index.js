@@ -1,6 +1,6 @@
 import { Box, Container } from '@mui/system';
 import React, { useState } from 'react';
-import ResponsiveAppBar from '../Home/ResponsiveAppbar';
+import ResponsiveAppBar from '../../components/ResponsiveAppbar';
 import ActivityTopArea from './components/ActivityTopArea';
 import ProjectPage from './project/ProjectPage';
 import SeminarPage from './seminar/SeminarPage';

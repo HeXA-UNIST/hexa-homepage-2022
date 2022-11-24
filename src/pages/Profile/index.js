@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import ResponsiveAppBar from '../Home/ResponsiveAppbar';
+import ResponsiveAppBar from '../../components/ResponsiveAppbar';
 import Stack from '@mui/material/Stack';
 
 import '../Home/home.css';
@@ -18,7 +18,7 @@ import HotelIcon from '@mui/icons-material/Hotel';
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
-import TechStackList from './TechStacklist';
+import TechStackList from '../../components/TechStacklist';
 import { useNavigate } from 'react-router-dom';
 import ProjectList from './ProjectList';
 import LaunchIcon from '@mui/icons-material/Launch';
@@ -49,7 +49,7 @@ const Profile = () => {
     const personalStatus = useSelector(selectPersonalStatus); // active(활동) | rest(휴면) | glory(명예) | quit(탈퇴) | expel(제명)
     const personalCreatedAt = useSelector(selectPersonalCreatedAt);
     const personallastLoginAt = useSelector(selectPersonallastLoginAt);
-
+    const techList = useSelector(selectPersonalTechStack)
     const isPersonalDataLoaded = useSelector(selectIsPersonalDataLoaded);
     const dispatch = useDispatch();
     const userselectUser = useSelector(selectUser);
@@ -77,13 +77,13 @@ const Profile = () => {
                 <Stack direction="row" spacing={2} sx={{
 
                 }}>
-                        {attachment==""?
-                        <Avatar alt={personalName} src="/static/images/avatar/2.jpg" sx={{ fontSize: "36px", fontWeight: '900', width: 128, height: 128 }} >{personalName}</Avatar>:
+                    {attachment == "" ?
+                        <Avatar alt={personalName} src="/static/images/avatar/2.jpg" sx={{ fontSize: "36px", fontWeight: '900', width: 128, height: 128 }} >{personalName}</Avatar> :
                         <Avatar alt={personalName} src={attachment} sx={{ fontSize: "36px", fontWeight: '900', width: 128, height: 128 }} ></Avatar>
-                        }
+                    }
 
                     {/* <Box sx={{ fontSize: "36px", mr: 10 }}>{personalName}</Box> */}
-                    
+
                     <Stack sx={{ height: 98 }}>
 
                         <Typography gutterBottom component="div" sx={{ mt: 4, mb: 2, fontFamily: 'Noto Sans KR', lineHeight: '10px', fontWeight: '500', fontSize: "34px" }}>
@@ -305,7 +305,10 @@ const Profile = () => {
                         <ProfileMessage />
 
                         <SNS />
-                        <TechStackList />
+                        <Typography sx={{ fontSize: "21px", fontWeight: 500, fontFamily: 'Noto Sans KR', color: "#232629" }}>
+                            기술 스택
+                        </Typography>
+                        <TechStackList techList={techList} />
                         <ProjectList />
                     </Stack>
                     {/* <TechStackList />

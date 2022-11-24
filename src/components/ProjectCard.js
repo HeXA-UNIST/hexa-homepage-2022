@@ -1,14 +1,19 @@
 // mui
-import { Box, Card, CardContent, CardMedia, Chip, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, Chip, Typography } from "@mui/material";
+import { useNavigate, Link } from "react-router";
 
 import './ProjectCardStyle.css';
 
 // TODO: 마우스 hover, active 제대로 효과 주기
 const ProjectCard = (props) => {
-    const { name, startDate, endDate, techStack, thumbnailUrl } = props.project;
+    const { name, startDate, endDate, techStack, thumbnailUrl,id } = props.project;
+    const navigate = useNavigate();
     return (
+        
         <div
-            className="project-card">
+            className="project-card" onClick={()=>navigate(`/project?id=${id}`,{})}>
+                
+                
             <div className="project-card-image">
                 <img
                     alt={name + " thumbnail"}
@@ -41,7 +46,9 @@ const ProjectCard = (props) => {
                     <ProjectTechStackArea techStackList={techStack} />
                 </div>
             </div>
+            
         </div>
+        
     );
 }
 

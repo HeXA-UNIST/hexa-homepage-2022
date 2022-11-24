@@ -4,7 +4,7 @@ import { loadPersonalData, loadUserPersonalData, postUserPersonalData, selectPer
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import ResponsiveAppBar from '../Home/ResponsiveAppbar';
+import ResponsiveAppBar from '../../components/ResponsiveAppbar';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';

@@ -6,7 +6,7 @@ import About from '../pages/About';
 import Activity from '../pages/Activity';
 import Apply from '../pages/Apply';
 import NotFound from '../pages/NotFound';
-import UploadProject from 'pages/UploadProject';
+import UploadProject from 'pages/uploadProject';
 
 import SeminarReducerTestScreen from '../features/seminar/test';
 import ProjectReducerTestScreen from '../features/project/test';

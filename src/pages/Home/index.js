@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { registerAuthStateChangedObserver } from '../../features/auth/auth';
 import {loadUserPersonalData, loadPersonalData} from '../../features/personal/personal_reducer.js'
-import ResponsiveAppBar from './ResponsiveAppbar';
+import ResponsiveAppBar from '../../components/ResponsiveAppbar';
 import { loginSlice, selectIsLoggedIn, setIsLoggedIn } from '../../features/auth/login_reducer';
 import { configureStore } from '@reduxjs/toolkit';
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });

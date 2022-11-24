@@ -2,7 +2,7 @@ import { Button, TextField, Typography, Link, InputAdornment, CircularProgress }
 import { Box } from '@mui/system';
 import { createSeminarData, postSeminarDataFirebase } from 'features/seminar/seminar';
 import { handleUploadblob } from 'features/upload/uploadImage';
-import ResponsiveAppBar from 'pages/Home/ResponsiveAppbar';
+import ResponsiveAppBar from 'components/ResponsiveAppbar';
 import React, { createRef, useEffect, useState } from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';

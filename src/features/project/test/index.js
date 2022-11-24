@@ -130,10 +130,12 @@ const NewProjectForm = (props) => {
         const projectData = {
             name: name,
             startDate: new Date(Date.parse(startDate)).getTime(),
+            id : "",
             endDate: endDate === null || endDate === "" ? null : new Date(Date.parse(endDate)).getTime(),
             techStack: techStack.split(",").map((tech) => tech.trim()),
             members: [],
             content: content,
+            subtitle :"",
             links: links.split(",").map((link) => link.trim()),
             thumbnailUrl: thumbnailUrl,
         };

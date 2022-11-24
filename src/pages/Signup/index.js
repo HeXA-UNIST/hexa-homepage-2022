@@ -18,7 +18,7 @@ import HeXAInfo from '../Home/HexaInfo';
 // import { useHistory } from "react-router-dom";
 import { GoogleLoginButton, GithubLoginButton } from "react-social-login-buttons";
 import '../Home/home.css';
-import ResponsiveAppBar from '../Home/ResponsiveAppbar';
+import ResponsiveAppBar from '../../components/ResponsiveAppbar';
 import { useNavigate } from 'react-router';
 import { Stack } from '@mui/system';
 
